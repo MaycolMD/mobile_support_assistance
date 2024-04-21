@@ -9,11 +9,6 @@ class RatingReportUS extends StatefulWidget {
 }
 
 class _RatingReportUSState extends State<RatingReportUS> {
-  final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  bool _isExpanded = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

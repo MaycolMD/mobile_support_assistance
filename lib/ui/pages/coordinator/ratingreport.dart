@@ -12,12 +12,8 @@ class RatingReport extends StatefulWidget {
 
 class _RatingReportState extends State<RatingReport> {
   final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
   DateTime? _selectedDate, _selectedDateI, _selectedDateF;
   double _rating = 3;
-
-  bool _isExpanded = false;
 
   @override
   Widget build(BuildContext context) {

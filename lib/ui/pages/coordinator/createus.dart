@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import './../../../widgets/text_field.dart';
+import './../../../widgets/back_button.dart';
+import './../../../widgets/submit_button.dart';
 
 class CreateUser extends StatefulWidget {
   const CreateUser({super.key});
@@ -10,9 +12,10 @@ class CreateUser extends StatefulWidget {
 
 class _CreateUserState extends State<CreateUser> {
   final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  bool _isExpanded = false;
+  final TextEditingController _userIdController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +45,7 @@ class _CreateUserState extends State<CreateUser> {
                 ),
                 const SizedBox(height: 20),
                 const Text(
-                  'NEW USER REPORT',
+                  'NEW REPORTING USER',
                   style: TextStyle(
                     fontSize: 40,
                   ),
@@ -60,321 +63,24 @@ class _CreateUserState extends State<CreateUser> {
                 const SizedBox(
                   height: 20,
                 ),
-                SizedBox(
-                  width: 800,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'US_ID',
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                              fontFamily: 'Readex Pro',
-                              letterSpacing: 0,
-                            ),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              60, 0, 10, 0),
-                          child: TextFormField(
-                            decoration: InputDecoration(
-                              hintText: 'Enter User ID',
-                              hintStyle: const TextStyle(
-                                fontFamily: 'Readex Pro',
-                                letterSpacing: 0,
-                                fontSize: 16,
-                              ),
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 8, horizontal: 12),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: const BorderSide(
-                                  color: Colors.blue,
-                                  width: 2,
-                                ),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: const BorderSide(
-                                  color: Colors.blue,
-                                  width: 2,
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: const BorderSide(
-                                  color: Colors.blue,
-                                  width: 2,
-                                ),
-                              ),
-                            ),
-                            style: const TextStyle(
-                              fontFamily: 'Readex Pro',
-                              letterSpacing: 0,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                SizedBox(
-                  width: 800,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Name',
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                              fontFamily: 'Readex Pro',
-                              letterSpacing: 0,
-                            ),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              60, 0, 10, 0),
-                          child: TextFormField(
-                            decoration: InputDecoration(
-                              hintText: 'Enter Name',
-                              hintStyle: const TextStyle(
-                                fontFamily: 'Readex Pro',
-                                letterSpacing: 0,
-                                fontSize: 16,
-                              ),
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 8, horizontal: 12),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: const BorderSide(
-                                  color: Colors.blue,
-                                  width: 2,
-                                ),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: const BorderSide(
-                                  color: Colors.blue,
-                                  width: 2,
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: const BorderSide(
-                                  color: Colors.blue,
-                                  width: 2,
-                                ),
-                              ),
-                            ),
-                            style: const TextStyle(
-                              fontFamily: 'Readex Pro',
-                              letterSpacing: 0,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                SizedBox(
-                  width: 800,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Email',
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                              fontFamily: 'Readex Pro',
-                              letterSpacing: 0,
-                            ),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              65, 0, 10, 0),
-                          child: TextFormField(
-                            decoration: InputDecoration(
-                              hintText: 'Enter email',
-                              hintStyle: const TextStyle(
-                                fontFamily: 'Readex Pro',
-                                letterSpacing: 0,
-                                fontSize: 16,
-                              ),
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 8, horizontal: 12),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: const BorderSide(
-                                  color: Colors.blue,
-                                  width: 2,
-                                ),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: const BorderSide(
-                                  color: Colors.blue,
-                                  width: 2,
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: const BorderSide(
-                                  color: Colors.blue,
-                                  width: 2,
-                                ),
-                              ),
-                            ),
-                            style: const TextStyle(
-                              fontFamily: 'Readex Pro',
-                              letterSpacing: 0,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                SizedBox(
-                  width: 800,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Password',
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                              fontFamily: 'Readex Pro',
-                              letterSpacing: 0,
-                            ),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              35, 0, 10, 0),
-                          child: TextFormField(
-                            decoration: InputDecoration(
-                              hintText: 'Enter Password',
-                              hintStyle: const TextStyle(
-                                fontFamily: 'Readex Pro',
-                                letterSpacing: 0,
-                                fontSize: 16,
-                              ),
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 8, horizontal: 12),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: const BorderSide(
-                                  color: Colors.blue,
-                                  width: 2,
-                                ),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: const BorderSide(
-                                  color: Colors.blue,
-                                  width: 2,
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: const BorderSide(
-                                  color: Colors.blue,
-                                  width: 2,
-                                ),
-                              ),
-                            ),
-                            style: const TextStyle(
-                              fontFamily: 'Readex Pro',
-                              letterSpacing: 0,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                const SizedBox(height: 20),
+                buildTextField('US_ID', _userIdController, 'Enter User ID'),
+                const SizedBox(height: 20),
+                buildTextField('Name', _nameController, 'Enter Name'),
+                const SizedBox(height: 20),
+                buildTextField('Email', _emailController, 'Enter Email'),
+                const SizedBox(height: 20),
+                buildTextField(
+                    'Password', _passwordController, 'Enter Password',
+                    isObscureText: true),
                 const SizedBox(
                   height: 50,
                 ),
-                ElevatedButton(
-                  key: const Key('ButtonSubmit'),
-                  onPressed: () {
-                    Get.back();
-                  },
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        Colors.purple), // Color morado
-                    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                      const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical:
-                              12), // Ajusta el padding según sea necesario
-                    ),
-                    shape: MaterialStateProperty.all<OutlinedBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(8), // Borde suavizado
-                      ),
-                    ),
-                  ),
-                  child: const Text(
-                    "Submit",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 30), // Color del texto blanco
-                  ),
-                ),
+                buildSubmitButton(),
                 const SizedBox(
                   height: 20,
                 ),
-                OutlinedButton(
-                  key: const Key('ButtonGoBack'),
-                  onPressed: () {
-                    Get.back();
-                  },
-                  style: ButtonStyle(
-                    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                      const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 12,
-                      ),
-                    ),
-                    shape: MaterialStateProperty.all<OutlinedBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                    side: MaterialStateProperty.all<BorderSide>(
-                      const BorderSide(
-                        color: Colors.purple, // Borde morado
-                        width: 2, // Ancho del borde
-                      ),
-                    ),
-                  ),
-                  child: const Text(
-                    "Go Back",
-                    style: TextStyle(
-                      color: Colors.purple, // Color del texto morado
-                      fontSize: 20,
-                    ),
-                  ),
-                ),
+                buildGoBackButton(),
               ],
             ),
           ),
