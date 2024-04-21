@@ -127,16 +127,25 @@ class CustomRowWidget extends StatelessWidget {
                     ),
                     color: Colors.deepPurple,
                   ),
-                  child: Icon(
-                    Icons.add,
-                    color: Colors.black,
-                    size: 24,
+                  child: IconButton(
+                    onPressed: () {
+                      Get.toNamed('/RecapReport');
+                    },
+                    icon: Icon(
+                      Icons.add,
+                      color: Colors.black,
+                      size: 24,
+                    ),
+                    iconSize: 24,
+                    padding: EdgeInsets.zero,
+                    splashRadius: 24,
+                    tooltip: 'Add',
                   ),
                 ),
               ),
-              Expanded(
+              const Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  padding: EdgeInsets.symmetric(horizontal: 8.0),
                   child: Text(
                     'Id Report',
                     textAlign: TextAlign.center,

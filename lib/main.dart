@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:project/ui/pages/login/login.dart';
 import 'package:project/ui/pages/support/create_report.dart';
 import 'package:project/ui/pages/support/main_us.dart';
+import 'package:project/ui/pages/support/recap_report.dart';
 import 'ui/pages/coordinator/main.dart';
 import 'ui/pages/coordinator/createus.dart';
 import 'ui/pages/coordinator/createclient.dart';
@@ -34,7 +35,8 @@ class MyApp extends StatelessWidget {
           GetPage(name: '/SpecificReport', page: () => const RatingReport()),
           GetPage(name: '/MainUS', page: () => const MainUS()),
           GetPage(name: '/Login', page: () => const Login()),
-          GetPage(name: '/CreateReport', page: () => const CreateReport())
+          GetPage(name: '/CreateReport', page: () => const CreateReport()),
+          GetPage(name: '/RecapReport', page: () => const RecapReport())
         ],
         home: const Login(
           key: Key('MainPage'),
