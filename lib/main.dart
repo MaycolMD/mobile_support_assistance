@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:project/ui/pages/login/login.dart';
+import 'package:project/ui/pages/support/create_report.dart';
+import 'package:project/ui/pages/support/main_us.dart';
 import 'ui/pages/coordinator/main.dart';
 import 'ui/pages/coordinator/createus.dart';
 import 'ui/pages/coordinator/createclient.dart';
@@ -24,13 +27,16 @@ class MyApp extends StatelessWidget {
         ),
         initialRoute: '/',
         getPages: [
-          GetPage(name: '/', page: () => const MainPageUC()),
+          GetPage(name: '/', page: () => const Login()),
           GetPage(name: '/CreateUS', page: () => const CreateUser()),
           GetPage(name: '/CreateClient', page: () => const CreateClient()),
           GetPage(name: '/Reports', page: () => const RatingReportUS()),
           GetPage(name: '/SpecificReport', page: () => const RatingReport()),
+          GetPage(name: '/MainUS', page: () => const MainUS()),
+          GetPage(name: '/Login', page: () => const Login()),
+          GetPage(name: '/CreateReport', page: () => const CreateReport())
         ],
-        home: const MainPageUC(
+        home: const Login(
           key: Key('MainPage'),
         ));
   }

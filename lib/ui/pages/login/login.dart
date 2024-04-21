@@ -121,7 +121,7 @@ class _LoginState extends State<Login> {
                   child: ElevatedButton(
                     key: Key('ButtonLogin'),
                     onPressed: () {
-                      Get.offNamed('MainUS');
+                      Get.offNamed('/MainUS');
                     },
                     style: ButtonStyle(
                       backgroundColor:

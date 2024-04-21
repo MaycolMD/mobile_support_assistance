@@ -29,7 +29,7 @@ class _MainUSState extends State<MainUS> {
                       size: 25,
                     ),
                     onPressed: () {
-                      Get.offNamed('Login');
+                      Get.offNamed('/Login');
                     },
                   ),
                 )
@@ -83,7 +83,7 @@ class _MainUSState extends State<MainUS> {
               child: ElevatedButton(
                   key: Key('ButtonCreateReport'),
                   onPressed: () {
-                    Get.toNamed('CreateReport');
+                    Get.toNamed('/CreateReport');
                   },
                   child: Text('Add Report',
                       style: TextStyle(color: Colors.white, fontSize: 20)),
