@@ -3,6 +3,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import './../../../widgets/text_field.dart';
 import './../../../widgets/back_button.dart';
 import './../../../widgets/submit_button.dart';
+import './../../controllers/coordinator/ratingreportspecific.controller.dart';
 
 class RatingReport extends StatefulWidget {
   const RatingReport({super.key});
@@ -13,13 +14,8 @@ class RatingReport extends StatefulWidget {
 
 class _RatingReportState extends State<RatingReport> {
   final _formKey = GlobalKey<FormState>();
-  double _rating = 3;
 
-  final TextEditingController _userIdController = TextEditingController();
-  final TextEditingController _userDateController = TextEditingController();
-  final TextEditingController _userStartTimeController =
-      TextEditingController();
-  final TextEditingController _userEndTimeController = TextEditingController();
+  final FormControllers _controllers = FormControllers();
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +66,7 @@ class _RatingReportState extends State<RatingReport> {
                     ),
                     buildTextField(
                       'Client ID',
-                      _userIdController,
+                      _controllers.userIdController,
                       '1001883069',
                       isEditable: false,
                     ),
@@ -79,7 +75,7 @@ class _RatingReportState extends State<RatingReport> {
                     ),
                     buildTextField(
                       'Date',
-                      _userDateController,
+                      _controllers.userDateController,
                       '15/02/2024',
                       isEditable: false,
                     ),
@@ -147,7 +143,7 @@ class _RatingReportState extends State<RatingReport> {
                     ),
                     buildTextField(
                       'Start time',
-                      _userStartTimeController,
+                      _controllers.userStartTimeController,
                       '6:00 AM',
                       isEditable: false,
                     ),
@@ -156,7 +152,7 @@ class _RatingReportState extends State<RatingReport> {
                     ),
                     buildTextField(
                       'End time',
-                      _userEndTimeController,
+                      _controllers.userEndTimeController,
                       '10:00 PM',
                       isEditable: false,
                     ),
@@ -182,7 +178,7 @@ class _RatingReportState extends State<RatingReport> {
                           RatingBar.builder(
                             onRatingUpdate: (newValue) {
                               setState(() {
-                                _rating =
+                                _controllers.rating =
                                     newValue; // Actualiza el valor del rating cuando cambia
                               });
                             },
@@ -191,8 +187,8 @@ class _RatingReportState extends State<RatingReport> {
                               color: Theme.of(context).primaryColor,
                             ),
                             direction: Axis.horizontal,
-                            initialRating:
-                                _rating, // Utiliza el valor del rating definido
+                            initialRating: _controllers
+                                .rating, // Utiliza el valor del rating definido
                             itemCount: 5,
                             itemSize: 50,
                             glowColor: Theme.of(context).primaryColor,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import './../../../widgets/text_field.dart';
 import './../../../widgets/back_button.dart';
 import './../../../widgets/submit_button.dart';
+import './../../controllers/coordinator/createclient.controller.dart';
 
 class CreateClient extends StatefulWidget {
   const CreateClient({super.key});
@@ -12,8 +13,8 @@ class CreateClient extends StatefulWidget {
 
 class _CreateClientState extends State<CreateClient> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _userIdController = TextEditingController();
-  final TextEditingController _nameController = TextEditingController();
+
+  final FormControllers _controllers = FormControllers();
 
   @override
   Widget build(BuildContext context) {
@@ -62,12 +63,13 @@ class _CreateClientState extends State<CreateClient> {
                   const SizedBox(
                     height: 20,
                   ),
-                  buildTextField(
-                      'Client ID', _userIdController, 'Enter Client ID'),
+                  buildTextField('Client ID', _controllers.userIdController,
+                      'Enter Client ID'),
                   const SizedBox(
                     height: 20,
                   ),
-                  buildTextField('Name', _nameController, 'Enter Name'),
+                  buildTextField(
+                      'Name', _controllers.nameController, 'Enter Name'),
                   const SizedBox(
                     height: 50,
                   ),

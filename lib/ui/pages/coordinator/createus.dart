@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import './../../../widgets/text_field.dart';
 import './../../../widgets/back_button.dart';
 import './../../../widgets/submit_button.dart';
+import './../../controllers/coordinator/createus.controller.dart';
 
 class CreateUser extends StatefulWidget {
   const CreateUser({super.key});
@@ -12,10 +13,8 @@ class CreateUser extends StatefulWidget {
 
 class _CreateUserState extends State<CreateUser> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _userIdController = TextEditingController();
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+
+  final FormControllers _controllers = FormControllers();
 
   @override
   Widget build(BuildContext context) {
@@ -65,14 +64,17 @@ class _CreateUserState extends State<CreateUser> {
                     height: 20,
                   ),
                   const SizedBox(height: 20),
-                  buildTextField('US_ID', _userIdController, 'Enter User ID'),
-                  const SizedBox(height: 20),
-                  buildTextField('Name', _nameController, 'Enter Name'),
-                  const SizedBox(height: 20),
-                  buildTextField('Email', _emailController, 'Enter Email'),
+                  buildTextField(
+                      'US_ID', _controllers.userIdController, 'Enter User ID'),
                   const SizedBox(height: 20),
                   buildTextField(
-                      'Password', _passwordController, 'Enter Password',
+                      'Name', _controllers.nameController, 'Enter Name'),
+                  const SizedBox(height: 20),
+                  buildTextField(
+                      'Email', _controllers.emailController, 'Enter Email'),
+                  const SizedBox(height: 20),
+                  buildTextField('Password', _controllers.passwordController,
+                      'Enter Password',
                       isObscureText: true),
                   const SizedBox(
                     height: 50,

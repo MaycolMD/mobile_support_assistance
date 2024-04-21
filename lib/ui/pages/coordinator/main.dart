@@ -9,8 +9,6 @@ class MainPageUC extends StatefulWidget {
 }
 
 class _MainPageUCState extends State<MainPageUC> {
-  bool _isExpanded = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -166,21 +164,9 @@ class _MainPageUCState extends State<MainPageUC> {
               onPressed: () {
                 if (routeName != null) {
                   Get.toNamed(routeName);
-                } else {
-                  setState(() {
-                    _isExpanded = !_isExpanded;
-                  });
                 }
               },
             ),
-            if (_isExpanded && routeName == null)
-              Container(
-                padding: const EdgeInsets.all(8.0),
-                child: const Text(
-                  'More information here',
-                  textAlign: TextAlign.center,
-                ),
-              ),
           ],
         ),
       ),
