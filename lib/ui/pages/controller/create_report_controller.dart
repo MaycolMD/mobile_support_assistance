@@ -1,16 +1,49 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CreateReportController extends GetX {
-  final List<String> clientName = [
-    'Client 1',
-    'Client 2'
-  ]; //obtener de los createcliente en coordinator
+class CreateReportController extends GetxController {
+  // Controladores para los widgets que los requieran
+  final TextEditingController descriptionController = TextEditingController();
 
-  String selectedClientName = '';
+  // Otros campos de estado
+  String? selectedClient;
+  List<String> clientList = ['Client1', 'Client2', 'ClientN'];
+  DateTime? selectedDate;
+  TimeOfDay? selectedTimeStart;
+  TimeOfDay? selectedTimeEnd;
 
-  CreateReportController({required super.builder});
+  Future<DateTime?> selectDate(BuildContext context) async {
+    final pickedDate = await showDatePicker(
+      context: context,
+      initialDate: selectedDate ?? DateTime.now(),
+      firstDate: DateTime(2024),
+      lastDate: DateTime(2025),
+    );
+    if (pickedDate != null) {
+      selectedDate = pickedDate;
+      update(); // Actualiza la interfaz de usuario
+    }
+    return pickedDate;
+  }
 
-  void handleSelection(String newClient) {
-    selectedClientName = newClient;
+  Future<TimeOfDay?> selectTime(
+    BuildContext context,
+    bool isStartTime,
+  ) async {
+    final pickedTime = await showTimePicker(
+      context: context,
+      initialTime: isStartTime
+          ? selectedTimeStart ?? TimeOfDay.now()
+          : selectedTimeEnd ?? TimeOfDay.now(),
+    );
+    if (pickedTime != null) {
+      if (isStartTime) {
+        selectedTimeStart = pickedTime;
+      } else {
+        selectedTimeEnd = pickedTime;
+      }
+      update(); // Actualiza la interfaz de usuario
+    }
+    return pickedTime;
   }
 }

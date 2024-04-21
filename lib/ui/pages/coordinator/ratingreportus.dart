@@ -57,7 +57,7 @@ class _RatingReportUSState extends State<RatingReportUS> {
                   reportId: 'Report 1',
                   username: 'US username 1',
                   onPressed: () {
-                    Get.toNamed('SpecificReport');
+                    Get.toNamed('/SpecificReport');
                   },
                 ),
                 const SizedBox(
@@ -67,14 +67,14 @@ class _RatingReportUSState extends State<RatingReportUS> {
                   reportId: 'Report 2',
                   username: 'US username 2',
                   onPressed: () {
-                    Navigator.of(context).pushNamed('RatingSpecificReport');
+                    Get.toNamed('/SpecificReport');
                   },
                 ),
                 const SizedBox(height: 40),
                 ElevatedButton(
                   key: const Key('ButtonGoBack'),
                   onPressed: () {
-                    Get.back();
+                    Get.toNamed('/MainPageUC');
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(

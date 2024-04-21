@@ -13,12 +13,14 @@ class CreateReport extends StatefulWidget {
 }
 
 class _CreateReportState extends State<CreateReport> {
+  final CreateReportController controller = Get.put(CreateReportController());
+/*
   String? _selectedClient;
   List<String> _clientList = ['Client1', 'Client2', 'ClientN'];
   DateTime? _selectedDate;
   TimeOfDay? _selectedTime1;
   TimeOfDay? _selectedTime2;
-
+*/
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,12 +97,13 @@ class _CreateReportState extends State<CreateReport> {
                                 ),
                                 dropBoxSelector(
                                     context: context,
-                                    label: _selectedClient,
+                                    label: controller.selectedClient,
                                     hintText: 'Select a client',
-                                    items: _clientList,
+                                    items: controller.clientList,
                                     onChanged: (newValue) => {
                                           setState(() {
-                                            _selectedClient = newValue;
+                                            controller.selectedClient =
+                                                newValue;
                                           })
                                         })
                               ],
@@ -130,11 +133,18 @@ class _CreateReportState extends State<CreateReport> {
                                       decoration: TextDecoration.none),
                                 ),
                                 buildDateSelector(
-                                  context: context,
-                                  label: 'Date',
-                                  selectedDate: _selectedDate,
-                                  onPressed: () => _selectDate(context),
-                                ),
+                                    context: context,
+                                    label: 'Date',
+                                    selectedDate: controller.selectedDate,
+                                    onPressed: () async {
+                                      final pickedDate =
+                                          await controller.selectDate(context);
+                                      if (pickedDate != null) {
+                                        setState(() {
+                                          controller.selectedDate = pickedDate;
+                                        });
+                                      }
+                                    }),
                               ],
                             ),
                           )
@@ -187,17 +197,17 @@ class _CreateReportState extends State<CreateReport> {
                                 buildTimeSelector(
                                   context: context,
                                   label: 'Start Time',
-                                  selectedTime: _selectedTime1,
+                                  selectedTime: controller.selectedTimeEnd,
                                   onPressed: () async {
-                                    final pickedTime =
-                                        await _selectTime(context);
+                                    final pickedTime = await controller
+                                        .selectTime(context, false);
                                     if (pickedTime != null) {
                                       setState(() {
-                                        _selectedTime1 = pickedTime;
+                                        controller.selectedTimeEnd = pickedTime;
                                       });
                                     }
                                   },
-                                  selectTime: _selectTime,
+                                  selectTime: controller.selectTime,
                                 ),
                               ],
                             ),
@@ -226,17 +236,18 @@ class _CreateReportState extends State<CreateReport> {
                                 buildTimeSelector(
                                   context: context,
                                   label: 'Start Time',
-                                  selectedTime: _selectedTime2,
+                                  selectedTime: controller.selectedTimeStart,
                                   onPressed: () async {
-                                    final pickedTime =
-                                        await _selectTime(context);
+                                    final pickedTime = await controller
+                                        .selectTime(context, true);
                                     if (pickedTime != null) {
                                       setState(() {
-                                        _selectedTime2 = pickedTime;
+                                        controller.selectedTimeStart =
+                                            pickedTime;
                                       });
                                     }
                                   },
-                                  selectTime: _selectTime,
+                                  selectTime: controller.selectTime,
                                 ),
                               ],
                             ),
@@ -266,30 +277,6 @@ class _CreateReportState extends State<CreateReport> {
         ),
       ),
     );
-  }
-
-  void _selectDate(BuildContext context) async {
-    final DateTime? pickedDate = await showDatePicker(
-      context: context,
-      initialDate: _selectedDate ??
-          DateTime
-              .now(), // Fecha inicial (hoy si no hay ninguna fecha seleccionada)
-      firstDate: DateTime(2024), // Fecha mínima
-      lastDate: DateTime(2025), // Fecha máxima
-    );
-    if (pickedDate != null) {
-      setState(() {
-        _selectedDate = pickedDate; // Actualiza la fecha seleccionada
-      });
-    }
-  }
-
-  Future<TimeOfDay?> _selectTime(BuildContext context) async {
-    final TimeOfDay? pickedTime = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now(), // Hora inicial (la hora actual)
-    );
-    return pickedTime;
   }
 }
 
@@ -343,7 +330,7 @@ Widget buildTimeSelector({
   required String label,
   required TimeOfDay? selectedTime,
   required VoidCallback onPressed,
-  required Future<TimeOfDay?> Function(BuildContext) selectTime,
+  required Future<TimeOfDay?> Function(BuildContext, bool) selectTime,
 }) {
   return Expanded(
     child: Padding(
