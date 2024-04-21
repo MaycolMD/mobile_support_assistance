@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'ui/pages/coordinator/main.dart';
+import 'ui/pages/coordinator/ratingreport.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const MainPageUC(
+        home: const RatingReport(
           key: Key('MainPage'),
         ));
   }

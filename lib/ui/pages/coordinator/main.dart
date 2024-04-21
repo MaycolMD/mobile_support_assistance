@@ -61,6 +61,9 @@ class _MainPageUCState extends State<MainPageUC> {
                 endIndent: 24,
                 color: Theme.of(context).dividerColor,
               ),
+              const SizedBox(
+                height: 50,
+              ),
               Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -87,12 +90,31 @@ class _MainPageUCState extends State<MainPageUC> {
               const SizedBox(
                 height: 50,
               ),
-              OutlinedButton(
+              ElevatedButton(
                 key: const Key('ButtonGoBack'),
                 onPressed: () {
                   Get.back();
                 },
-                child: const Text("Go Back"),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      Colors.purple), // Color morado
+                  padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                    const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 12), // Ajusta el padding según sea necesario
+                  ),
+                  shape: MaterialStateProperty.all<OutlinedBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8), // Borde suavizado
+                    ),
+                  ),
+                ),
+                child: const Text(
+                  "Go Back",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18), // Color del texto blanco
+                ),
               ),
             ],
           ),
