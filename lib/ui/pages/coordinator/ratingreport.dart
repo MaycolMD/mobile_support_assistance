@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import './../../../widgets/date_select.dart';
+import './../../../widgets/text_field.dart';
+import './../../../widgets/back_button.dart';
+import './../../../widgets/submit_button.dart';
 
 class RatingReport extends StatefulWidget {
   const RatingReport({super.key});
@@ -14,6 +18,8 @@ class _RatingReportState extends State<RatingReport> {
   final _formKey = GlobalKey<FormState>();
   DateTime? _selectedDate, _selectedDateI, _selectedDateF;
   double _rating = 3;
+
+  final TextEditingController _userIdController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -61,117 +67,19 @@ class _RatingReportState extends State<RatingReport> {
                 const SizedBox(
                   height: 20,
                 ),
-                SizedBox(
-                  width: 800,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Client ID',
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                              fontFamily: 'Readex Pro',
-                              letterSpacing: 0,
-                            ),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              45, 0, 10, 0),
-                          child: TextFormField(
-                            decoration: InputDecoration(
-                              hintText: 'Enter Client ID',
-                              hintStyle: const TextStyle(
-                                fontFamily: 'Readex Pro',
-                                letterSpacing: 0,
-                                fontSize: 16,
-                              ),
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 8, horizontal: 12),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: const BorderSide(
-                                  color: Colors.blue,
-                                  width: 2,
-                                ),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: const BorderSide(
-                                  color: Colors.blue,
-                                  width: 2,
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: const BorderSide(
-                                  color: Colors.blue,
-                                  width: 2,
-                                ),
-                              ),
-                            ),
-                            style: const TextStyle(
-                              fontFamily: 'Readex Pro',
-                              letterSpacing: 0,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                buildTextField(
+                  'Client ID',
+                  _userIdController,
+                  'Enter Client ID',
                 ),
                 const SizedBox(
                   height: 20,
                 ),
-                SizedBox(
-                  width: 800,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Date',
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                              fontFamily: 'Readex Pro',
-                              letterSpacing: 0,
-                            ),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              70, 0, 10, 0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(
-                                color: Colors.blue,
-                                width: 2,
-                              ),
-                            ),
-                            child: TextButton(
-                              onPressed: () {
-                                _selectDate(
-                                    context); // Función para abrir el selector de fecha
-                              },
-                              child: Text(
-                                _selectedDate != null
-                                    ? DateFormat('yyyy-MM-dd')
-                                        .format(_selectedDate!)
-                                    : 'Select Date',
-                                style: const TextStyle(
-                                  fontFamily: 'Readex Pro',
-                                  color: Colors.black,
-                                  letterSpacing: 0,
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                buildDateSelector(
+                  context: context,
+                  label: 'Date',
+                  selectedDate: _selectedDate,
+                  onPressed: () => _selectDate(context),
                 ),
                 const SizedBox(
                   height: 20,
@@ -233,106 +141,20 @@ class _RatingReportState extends State<RatingReport> {
                 const SizedBox(
                   height: 20,
                 ),
-                SizedBox(
-                  width: 800,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Start time',
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                              fontFamily: 'Readex Pro',
-                              letterSpacing: 0,
-                            ),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              65, 0, 10, 0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(
-                                color: Colors.blue,
-                                width: 2,
-                              ),
-                            ),
-                            child: TextButton(
-                              onPressed: () {
-                                _selectDateI(
-                                    context); // Función para abrir el selector de fecha
-                              },
-                              child: Text(
-                                _selectedDateI != null
-                                    ? DateFormat('yyyy-MM-dd')
-                                        .format(_selectedDateI!)
-                                    : 'Select Date',
-                                style: const TextStyle(
-                                  fontFamily: 'Readex Pro',
-                                  color: Colors.black,
-                                  letterSpacing: 0,
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                buildDateSelector(
+                  context: context,
+                  label: 'Start time',
+                  selectedDate: _selectedDateI,
+                  onPressed: () => _selectDateI(context),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
-                SizedBox(
-                  width: 800,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'End time',
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                              fontFamily: 'Readex Pro',
-                              letterSpacing: 0,
-                            ),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              70, 0, 10, 0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(
-                                color: Colors.blue,
-                                width: 2,
-                              ),
-                            ),
-                            child: TextButton(
-                              onPressed: () {
-                                _selectDateF(
-                                    context); // Función para abrir el selector de fecha
-                              },
-                              child: Text(
-                                _selectedDateF != null
-                                    ? DateFormat('yyyy-MM-dd')
-                                        .format(_selectedDateF!)
-                                    : 'Select Date',
-                                style: const TextStyle(
-                                  fontFamily: 'Readex Pro',
-                                  color: Colors.black,
-                                  letterSpacing: 0,
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                buildDateSelector(
+                  context: context,
+                  label: 'End time',
+                  selectedDate: _selectedDateF,
+                  onPressed: () => _selectDateF(context),
                 ),
                 const SizedBox(
                   height: 50,
@@ -374,69 +196,11 @@ class _RatingReportState extends State<RatingReport> {
                 const SizedBox(
                   height: 50,
                 ),
-                ElevatedButton(
-                  key: const Key('ButtonSubmit'),
-                  onPressed: () {
-                    Get.back();
-                  },
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        Colors.purple), // Color morado
-                    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                      const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical:
-                              12), // Ajusta el padding según sea necesario
-                    ),
-                    shape: MaterialStateProperty.all<OutlinedBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(8), // Borde suavizado
-                      ),
-                    ),
-                  ),
-                  child: const Text(
-                    "Submit",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 30), // Color del texto blanco
-                  ),
-                ),
+                buildSubmitButton(),
                 const SizedBox(
                   height: 20,
                 ),
-                OutlinedButton(
-                  key: const Key('ButtonGoBack'),
-                  onPressed: () {
-                    Get.back();
-                  },
-                  style: ButtonStyle(
-                    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                      const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 12,
-                      ),
-                    ),
-                    shape: MaterialStateProperty.all<OutlinedBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                    side: MaterialStateProperty.all<BorderSide>(
-                      const BorderSide(
-                        color: Colors.purple, // Borde morado
-                        width: 2, // Ancho del borde
-                      ),
-                    ),
-                  ),
-                  child: const Text(
-                    "Go Back",
-                    style: TextStyle(
-                      color: Colors.purple, // Color del texto morado
-                      fontSize: 20,
-                    ),
-                  ),
-                ),
+                buildGoBackButton(),
               ],
             ),
           ),

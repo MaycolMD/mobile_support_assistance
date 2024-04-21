@@ -66,7 +66,7 @@ class _CreateClientState extends State<CreateClient> {
                 const SizedBox(
                   height: 20,
                 ),
-                buildTextField('Name', _userIdController, 'Enter Name'),
+                buildTextField('Name', _nameController, 'Enter Name'),
                 const SizedBox(
                   height: 50,
                 ),

@@ -9,9 +9,6 @@ class MainPageUC extends StatefulWidget {
 }
 
 class _MainPageUCState extends State<MainPageUC> {
-  final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
   bool _isExpanded = false;
 
   @override
