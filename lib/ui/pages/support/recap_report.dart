@@ -187,7 +187,7 @@ Widget buildTextField(
                 color: Colors.black,
                 fontSize: 17.0,
                 fontFamily: 'Roboto',
-                //fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.bold,
                 decoration: TextDecoration.none),
           ),
           SizedBox(

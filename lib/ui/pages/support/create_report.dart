@@ -59,7 +59,7 @@ class _CreateReportState extends State<CreateReport> {
                             size: 25,
                           ),
                           onPressed: () {
-                            Get.toNamed('MainUS');
+                            Get.toNamed('/MainUS');
                           },
                         ),
                       )
@@ -81,7 +81,7 @@ class _CreateReportState extends State<CreateReport> {
                         child: Column(children: [
                           Container(
                             //Client container
-                            width: double.infinity,
+                            width: 350,
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -118,7 +118,7 @@ class _CreateReportState extends State<CreateReport> {
                         child: Column(children: [
                           Container(
                             //Client container
-                            width: 356,
+                            width: 350,
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -150,28 +150,30 @@ class _CreateReportState extends State<CreateReport> {
                           )
                         ])),
                     SizedBox(height: 15),
-                    TextFormField(
-                      textCapitalization: TextCapitalization.words,
-                      //autofocus: true,
-                      decoration: InputDecoration(
-                        labelText: 'Description about your support',
-                        labelStyle: TextStyle(
-                            fontFamily: 'Readex Pro', letterSpacing: 0),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.grey,
-                            width: 2,
+                    Container(
+                        width: 350,
+                        child: TextFormField(
+                          textCapitalization: TextCapitalization.words,
+                          //autofocus: true,
+                          decoration: InputDecoration(
+                            labelText: 'Description about your support',
+                            labelStyle: TextStyle(
+                                fontFamily: 'Readex Pro', letterSpacing: 0),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            //filled: true,
+                            //fillColor: Colors.white,
+                            contentPadding:
+                                EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
                           ),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        //filled: true,
-                        //fillColor: Colors.white,
-                        contentPadding:
-                            EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
-                      ),
-                      cursorColor: Colors.deepPurple,
-                      maxLines: 5,
-                    ),
+                          cursorColor: Colors.deepPurple,
+                          maxLines: 5,
+                        )),
                     SizedBox(
                       height: 10,
                     ),

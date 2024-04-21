@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:project/ui/controllers/login_controller.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -9,6 +10,8 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  final LoginController controller = Get.put(LoginController());
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -17,7 +20,7 @@ class _LoginState extends State<Login> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const SizedBox(
+          SizedBox(
             //overlay
             width: double.infinity,
             height: 300,
@@ -43,7 +46,7 @@ class _LoginState extends State<Login> {
                   child: Text('Your Support Assistance',
                       style: TextStyle(
                           color: Colors.black,
-                          fontSize: 15.0,
+                          fontSize: 30.0,
                           fontFamily: 'Roboto',
                           fontWeight: FontWeight.bold,
                           decoration: TextDecoration.none)),
@@ -52,20 +55,21 @@ class _LoginState extends State<Login> {
             ),
           ),
           Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 16),
+            padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 16),
             child: Column(
               //SignIn
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Padding(
+                Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0, 50, 0, 16),
                   child: SizedBox(
                     //emailaddress
                     width: double.infinity,
                     child: Material(
                       child: TextField(
+                        controller: controller.emailController,
                         autofocus: true,
                         decoration: InputDecoration(
                           labelText: '[Email address]',
@@ -86,14 +90,15 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 5),
-                const Padding(
+                SizedBox(height: 5),
+                Padding(
                   //Password
                   padding: EdgeInsetsDirectional.fromSTEB(0, 25, 0, 16),
                   child: SizedBox(
                     width: double.infinity,
                     child: Material(
                       child: TextField(
+                        controller: controller.passwordController,
                         autofillHints: [AutofillHints.password],
                         decoration: InputDecoration(
                           labelText: '[User password]',
@@ -121,7 +126,18 @@ class _LoginState extends State<Login> {
                   child: ElevatedButton(
                     key: const Key('ButtonLogin'),
                     onPressed: () {
-                      Get.offNamed('/MainUS');
+                      String email = controller.emailController.text;
+                      String password = controller.passwordController.text;
+                      if ((email == "a@a.com" || email == "b@b.com") &&
+                          password == "123456") {
+                        controller.emailController = TextEditingController();
+                        controller.passwordController = TextEditingController();
+                        Get.offNamed('/MainPageUC');
+                      } else {
+                        controller.emailController = TextEditingController();
+                        controller.passwordController = TextEditingController();
+                        Get.offNamed('/MainUS');
+                      }
                     },
                     style: const ButtonStyle(
                       backgroundColor:
@@ -129,27 +145,7 @@ class _LoginState extends State<Login> {
                     ),
                     child: const Center(
                       child: Text(
-                        'Sign In US',
-                        style: TextStyle(color: Colors.white, fontSize: 20),
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  //button
-                  padding: const EdgeInsetsDirectional.fromSTEB(0, 60, 0, 20),
-                  child: ElevatedButton(
-                    key: const Key('ButtonLogin'),
-                    onPressed: () {
-                      Get.offNamed('/MainPageUC');
-                    },
-                    style: const ButtonStyle(
-                      backgroundColor:
-                          MaterialStatePropertyAll(Colors.deepPurple),
-                    ),
-                    child: const Center(
-                      child: Text(
-                        'Sign In UC',
+                        'Sign In',
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
                     ),
