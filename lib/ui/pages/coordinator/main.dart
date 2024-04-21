@@ -82,7 +82,7 @@ class _MainPageUCState extends State<MainPageUC> {
                   const SizedBox(width: 200),
                   _buildCustomCard(
                     'US Reports',
-                    null,
+                    'Reports',
                     Icons.expand_more,
                   ),
                 ],
@@ -113,7 +113,7 @@ class _MainPageUCState extends State<MainPageUC> {
                   "Go Back",
                   style: TextStyle(
                       color: Colors.white,
-                      fontSize: 18), // Color del texto blanco
+                      fontSize: 20), // Color del texto blanco
                 ),
               ),
             ],

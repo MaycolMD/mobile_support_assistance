@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class RatingReport extends StatefulWidget {
   const RatingReport({super.key});
@@ -12,6 +14,9 @@ class _RatingReportState extends State<RatingReport> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  DateTime? _selectedDate, _selectedDateI, _selectedDateF;
+  double _rating = 3;
+
   bool _isExpanded = false;
 
   @override
@@ -140,16 +145,62 @@ class _RatingReportState extends State<RatingReport> {
                         child: Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
                               70, 0, 10, 0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                color: Colors.blue,
+                                width: 2,
+                              ),
+                            ),
+                            child: TextButton(
+                              onPressed: () {
+                                _selectDate(
+                                    context); // Función para abrir el selector de fecha
+                              },
+                              child: Text(
+                                _selectedDate != null
+                                    ? DateFormat('yyyy-MM-dd')
+                                        .format(_selectedDate!)
+                                    : 'Select Date',
+                                style: const TextStyle(
+                                  fontFamily: 'Readex Pro',
+                                  color: Colors.black,
+                                  letterSpacing: 0,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                SizedBox(
+                  width: 800,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
                           child: TextFormField(
+                            maxLines: 2,
                             decoration: InputDecoration(
-                              hintText: 'Enter Name',
+                              hintText: 'Description',
                               hintStyle: const TextStyle(
                                 fontFamily: 'Readex Pro',
                                 letterSpacing: 0,
                                 fontSize: 16,
                               ),
                               contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 8, horizontal: 12),
+                                  vertical: 40, horizontal: 12),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(12),
                                 borderSide: const BorderSide(
@@ -179,6 +230,147 @@ class _RatingReportState extends State<RatingReport> {
                             ),
                           ),
                         ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                SizedBox(
+                  width: 800,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Start time',
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                              fontFamily: 'Readex Pro',
+                              letterSpacing: 0,
+                            ),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              65, 0, 10, 0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                color: Colors.blue,
+                                width: 2,
+                              ),
+                            ),
+                            child: TextButton(
+                              onPressed: () {
+                                _selectDateI(
+                                    context); // Función para abrir el selector de fecha
+                              },
+                              child: Text(
+                                _selectedDateI != null
+                                    ? DateFormat('yyyy-MM-dd')
+                                        .format(_selectedDateI!)
+                                    : 'Select Date',
+                                style: const TextStyle(
+                                  fontFamily: 'Readex Pro',
+                                  color: Colors.black,
+                                  letterSpacing: 0,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                SizedBox(
+                  width: 800,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'End time',
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                              fontFamily: 'Readex Pro',
+                              letterSpacing: 0,
+                            ),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              70, 0, 10, 0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                color: Colors.blue,
+                                width: 2,
+                              ),
+                            ),
+                            child: TextButton(
+                              onPressed: () {
+                                _selectDateF(
+                                    context); // Función para abrir el selector de fecha
+                              },
+                              child: Text(
+                                _selectedDateF != null
+                                    ? DateFormat('yyyy-MM-dd')
+                                        .format(_selectedDateF!)
+                                    : 'Select Date',
+                                style: const TextStyle(
+                                  fontFamily: 'Readex Pro',
+                                  color: Colors.black,
+                                  letterSpacing: 0,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 50,
+                ),
+                SizedBox(
+                  width: 800,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Rate   ',
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            fontFamily: 'Readex Pro',
+                            letterSpacing: 0,
+                            fontSize: 18),
+                      ),
+                      RatingBar.builder(
+                        onRatingUpdate: (newValue) {
+                          setState(() {
+                            _rating =
+                                newValue; // Actualiza el valor del rating cuando cambia
+                          });
+                        },
+                        itemBuilder: (context, index) => Icon(
+                          Icons.star_rounded,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        direction: Axis.horizontal,
+                        initialRating:
+                            _rating, // Utiliza el valor del rating definido
+                        itemCount: 5,
+                        itemSize: 50,
+                        glowColor: Theme.of(context).primaryColor,
                       ),
                     ],
                   ),
@@ -255,5 +447,51 @@ class _RatingReportState extends State<RatingReport> {
         ),
       ),
     );
+  }
+
+  void _selectDate(BuildContext context) async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate ??
+          DateTime
+              .now(), // Fecha inicial (hoy si no hay ninguna fecha seleccionada)
+      firstDate: DateTime(1900), // Fecha mínima
+      lastDate: DateTime(2100), // Fecha máxima
+    );
+    if (pickedDate != null) {
+      setState(() {
+        _selectedDate = pickedDate; // Actualiza la fecha seleccionada
+      });
+    }
+  }
+
+  void _selectDateI(BuildContext context) async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: _selectedDateI ?? DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime(2100),
+    );
+    if (pickedDate != null) {
+      setState(() {
+        _selectedDateI = pickedDate; // Actualiza la fecha seleccionada
+      });
+    }
+  }
+
+  void _selectDateF(BuildContext context) async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: _selectedDateF ??
+          DateTime
+              .now(), // Fecha inicial (hoy si no hay ninguna fecha seleccionada)
+      firstDate: DateTime(1900), // Fecha mínima
+      lastDate: DateTime(2100), // Fecha máxima
+    );
+    if (pickedDate != null) {
+      setState(() {
+        _selectedDateF = pickedDate; // Actualiza la fecha seleccionada
+      });
+    }
   }
 }
