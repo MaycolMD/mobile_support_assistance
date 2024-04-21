@@ -8,7 +8,7 @@ import 'ui/pages/coordinator/main.dart';
 import 'ui/pages/coordinator/createus.dart';
 import 'ui/pages/coordinator/createclient.dart';
 import 'ui/pages/coordinator/ratingreportus.dart';
-import 'ui/pages/coordinator/ratingreport.dart';
+import 'ui/pages/coordinator/ratingreportspecific.dart';
 
 void main() {
   runApp(const MyApp());
@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
         getPages: [
           GetPage(name: '/', page: () => const Login()),
           GetPage(name: '/CreateUS', page: () => const CreateUser()),
+          GetPage(name: '/MainPageUC', page: () => const MainPageUC()),
           GetPage(name: '/CreateClient', page: () => const CreateClient()),
           GetPage(name: '/Reports', page: () => const RatingReportUS()),
           GetPage(name: '/SpecificReport', page: () => const RatingReport()),

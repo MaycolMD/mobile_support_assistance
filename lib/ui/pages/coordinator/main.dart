@@ -18,102 +18,106 @@ class _MainPageUCState extends State<MainPageUC> {
       body: Center(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(20.0, 50, 20.0, 12.0),
-          child: Column(
-            children: [
-              Card(
-                clipBehavior: Clip.antiAliasWithSaveLayer,
-                color: Theme.of(context).primaryColor,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: Icon(
-                    Icons.tag_faces_sharp,
-                    color: Theme.of(context).colorScheme.background,
-                    size: 80,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Card(
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  color: Theme.of(context).primaryColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50),
                   ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              const Text(
-                'Username',
-                style: TextStyle(fontSize: 20),
-              ),
-              const SizedBox(height: 20),
-              const Text(
-                'Email Address',
-                style: TextStyle(
-                  fontSize: 20,
-                  decoration: TextDecoration.underline,
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Divider(
-                height: 44,
-                thickness: 1,
-                indent: 24,
-                endIndent: 24,
-                color: Theme.of(context).dividerColor,
-              ),
-              const SizedBox(
-                height: 50,
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  _buildCustomCard(
-                    'US Admin',
-                    'CreateUS',
-                    Icons.expand_more,
-                  ),
-                  const SizedBox(width: 200),
-                  _buildCustomCard(
-                    'Client Admin',
-                    'CreateClient',
-                    Icons.expand_more,
-                  ),
-                  const SizedBox(width: 200),
-                  _buildCustomCard(
-                    'US Reports',
-                    'Reports',
-                    Icons.expand_more,
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 50,
-              ),
-              ElevatedButton(
-                key: const Key('ButtonGoBack'),
-                onPressed: () {
-                  Get.back();
-                },
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                      Colors.purple), // Color morado
-                  padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                    const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 12), // Ajusta el padding según sea necesario
-                  ),
-                  shape: MaterialStateProperty.all<OutlinedBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8), // Borde suavizado
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Icon(
+                      Icons.tag_faces_sharp,
+                      color: Theme.of(context).colorScheme.background,
+                      size: 80,
                     ),
                   ),
                 ),
-                child: const Text(
-                  "Go Back",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20), // Color del texto blanco
+                const SizedBox(height: 20),
+                const Text(
+                  'Username',
+                  style: TextStyle(fontSize: 20),
                 ),
-              ),
-            ],
+                const SizedBox(height: 20),
+                const Text(
+                  'Email Address',
+                  style: TextStyle(
+                    fontSize: 20,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Divider(
+                  height: 44,
+                  thickness: 1,
+                  indent: 24,
+                  endIndent: 24,
+                  color: Theme.of(context).dividerColor,
+                ),
+                const SizedBox(
+                  height: 50,
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _buildCustomCard(
+                      'US Admin',
+                      'CreateUS',
+                      Icons.expand_more,
+                    ),
+                    const SizedBox(width: 250),
+                    _buildCustomCard(
+                      'Client Admin',
+                      'CreateClient',
+                      Icons.expand_more,
+                    ),
+                    const SizedBox(width: 250),
+                    _buildCustomCard(
+                      'US Reports',
+                      'Reports',
+                      Icons.expand_more,
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 50,
+                ),
+                ElevatedButton(
+                  key: const Key('ButtonGoBack'),
+                  onPressed: () {
+                    Get.back();
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        Colors.purple), // Color morado
+                    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                      const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical:
+                              12), // Ajusta el padding según sea necesario
+                    ),
+                    shape: MaterialStateProperty.all<OutlinedBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.circular(8), // Borde suavizado
+                      ),
+                    ),
+                  ),
+                  child: const Text(
+                    "Go Back",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20), // Color del texto blanco
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

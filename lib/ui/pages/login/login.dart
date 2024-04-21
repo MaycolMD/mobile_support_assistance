@@ -17,7 +17,7 @@ class _LoginState extends State<Login> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(
+          const SizedBox(
             //overlay
             width: double.infinity,
             height: 300,
@@ -52,14 +52,14 @@ class _LoginState extends State<Login> {
             ),
           ),
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 16),
+            padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 16),
             child: Column(
               //SignIn
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Padding(
+                const Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0, 50, 0, 16),
                   child: SizedBox(
                     //emailaddress
@@ -86,8 +86,8 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                 ),
-                SizedBox(height: 5),
-                Padding(
+                const SizedBox(height: 5),
+                const Padding(
                   //Password
                   padding: EdgeInsetsDirectional.fromSTEB(0, 25, 0, 16),
                   child: SizedBox(
@@ -117,19 +117,39 @@ class _LoginState extends State<Login> {
                 //SizedBox(height: 5,)
                 Padding(
                   //button
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 60, 0, 20),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0, 60, 0, 20),
                   child: ElevatedButton(
-                    key: Key('ButtonLogin'),
+                    key: const Key('ButtonLogin'),
                     onPressed: () {
                       Get.offNamed('/MainUS');
                     },
-                    style: ButtonStyle(
+                    style: const ButtonStyle(
                       backgroundColor:
                           MaterialStatePropertyAll(Colors.deepPurple),
                     ),
-                    child: Center(
+                    child: const Center(
                       child: Text(
-                        'Sign In',
+                        'Sign In US',
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  //button
+                  padding: const EdgeInsetsDirectional.fromSTEB(0, 60, 0, 20),
+                  child: ElevatedButton(
+                    key: const Key('ButtonLogin'),
+                    onPressed: () {
+                      Get.offNamed('/MainPageUC');
+                    },
+                    style: const ButtonStyle(
+                      backgroundColor:
+                          MaterialStatePropertyAll(Colors.deepPurple),
+                    ),
+                    child: const Center(
+                      child: Text(
+                        'Sign In UC',
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
                     ),

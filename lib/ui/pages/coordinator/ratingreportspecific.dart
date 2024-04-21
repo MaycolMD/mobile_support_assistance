@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import './../../../widgets/date_select.dart';
 import './../../../widgets/text_field.dart';
 import './../../../widgets/back_button.dart';
 import './../../../widgets/submit_button.dart';
@@ -16,10 +13,13 @@ class RatingReport extends StatefulWidget {
 
 class _RatingReportState extends State<RatingReport> {
   final _formKey = GlobalKey<FormState>();
-  DateTime? _selectedDate, _selectedDateI, _selectedDateF;
   double _rating = 3;
 
   final TextEditingController _userIdController = TextEditingController();
+  final TextEditingController _userDateController = TextEditingController();
+  final TextEditingController _userStartTimeController =
+      TextEditingController();
+  final TextEditingController _userEndTimeController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -71,16 +71,17 @@ class _RatingReportState extends State<RatingReport> {
                     buildTextField(
                       'Client ID',
                       _userIdController,
-                      'Enter Client ID',
+                      '1001883069',
+                      isEditable: false,
                     ),
                     const SizedBox(
                       height: 20,
                     ),
-                    buildDateSelector(
-                      context: context,
-                      label: 'Date',
-                      selectedDate: _selectedDate,
-                      onPressed: () => _selectDate(context),
+                    buildTextField(
+                      'Date',
+                      _userDateController,
+                      '15/02/2024',
+                      isEditable: false,
                     ),
                     const SizedBox(
                       height: 20,
@@ -96,9 +97,11 @@ class _RatingReportState extends State<RatingReport> {
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 0, 10, 0),
                               child: TextFormField(
+                                readOnly: true,
                                 maxLines: 2,
                                 decoration: InputDecoration(
-                                  hintText: 'Description',
+                                  hintText:
+                                      'Se observó un aumento significativo en una tendencia creciente en los resultados.',
                                   hintStyle: const TextStyle(
                                     fontFamily: 'Readex Pro',
                                     letterSpacing: 0,
@@ -142,20 +145,20 @@ class _RatingReportState extends State<RatingReport> {
                     const SizedBox(
                       height: 20,
                     ),
-                    buildDateSelector(
-                      context: context,
-                      label: 'Start time',
-                      selectedDate: _selectedDateI,
-                      onPressed: () => _selectDateI(context),
+                    buildTextField(
+                      'Start time',
+                      _userStartTimeController,
+                      '6:00 AM',
+                      isEditable: false,
                     ),
                     const SizedBox(
                       height: 20,
                     ),
-                    buildDateSelector(
-                      context: context,
-                      label: 'End time',
-                      selectedDate: _selectedDateF,
-                      onPressed: () => _selectDateF(context),
+                    buildTextField(
+                      'End time',
+                      _userEndTimeController,
+                      '10:00 PM',
+                      isEditable: false,
                     ),
                     const SizedBox(
                       height: 50,
@@ -211,51 +214,5 @@ class _RatingReportState extends State<RatingReport> {
             )),
       ),
     );
-  }
-
-  void _selectDate(BuildContext context) async {
-    final DateTime? pickedDate = await showDatePicker(
-      context: context,
-      initialDate: _selectedDate ??
-          DateTime
-              .now(), // Fecha inicial (hoy si no hay ninguna fecha seleccionada)
-      firstDate: DateTime(1900), // Fecha mínima
-      lastDate: DateTime(2100), // Fecha máxima
-    );
-    if (pickedDate != null) {
-      setState(() {
-        _selectedDate = pickedDate; // Actualiza la fecha seleccionada
-      });
-    }
-  }
-
-  void _selectDateI(BuildContext context) async {
-    final DateTime? pickedDate = await showDatePicker(
-      context: context,
-      initialDate: _selectedDateI ?? DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime(2100),
-    );
-    if (pickedDate != null) {
-      setState(() {
-        _selectedDateI = pickedDate; // Actualiza la fecha seleccionada
-      });
-    }
-  }
-
-  void _selectDateF(BuildContext context) async {
-    final DateTime? pickedDate = await showDatePicker(
-      context: context,
-      initialDate: _selectedDateF ??
-          DateTime
-              .now(), // Fecha inicial (hoy si no hay ninguna fecha seleccionada)
-      firstDate: DateTime(1900), // Fecha mínima
-      lastDate: DateTime(2100), // Fecha máxima
-    );
-    if (pickedDate != null) {
-      setState(() {
-        _selectedDateF = pickedDate; // Actualiza la fecha seleccionada
-      });
-    }
   }
 }
