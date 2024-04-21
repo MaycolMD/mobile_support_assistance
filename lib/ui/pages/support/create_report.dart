@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:project/ui/pages/controller/create_report_controller.dart';
+import 'package:project/ui/controllers/user_support/create_report_controller.dart';
 
 class CreateReport extends StatefulWidget {
   const CreateReport({super.key});
@@ -259,6 +259,17 @@ class _CreateReportState extends State<CreateReport> {
                       child: ElevatedButton(
                           key: Key('ButtonSubmitReportUS'),
                           onPressed: () {
+                            //GUARDAR TODO EN LOCAL Y LUEGO SE BORRA TODO
+                            controller.descriptionController
+                                .clear(); // Borrar el contenido del campo de descripción
+                            controller.selectedClient =
+                                null; // Reiniciar la selección de cliente
+                            controller.selectedDate =
+                                null; // Reiniciar la fecha seleccionada
+                            controller.selectedTimeStart =
+                                null; // Reiniciar la hora de inicio seleccionada
+                            controller.selectedTimeEnd =
+                                null; // Reiniciar la hora de finalización seleccionada
                             Get.toNamed('/MainUS');
                           },
                           child: Text('Submit',
