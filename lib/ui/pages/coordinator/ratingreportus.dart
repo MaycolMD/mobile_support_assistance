@@ -50,25 +50,52 @@ class _RatingReportUSState extends State<RatingReportUS> {
                   endIndent: 24,
                   color: Theme.of(context).dividerColor,
                 ),
-                const SizedBox(
-                  height: 50,
-                ),
-                ReportCard(
-                  reportId: 'Report 1',
-                  username: 'US username 1',
-                  onPressed: () {
-                    Get.toNamed('/SpecificReport');
-                  },
-                ),
-                const SizedBox(
-                  height: 40,
-                ),
-                ReportCard(
-                  reportId: 'Report 2',
-                  username: 'US username 2',
-                  onPressed: () {
-                    Get.toNamed('/SpecificReport');
-                  },
+                SizedBox(
+                  height: 400,
+                  child: SizedBox(
+                    height: double.infinity,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: ReportCard(
+                              reportId: 'Report 1',
+                              username: 'US username 1',
+                              date: '09/04/2024',
+                              onPressed: () {
+                                Get.toNamed('/SpecificReport');
+                              },
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: ReportCard(
+                              reportId: 'Report 2',
+                              username: 'US username 2',
+                              date: '09/03/2024',
+                              onPressed: () {
+                                Get.toNamed('/SpecificReport');
+                              },
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: ReportCard(
+                              reportId: 'Report 3',
+                              username: 'US username 3',
+                              date: '10/05/2024',
+                              onPressed: () {
+                                Get.toNamed('/SpecificReport');
+                              },
+                            ),
+                          ),
+                          // Agrega más ReportCards dentro de Padding según sea necesario
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
                 const SizedBox(height: 40),
                 ElevatedButton(

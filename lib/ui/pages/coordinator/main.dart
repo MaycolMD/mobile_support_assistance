@@ -37,13 +37,13 @@ class _MainPageUCState extends State<MainPageUC> {
                 const SizedBox(height: 20),
                 const Text(
                   'Username',
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 30),
                 ),
                 const SizedBox(height: 20),
                 const Text(
                   'Email Address',
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 25,
                     decoration: TextDecoration.underline,
                   ),
                 ),
@@ -79,6 +79,12 @@ class _MainPageUCState extends State<MainPageUC> {
                     _buildCustomCard(
                       'US Reports',
                       'Reports',
+                      Icons.expand_more,
+                    ),
+                    const SizedBox(width: 250),
+                    _buildCustomCard(
+                      'Supports',
+                      'Supports',
                       Icons.expand_more,
                     ),
                   ],
