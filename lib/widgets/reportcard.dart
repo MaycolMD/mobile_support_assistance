@@ -4,6 +4,7 @@ class ReportCard extends StatelessWidget {
   final String reportId;
   final String username;
   final String date;
+  final String status;
   final VoidCallback onPressed;
 
   const ReportCard({
@@ -11,6 +12,7 @@ class ReportCard extends StatelessWidget {
     required this.reportId,
     required this.username,
     required this.date,
+    required this.status,
     required this.onPressed,
   }) : super(key: key);
 
@@ -32,7 +34,8 @@ class ReportCard extends StatelessWidget {
         ],
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
             'ID $reportId',
@@ -43,7 +46,7 @@ class ReportCard extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 16),
           Text(
             'Username: $username',
             style: const TextStyle(
@@ -61,7 +64,16 @@ class ReportCard extends StatelessWidget {
               fontSize: 20,
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
+          Text(
+            'Status: $status',
+            style: const TextStyle(
+              fontFamily: 'Readex Pro',
+              letterSpacing: 0,
+              fontSize: 20,
+            ),
+          ),
+          const SizedBox(height: 50),
           ElevatedButton(
             onPressed: onPressed,
             style: ButtonStyle(
