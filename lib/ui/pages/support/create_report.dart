@@ -400,30 +400,32 @@ Widget dropBoxSelector(
       child: Padding(
           padding: const EdgeInsetsDirectional.fromSTEB(15, 0, 10, 0),
           child: Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(
-                width: 1,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  width: 1,
+                ),
               ),
-            ),
-            child: DropdownButtonFormField<String>(
-              value: label,
-              items: items
-                  .map((item) => DropdownMenuItem<String>(
-                        value: item,
-                        child: Text(item),
-                      ))
-                  .toList(),
-              decoration: InputDecoration(
-                  hintText: hintText,
-                  labelStyle: TextStyle(
-                    fontFamily: 'Readex Pro',
-                    color: Colors.black,
-                    letterSpacing: 0,
-                    fontSize: 16,
-                  )),
-              onChanged: onChanged,
-            ),
-          )));
+              child: Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                child: DropdownButtonFormField<String>(
+                  value: label,
+                  items: items
+                      .map((item) => DropdownMenuItem<String>(
+                            value: item,
+                            child: Text(item),
+                          ))
+                      .toList(),
+                  decoration: InputDecoration(
+                      hintText: hintText,
+                      labelStyle: TextStyle(
+                        fontFamily: 'Readex Pro',
+                        color: Colors.black,
+                        letterSpacing: 0,
+                        fontSize: 16,
+                      )),
+                  onChanged: onChanged,
+                ),
+              ))));
 }
