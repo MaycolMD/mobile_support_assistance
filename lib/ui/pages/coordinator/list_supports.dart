@@ -51,22 +51,26 @@ class _ListSupportersState extends State<ListSupporters> {
                 SizedBox(
                   height: 10,
                 ),
-                Row(
-                  children: [
-                    buildCard(
+                SizedBox(
+                  height: 400,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: List.generate(3, (index) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: buildCard(
                         context: context,
                         usID: '[US ID]',
                         usUsername: 'maycolMd',
                         countReports: '2',
                         avgRating: 3.0),
-                    buildCard(
-                        context: context,
-                        usID: '[US ID]',
-                        usUsername: 'maycolMd',
-                        countReports: '2',
-                        avgRating: 3.0)
-                  ],
+                        );
+                      }),
+                    ),
+                  ),
                 ),
+                
                 SizedBox(height: 20),
                 ElevatedButton(
                   key: const Key('ButtonGoBack'),
@@ -75,7 +79,7 @@ class _ListSupportersState extends State<ListSupporters> {
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
-                      Colors.purple,
+                      Colors.deepPurple,
                     ),
                     padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
@@ -115,8 +119,8 @@ Widget buildCard({
         BoxShadow(
           color: Colors.grey.withOpacity(0.3),
           spreadRadius: 2,
-          blurRadius: 5,
-          offset: const Offset(0, 2), // changes position of shadow
+          blurRadius: 8,
+          offset: const Offset(0, 4),
         ),
       ],
     ),
@@ -128,74 +132,77 @@ Widget buildCard({
             usID,
             style: const TextStyle(
               fontFamily: 'Readex Pro',
-              letterSpacing: 0,
-              fontSize: 24,
+              fontSize: 28,
               fontWeight: FontWeight.bold,
+              color: Colors.deepPurple,
             ),
           ),
         ),
-        const SizedBox(height: 5),
-        Center(
-            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Icon(Icons.person),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            usUsername,
-            style: const TextStyle(
-              fontFamily: 'Readex Pro',
-              letterSpacing: 0,
-              fontSize: 20,
-            ),
-          )
-        ])),
-        const SizedBox(height: 16),
+        const SizedBox(height: 10),
         Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.description),
-              SizedBox(
-                height: 10,
+              Icon(Icons.person, size: 24, color: Colors.deepPurple),
+              const SizedBox(width: 5),
+              Text(
+                usUsername,
+                style: const TextStyle(
+                  fontFamily: 'Readex Pro',
+                  fontSize: 22,
+                  color: Colors.black87,
+                ),
               ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 20),
+        Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.description, size: 24, color: Colors.deepPurple),
+              const SizedBox(width: 5),
               Text(
                 'Number of reports: $countReports',
                 style: const TextStyle(
                   fontFamily: 'Readex Pro',
-                  letterSpacing: 0,
-                  fontSize: 20,
+                  fontSize: 22,
+                  color: Colors.black87,
                 ),
-              )
+              ),
             ],
           ),
         ),
-        const SizedBox(height: 16),
-        Container(
-          child: Center(
-              child: Column(children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.grade),
-                SizedBox(
-                  height: 10,
+        const SizedBox(height: 20),
+        Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.grade, size: 24, color: Colors.deepPurple),
+              const SizedBox(width: 5),
+              Text(
+                'Average Rating: $avgRating',
+                style: const TextStyle(
+                  fontFamily: 'Readex Pro',
+                  fontSize: 22,
+                  color: Colors.black87,
                 ),
-                Text(
-                  'Average Rating: $avgRating',
-                  style: const TextStyle(
-                      fontFamily: 'Readex Pro', letterSpacing: 0, fontSize: 20),
-                )
-              ],
-            ),
-            LinearProgressIndicator(
-              value: progress,
-              backgroundColor: Colors.grey[300],
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.deepPurple),
-            )
-          ])),
-        )
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 20),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: LinearProgressIndicator(
+            value: progress,
+            backgroundColor: Colors.grey[300],
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.deepPurple),
+          ),
+        ),
       ],
     ),
   );
 }
+

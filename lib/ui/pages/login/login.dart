@@ -99,21 +99,22 @@ class _LoginState extends State<Login> {
                     child: Material(
                       child: TextField(
                         controller: controller.passwordController,
+                        obscureText:
+                            true, // Muestra asteriscos en lugar de caracteres reales
                         autofillHints: const [AutofillHints.password],
                         decoration: const InputDecoration(
                           labelText: '[User password]',
                           labelStyle: TextStyle(
-                              fontFamily: 'Readex Pro ', letterSpacing: 0),
+                              fontFamily: 'Readex Pro', letterSpacing: 0),
                           enabledBorder: OutlineInputBorder(
                             borderSide:
                                 BorderSide(color: Colors.grey, width: 1),
-                            //borderRadius: BorderRadius.circular(12,0)
                           ),
                           filled: true,
                           fillColor: Colors.white,
                         ),
                         style: const TextStyle(
-                            fontFamily: 'Readex Pro ', letterSpacing: 0),
+                            fontFamily: 'Readex Pro', letterSpacing: 0),
                         keyboardType: TextInputType.emailAddress,
                       ),
                     ),
