@@ -84,7 +84,7 @@ class _MainPageUCState extends State<MainPageUC> {
                     const SizedBox(width: 250),
                     _buildCustomCard(
                       'Supports',
-                      'Supports',
+                      'ListSupporters',
                       Icons.expand_more,
                     ),
                   ],
