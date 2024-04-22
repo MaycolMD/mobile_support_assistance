@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import './../../../widgets/reportcard.dart';
+import './../../controllers/coordinator/ratingreportus.controller.dart';
 
-class RatingReportUS extends StatefulWidget {
-  const RatingReportUS({super.key});
+class RatingReportUS extends StatelessWidget {
+  final RatingReportUSController controller =
+      Get.put(RatingReportUSController());
 
-  @override
-  _RatingReportUSState createState() => _RatingReportUSState();
-}
+  RatingReportUS({Key? key}) : super(key: key);
 
-class _RatingReportUSState extends State<RatingReportUS> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,78 +51,80 @@ class _RatingReportUSState extends State<RatingReportUS> {
                 ),
                 SizedBox(
                   height: 400,
-                  child: SizedBox(
-                    height: double.infinity,
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            child: ReportCard(
-                              reportId: 'Report 1',
-                              username: 'US username 1',
-                              date: '09/04/2024',
-                              onPressed: () {
-                                Get.toNamed('/SpecificReport');
-                              },
-                            ),
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: List.generate(3, (index) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: ReportCard(
+                            reportId: 'Report ${index + 1}',
+                            username: 'US username ${index + 1}',
+                            date: '10/05/2024',
+                            status: 'Pendiente',
+                            onPressed: () {
+                              Get.toNamed('/SpecificReport');
+                            },
                           ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            child: ReportCard(
-                              reportId: 'Report 2',
-                              username: 'US username 2',
-                              date: '09/03/2024',
-                              onPressed: () {
-                                Get.toNamed('/SpecificReport');
-                              },
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            child: ReportCard(
-                              reportId: 'Report 3',
-                              username: 'US username 3',
-                              date: '10/05/2024',
-                              onPressed: () {
-                                Get.toNamed('/SpecificReport');
-                              },
-                            ),
-                          ),
-                          // Agrega más ReportCards dentro de Padding según sea necesario
-                        ],
-                      ),
+                        );
+                      }),
                     ),
                   ),
                 ),
-                const SizedBox(height: 40),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    TextButton(
+                      onPressed: controller.selectClient,
+                      style: ButtonStyle(
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                            side: BorderSide(
+                                color: Theme.of(context).primaryColor),
+                          ),
+                        ),
+                      ),
+                      child: Obx(() => Text(controller.selectedClient.value)),
+                    ),
+                    TextButton(
+                      onPressed: controller.selectSupport,
+                      style: ButtonStyle(
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                            side: BorderSide(
+                                color: Theme.of(context).primaryColor),
+                          ),
+                        ),
+                      ),
+                      child: Obx(() => Text(controller.selectedSupport.value)),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
                 ElevatedButton(
                   key: const Key('ButtonGoBack'),
-                  onPressed: () {
-                    Get.toNamed('/MainPageUC');
-                  },
+                  onPressed: controller.goToMainPage,
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
-                        Colors.purple), // Color morado
+                      Colors.purple,
+                    ),
                     padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                      const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical:
-                              12), // Ajusta el padding según sea necesario
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                     ),
                     shape: MaterialStateProperty.all<OutlinedBorder>(
                       RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(8), // Borde suavizado
+                        borderRadius: BorderRadius.circular(8),
                       ),
                     ),
                   ),
                   child: const Text(
                     "Go to main",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 25), // Color del texto blanco
+                    style: TextStyle(color: Colors.white, fontSize: 25),
                   ),
                 ),
               ],
