@@ -76,12 +76,12 @@ class _RecapReportState extends State<RecapReport> {
                             ),
                             buildTextField(
                                 context: context,
-                                label: 'Client',
+                                label: 'Client ',
                                 hintText: 'Client username'),
                             SizedBox(height: 10),
                             buildTextField(
                                 context: context,
-                                label: 'Date',
+                                label: 'Date   ',
                                 hintText: "Support's date"),
                             SizedBox(
                               height: 10,
@@ -122,7 +122,7 @@ class _RecapReportState extends State<RecapReport> {
                             ),
                             buildTextField(
                                 context: context,
-                                label: 'End Time',
+                                label: 'End Time  ',
                                 hintText: 'End Time'),
                             SizedBox(
                               height: 10,

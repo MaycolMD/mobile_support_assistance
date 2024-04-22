@@ -29,7 +29,7 @@ class _CreateReportState extends State<CreateReport> {
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
+              padding: const EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
               child: AppBar(
                 toolbarHeight: 30,
                 actions: [
@@ -38,7 +38,7 @@ class _CreateReportState extends State<CreateReport> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Padding(
+                      const Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(30, 0, 0, 0),
                         child: Text(
                           'Create a new report',
@@ -51,9 +51,10 @@ class _CreateReportState extends State<CreateReport> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
                         child: IconButton(
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.close_rounded,
                             color: Colors.deepPurple,
                             size: 25,
@@ -69,7 +70,7 @@ class _CreateReportState extends State<CreateReport> {
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 40, 0, 20),
+              padding: const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 20),
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -77,16 +78,17 @@ class _CreateReportState extends State<CreateReport> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
                         child: Column(children: [
-                          Container(
+                          SizedBox(
                             //Client container
                             width: 350,
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Text(
+                                const Text(
                                   'Client',
                                   style: TextStyle(
                                       color: Colors.black,
@@ -110,21 +112,22 @@ class _CreateReportState extends State<CreateReport> {
                             ),
                           )
                         ])),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
                         child: Column(children: [
-                          Container(
+                          SizedBox(
                             //Client container
                             width: 350,
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Text(
-                                  'Date',
+                                const Text(
+                                  'Date  ',
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 17.0,
@@ -149,18 +152,18 @@ class _CreateReportState extends State<CreateReport> {
                             ),
                           )
                         ])),
-                    SizedBox(height: 15),
-                    Container(
+                    const SizedBox(height: 15),
+                    SizedBox(
                         width: 350,
                         child: TextFormField(
                           textCapitalization: TextCapitalization.words,
                           //autofocus: true,
                           decoration: InputDecoration(
                             labelText: 'Description about your support',
-                            labelStyle: TextStyle(
+                            labelStyle: const TextStyle(
                                 fontFamily: 'Readex Pro', letterSpacing: 0),
                             enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Colors.grey,
                                 width: 2,
                               ),
@@ -174,20 +177,21 @@ class _CreateReportState extends State<CreateReport> {
                           cursorColor: Colors.deepPurple,
                           maxLines: 5,
                         )),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
                         child: Column(children: [
-                          Container(
+                          SizedBox(
                             //Client container
                             width: 356,
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Text(
+                                const Text(
                                   'Start Time',
                                   style: TextStyle(
                                       color: Colors.black,
@@ -215,19 +219,20 @@ class _CreateReportState extends State<CreateReport> {
                             ),
                           )
                         ])),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
                         child: Column(children: [
-                          Container(
+                          SizedBox(
                             //Client container
                             width: 356,
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Text(
-                                  'End Time',
+                                const Text(
+                                  'End Time  ',
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 17.0,
@@ -255,11 +260,12 @@ class _CreateReportState extends State<CreateReport> {
                             ),
                           )
                         ])),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 50, 0, 0),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 50, 0, 0),
                       child: ElevatedButton(
-                          key: Key('ButtonSubmitReportUS'),
+                          key: const Key('ButtonSubmitReportUS'),
                           onPressed: () {
                             //GUARDAR TODO EN LOCAL Y LUEGO SE BORRA TODO
                             controller.descriptionController
@@ -274,13 +280,13 @@ class _CreateReportState extends State<CreateReport> {
                                 null; // Reiniciar la hora de finalización seleccionada
                             Get.toNamed('/MainUS');
                           },
-                          child: Text('Submit',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 20)),
-                          style: ButtonStyle(
+                          style: const ButtonStyle(
                             backgroundColor:
                                 MaterialStatePropertyAll(Colors.deepPurple),
-                          )),
+                          ),
+                          child: const Text('Submit',
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 20))),
                     )
                   ],
                 ),

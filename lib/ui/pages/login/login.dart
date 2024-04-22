@@ -20,7 +20,7 @@ class _LoginState extends State<Login> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(
+          const SizedBox(
             //overlay
             width: double.infinity,
             height: 300,
@@ -55,7 +55,7 @@ class _LoginState extends State<Login> {
             ),
           ),
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 16),
+            padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 16),
             child: Column(
               //SignIn
               mainAxisAlignment: MainAxisAlignment.center,
@@ -63,7 +63,7 @@ class _LoginState extends State<Login> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 50, 0, 16),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0, 50, 0, 16),
                   child: SizedBox(
                     //emailaddress
                     width: double.infinity,
@@ -71,7 +71,7 @@ class _LoginState extends State<Login> {
                       child: TextField(
                         controller: controller.emailController,
                         autofocus: true,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: '[Email address]',
                           labelStyle: TextStyle(
                               fontFamily: 'Readex Pro ', letterSpacing: 0),
@@ -83,24 +83,24 @@ class _LoginState extends State<Login> {
                           filled: true,
                           fillColor: Colors.white,
                         ),
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontFamily: 'Readex Pro ', letterSpacing: 0),
                         keyboardType: TextInputType.emailAddress,
                       ),
                     ),
                   ),
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 Padding(
                   //Password
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 25, 0, 16),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0, 25, 0, 16),
                   child: SizedBox(
                     width: double.infinity,
                     child: Material(
                       child: TextField(
                         controller: controller.passwordController,
-                        autofillHints: [AutofillHints.password],
-                        decoration: InputDecoration(
+                        autofillHints: const [AutofillHints.password],
+                        decoration: const InputDecoration(
                           labelText: '[User password]',
                           labelStyle: TextStyle(
                               fontFamily: 'Readex Pro ', letterSpacing: 0),
@@ -112,7 +112,7 @@ class _LoginState extends State<Login> {
                           filled: true,
                           fillColor: Colors.white,
                         ),
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontFamily: 'Readex Pro ', letterSpacing: 0),
                         keyboardType: TextInputType.emailAddress,
                       ),
@@ -126,18 +126,7 @@ class _LoginState extends State<Login> {
                   child: ElevatedButton(
                     key: const Key('ButtonLogin'),
                     onPressed: () {
-                      String email = controller.emailController.text;
-                      String password = controller.passwordController.text;
-                      if ((email == "a@a.com" || email == "b@b.com") &&
-                          password == "123456") {
-                        controller.emailController = TextEditingController();
-                        controller.passwordController = TextEditingController();
-                        Get.offNamed('/MainPageUC');
-                      } else {
-                        controller.emailController = TextEditingController();
-                        controller.passwordController = TextEditingController();
-                        Get.offNamed('/MainUS');
-                      }
+                      Get.find<LoginController>().validateLogin();
                     },
                     style: const ButtonStyle(
                       backgroundColor:

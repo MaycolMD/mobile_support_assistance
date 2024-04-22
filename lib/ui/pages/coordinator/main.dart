@@ -89,7 +89,7 @@ class _MainPageUCState extends State<MainPageUC> {
                 ElevatedButton(
                   key: const Key('ButtonGoBack'),
                   onPressed: () {
-                    Get.back();
+                    Get.toNamed('/');
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
