@@ -66,6 +66,30 @@ class _ListSupportersState extends State<ListSupporters> {
                         countReports: '2',
                         avgRating: 3.0)
                   ],
+                ),
+                SizedBox(height: 20),
+                ElevatedButton(
+                  key: const Key('ButtonGoBack'),
+                  onPressed: () {
+                    Get.offNamed('/MainPageUC');
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                      Colors.purple,
+                    ),
+                    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                    ),
+                    shape: MaterialStateProperty.all<OutlinedBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                  ),
+                  child: const Text(
+                    "Go to main",
+                    style: TextStyle(color: Colors.white, fontSize: 25),
+                  ),
                 )
               ]))),
         ));
