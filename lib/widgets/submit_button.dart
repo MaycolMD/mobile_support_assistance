@@ -9,7 +9,7 @@ Widget buildSubmitButton() {
     },
     style: ButtonStyle(
       backgroundColor:
-          MaterialStateProperty.all<Color>(Colors.purple), // Color morado
+          MaterialStateProperty.all<Color>(Colors.deepPurple), // Color morado
       padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
         const EdgeInsets.symmetric(
             horizontal: 20,

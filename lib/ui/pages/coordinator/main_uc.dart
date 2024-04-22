@@ -67,30 +67,30 @@ class _MainPageUCState extends State<MainPageUC> {
                     _buildCustomCard(
                       'US Admin',
                       'CreateUS',
-                      Icons.expand_more,
+                      Icons.person_add,
                     ),
                     const SizedBox(width: 250),
                     _buildCustomCard(
                       'Client Admin',
                       'CreateClient',
-                      Icons.expand_more,
+                      Icons.group_add,
                     ),
                     const SizedBox(width: 250),
                     _buildCustomCard(
                       'US Reports',
                       'Reports',
-                      Icons.expand_more,
+                      Icons.description,
                     ),
                     const SizedBox(width: 250),
                     _buildCustomCard(
                       'Supports',
                       'ListSupporters',
-                      Icons.expand_more,
+                      Icons.people_alt,
                     ),
                   ],
                 ),
                 const SizedBox(
-                  height: 50,
+                  height: 70,
                 ),
                 ElevatedButton(
                   key: const Key('ButtonGoBack'),
@@ -99,7 +99,7 @@ class _MainPageUCState extends State<MainPageUC> {
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
-                        Colors.purple), // Color morado
+                        Colors.deepPurple), // Color morado
                     padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
                       const EdgeInsets.symmetric(
                           horizontal: 20,
@@ -117,7 +117,7 @@ class _MainPageUCState extends State<MainPageUC> {
                     "Go Back",
                     style: TextStyle(
                         color: Colors.white,
-                        fontSize: 20), // Color del texto blanco
+                        fontSize: 24), // Color del texto blanco
                   ),
                 ),
               ],
@@ -130,50 +130,52 @@ class _MainPageUCState extends State<MainPageUC> {
 
   Widget _buildCustomCard(String title, String? routeName, IconData icon) {
     return Container(
-      width: 150,
-      height: 150,
+      width: 180,
+      height: 180,
       decoration: BoxDecoration(
-        color: Theme.of(context).secondaryHeaderColor,
+        color: Theme.of(context).cardColor,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.3),
+            spreadRadius: 2,
+            blurRadius: 5,
+            offset: Offset(0, 3),
+          ),
+        ],
       ),
-      child: Card(
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        color: Theme.of(context).secondaryHeaderColor,
-        elevation: 4,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
+      child: Material(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(16),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(16),
+          onTap: () {
+            if (routeName != null) {
+              Get.toNamed(routeName);
+            }
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Icon(
+                  icon,
+                  size: 60,
+                  color: Colors.deepPurple,
+                ),
+                Text(
                   title,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                    fontFamily: 'Readex Pro',
-                    fontSize: 30,
-                    letterSpacing: 0,
-                    fontWeight: FontWeight.w500,
+                    fontSize: 22,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black87,
                   ),
                 ),
-              ),
+              ],
             ),
-            IconButton(
-              icon: Icon(
-                icon,
-                size: 24,
-                color: Colors.purple,
-              ),
-              onPressed: () {
-                if (routeName != null) {
-                  Get.toNamed(routeName);
-                }
-              },
-            ),
-          ],
+          ),
         ),
       ),
     );

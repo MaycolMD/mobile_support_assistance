@@ -21,7 +21,7 @@ Widget buildGoBackButton() {
       ),
       side: MaterialStateProperty.all<BorderSide>(
         const BorderSide(
-          color: Colors.purple, // Borde morado
+          color: Colors.deepPurple, // Borde morado
           width: 2, // Ancho del borde
         ),
       ),
@@ -29,7 +29,7 @@ Widget buildGoBackButton() {
     child: const Text(
       "Go Back",
       style: TextStyle(
-        color: Colors.purple, // Color del texto morado
+        color: Colors.deepPurple, // Color del texto morado
         fontSize: 20,
       ),
     ),

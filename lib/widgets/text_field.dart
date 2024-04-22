@@ -44,21 +44,21 @@ Widget buildTextField(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                         borderSide: const BorderSide(
-                          color: Colors.blue,
+                          color: Colors.deepPurple,
                           width: 2,
                         ),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                         borderSide: const BorderSide(
-                          color: Colors.blue,
+                          color: Colors.deepPurple,
                           width: 2,
                         ),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                         borderSide: const BorderSide(
-                          color: Colors.blue,
+                          color: Colors.deepPurple,
                           width: 2,
                         ),
                       ),

@@ -111,7 +111,7 @@ class RatingReportUS extends StatelessWidget {
                   onPressed: controller.goToMainPage,
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
-                      Colors.purple,
+                      Colors.deepPurple,
                     ),
                     padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
