@@ -112,7 +112,7 @@ Widget buildCard({
         ),
         const SizedBox(height: 5),
         Center(
-            child: Row(children: [
+            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           Icon(Icons.person),
           SizedBox(
             height: 10,
@@ -128,22 +128,41 @@ Widget buildCard({
         ])),
         const SizedBox(height: 16),
         Center(
-            child: Text(
-          'Number of reports: $countReports',
-          style: const TextStyle(
-            fontFamily: 'Readex Pro',
-            letterSpacing: 0,
-            fontSize: 20,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.description),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                'Number of reports: $countReports',
+                style: const TextStyle(
+                  fontFamily: 'Readex Pro',
+                  letterSpacing: 0,
+                  fontSize: 20,
+                ),
+              )
+            ],
           ),
-        )),
+        ),
         const SizedBox(height: 16),
         Container(
           child: Center(
               child: Column(children: [
-            Text(
-              'Average Rating: $avgRating',
-              style: const TextStyle(
-                  fontFamily: 'Readex Pro', letterSpacing: 0, fontSize: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.grade),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  'Average Rating: $avgRating',
+                  style: const TextStyle(
+                      fontFamily: 'Readex Pro', letterSpacing: 0, fontSize: 20),
+                )
+              ],
             ),
             LinearProgressIndicator(
               value: progress,
