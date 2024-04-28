@@ -1,16 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:loggy/loggy.dart';
+import 'package:project/domain/entities/user_client.dart';
+import 'package:project/domain/use_case/client_usecase.dart';
 
 class CreateReportController extends GetxController {
-  // Controladores para los widgets que los requieran
+  List<String> _clients = <String>[].obs;
+  final ClientUseCase clientUseCase = Get.put(ClientUseCase());
   final TextEditingController descriptionController = TextEditingController();
 
   // Otros campos de estado
   String? selectedClient;
-  List<String> clientList = ['Client1', 'Client2', 'ClientN'];
+  List<String> get clients => _clients;
   DateTime? selectedDate;
   TimeOfDay? selectedTimeStart;
   TimeOfDay? selectedTimeEnd;
+
+  Future<List<String>> getClients() async {
+    logInfo("Getting clients from controller");
+    _clients = await clientUseCase.getClients();
+    return _clients;
+  }
 
   Future<DateTime?> selectDate(BuildContext context) async {
     final pickedDate = await showDatePicker(

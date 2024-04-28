@@ -14,6 +14,7 @@ class CreateReport extends StatefulWidget {
 
 class _CreateReportState extends State<CreateReport> {
   final CreateReportController controller = Get.put(CreateReportController());
+
 /*
   String? _selectedClient;
   List<String> _clientList = ['Client1', 'Client2', 'ClientN'];
@@ -101,7 +102,7 @@ class _CreateReportState extends State<CreateReport> {
                                     context: context,
                                     label: controller.selectedClient,
                                     hintText: 'Select a client',
-                                    items: controller.clientList,
+                                    itemsFuture: controller.getClients(),
                                     onChanged: (newValue) => {
                                           setState(() {
                                             controller.selectedClient =
@@ -390,16 +391,29 @@ Widget buildTimeSelector({
   );
 }
 
-Widget dropBoxSelector(
-    {required BuildContext context,
-    required String? label,
-    required List<String> items,
-    required Function(String?) onChanged,
-    required String hintText}) {
+Widget dropBoxSelector({
+  required BuildContext context,
+  required String? label,
+  required Future<List<String>> itemsFuture,
+  required Function(String?) onChanged,
+  required String hintText,
+}) {
   return Expanded(
-      child: Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(15, 0, 10, 0),
-          child: Container(
+    child: Padding(
+      padding: const EdgeInsetsDirectional.fromSTEB(15, 0, 10, 0),
+      child: FutureBuilder<List<String>>(
+        future: itemsFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            // Mientras los datos están siendo cargados
+            return CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            // Si hay un error al cargar los datos
+            return Text('Error: ${snapshot.error}');
+          } else {
+            // Cuando los datos están disponibles
+            List<String> items = snapshot.data!;
+            return Container(
               width: double.infinity,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
@@ -418,14 +432,21 @@ Widget dropBoxSelector(
                           ))
                       .toList(),
                   decoration: InputDecoration(
-                      hintText: hintText,
-                      labelStyle: TextStyle(
-                        fontFamily: 'Readex Pro',
-                        color: Colors.black,
-                        letterSpacing: 0,
-                        fontSize: 16,
-                      )),
+                    hintText: hintText,
+                    labelStyle: TextStyle(
+                      fontFamily: 'Readex Pro',
+                      color: Colors.black,
+                      letterSpacing: 0,
+                      fontSize: 16,
+                    ),
+                  ),
                   onChanged: onChanged,
                 ),
-              ))));
+              ),
+            );
+          }
+        },
+      ),
+    ),
+  );
 }
