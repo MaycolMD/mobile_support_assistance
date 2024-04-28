@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:project/domain/entities/user_client.dart';
 import './../../../widgets/text_field.dart';
 import './../../../widgets/back_button.dart';
 import './../../../widgets/submit_button.dart';
@@ -73,7 +75,12 @@ class _CreateClientState extends State<CreateClient> {
                   const SizedBox(
                     height: 50,
                   ),
-                  buildSubmitButton(),
+                  buildSubmitButton(onPressed: () async {
+                    await _controllers.addClient(UserClient(
+                        id: int.parse(_controllers.userIdController.text),
+                        name: _controllers.nameController.text));
+                    Get.back();
+                  }),
                   const SizedBox(
                     height: 20,
                   ),

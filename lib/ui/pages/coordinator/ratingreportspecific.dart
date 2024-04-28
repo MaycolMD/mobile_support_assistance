@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get/get.dart';
 import './../../../widgets/text_field.dart';
 import './../../../widgets/back_button.dart';
 import './../../../widgets/submit_button.dart';
@@ -138,7 +139,7 @@ class _RatingReportState extends State<RatingReport> {
                     ],
                   ),
                   const SizedBox(height: 50),
-                  buildSubmitButton(),
+                  buildSubmitButton(onPressed: () => Get.back()),
                   const SizedBox(height: 20),
                   buildGoBackButton(),
                 ],

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
-import 'package:project/domain/entities/user_client.dart';
 import 'package:project/domain/use_case/client_usecase.dart';
 
 class CreateReportController extends GetxController {

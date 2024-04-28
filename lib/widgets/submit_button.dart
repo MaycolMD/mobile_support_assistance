@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-Widget buildSubmitButton() {
+Widget buildSubmitButton({
+  required VoidCallback onPressed,
+}) {
   return ElevatedButton(
     key: const Key('ButtonSubmit'),
-    onPressed: () {
-      Get.back();
-    },
+    onPressed: onPressed,
     style: ButtonStyle(
       backgroundColor:
           MaterialStateProperty.all<Color>(Colors.deepPurple), // Color morado

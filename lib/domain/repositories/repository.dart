@@ -1,4 +1,4 @@
-import 'package:project/data/datasources/client_datasource.dart';
+import 'package:project/data/datasources/remote/client_datasource.dart';
 import 'package:project/domain/entities/user_client.dart';
 
 class Repository {
@@ -11,4 +11,7 @@ class Repository {
 
   Future<List<String>> getClients() async =>
       await _clientDataSource.getClients();
+
+  Future<bool> addClient(UserClient client) async =>
+      await _clientDataSource.addClient(client);
 }

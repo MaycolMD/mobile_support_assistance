@@ -29,4 +29,22 @@ class ClientDataSource {
       return Future.error('Error code ${response.statusCode}');
     }
   }
+
+  Future<bool> addClient(UserClient client) async {
+    final response = await http.post(
+      Uri.parse("https://retoolapi.dev/$apiKey/client"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(client.toJson()),
+    );
+
+    if (response.statusCode == 201) {
+      //logInfo(response.body);
+      return Future.value(true);
+    } else {
+      logError("Got error code ${response.statusCode}");
+      return Future.value(false);
+    }
+  }
 }

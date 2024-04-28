@@ -11,4 +11,8 @@ class ClientUseCase {
     logInfo("Getting clients from useCase");
     return await _repository.getClients();
   }
+
+  Future<void> addClient(UserClient client) async {
+    await _repository.addClient(client);
+  }
 }
