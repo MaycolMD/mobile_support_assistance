@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:project/domain/entities/report.dart';
 import 'package:project/ui/controllers/user_support/create_report_controller.dart';
 
 class CreateReport extends StatefulWidget {
@@ -14,6 +15,7 @@ class CreateReport extends StatefulWidget {
 
 class _CreateReportState extends State<CreateReport> {
   final CreateReportController controller = Get.put(CreateReportController());
+  String client = "";
 
 /*
   String? _selectedClient;
@@ -157,11 +159,12 @@ class _CreateReportState extends State<CreateReport> {
                     SizedBox(
                         width: 350,
                         child: TextFormField(
+                          controller: TextEditingController(),
                           textCapitalization: TextCapitalization.words,
                           //autofocus: true,
                           decoration: InputDecoration(
-                            labelText: 'Description about your support',
-                            labelStyle: const TextStyle(
+                            hintText: 'Description about your support',
+                            hintStyle: const TextStyle(
                                 fontFamily: 'Readex Pro', letterSpacing: 0),
                             enabledBorder: OutlineInputBorder(
                               borderSide: const BorderSide(
@@ -267,12 +270,23 @@ class _CreateReportState extends State<CreateReport> {
                           const EdgeInsetsDirectional.fromSTEB(0, 50, 0, 0),
                       child: ElevatedButton(
                           key: const Key('ButtonSubmitReportUS'),
-                          onPressed: () {
-                            //GUARDAR TODO EN LOCAL Y LUEGO SE BORRA TODO
+                          onPressed: () async {
+                            await controller.addReport(Report(
+                                date: (controller.selectedDate).toString(),
+                                rating: 0,
+                                status: "Pending",
+                                endTime:
+                                    (controller.selectedTimeEnd).toString(),
+                                startTime:
+                                    (controller.selectedTimeStart).toString(),
+                                clientName: "",
+                                description:
+                                    controller.descriptionController.text,
+                                supportName: "veremos"));
                             controller.descriptionController
                                 .clear(); // Borrar el contenido del campo de descripción
-                            controller.selectedClient =
-                                null; // Reiniciar la selección de cliente
+                            controller
+                                .selectedClient; // Reiniciar la selección de cliente
                             controller.selectedDate =
                                 null; // Reiniciar la fecha seleccionada
                             controller.selectedTimeStart =

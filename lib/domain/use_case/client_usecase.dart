@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
 import 'package:project/domain/entities/user_client.dart';
-import 'package:project/domain/repositories/repository.dart';
+import 'package:project/domain/repositories/client_repository.dart';
 
 class ClientUseCase {
-  final Repository _repository = Get.put(Repository());
+  final ClientRepository _repository = Get.put(ClientRepository());
   ClientUseCase();
 
   Future<List<String>> getClients() async {

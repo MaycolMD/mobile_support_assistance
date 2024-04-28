@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:project/domain/entities/report.dart';
+import 'package:project/ui/controllers/user_support/main_us_controller.dart';
 
 class MainUS extends StatefulWidget {
   const MainUS({super.key});
@@ -9,8 +11,13 @@ class MainUS extends StatefulWidget {
 }
 
 class _MainUSState extends State<MainUS> {
+  final MainUSController _controller = Get.put(MainUSController());
+  final children = <Widget>[];
   @override
   Widget build(BuildContext context) {
+    for (var w in _controller.reports) {
+      children.add(CustomRowWidget(context: context, id: w.id.toString()));
+    }
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Center(
@@ -69,11 +76,7 @@ class _MainUSState extends State<MainUS> {
                     padding: EdgeInsets.zero,
                     shrinkWrap: true,
                     scrollDirection: Axis.vertical,
-                    children: const [
-                      CustomRowWidget(),
-                      CustomRowWidget(),
-                      CustomRowWidget()
-                    ],
+                    children: children,
                   ),
                 )
               ],
@@ -99,66 +102,64 @@ class _MainUSState extends State<MainUS> {
   }
 }
 
-class CustomRowWidget extends StatelessWidget {
-  const CustomRowWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
-        child: Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: Colors.grey, width: 1)),
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              GestureDetector(
-                child: Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(
-                      color: Colors.black,
-                      width: 1,
-                    ),
-                    color: Colors.deepPurple,
+Widget CustomRowWidget({
+  required BuildContext context,
+  required String? id,
+}) {
+  return Padding(
+      padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
+      child: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: Colors.grey, width: 1)),
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            GestureDetector(
+              child: Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                    color: Colors.black,
+                    width: 1,
                   ),
-                  child: IconButton(
-                    onPressed: () {
-                      Get.toNamed('/RecapReport');
-                    },
-                    icon: Icon(
-                      Icons.add,
-                      color: Colors.black,
-                      size: 24,
-                    ),
-                    iconSize: 24,
-                    padding: EdgeInsets.zero,
-                    splashRadius: 24,
-                    tooltip: 'Add',
+                  color: Colors.deepPurple,
+                ),
+                child: IconButton(
+                  onPressed: () {
+                    Get.toNamed('/RecapReport');
+                  },
+                  icon: Icon(
+                    Icons.add,
+                    color: Colors.black,
+                    size: 24,
+                  ),
+                  iconSize: 24,
+                  padding: EdgeInsets.zero,
+                  splashRadius: 24,
+                  tooltip: 'Add',
+                ),
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.0),
+                child: Text(
+                  'Id Report: $id',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: 'Readex Pro',
+                    letterSpacing: 0,
+                    fontSize: 16,
                   ),
                 ),
               ),
-              const Expanded(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Text(
-                    'Id Report',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: 'Readex Pro',
-                      letterSpacing: 0,
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ));
-  }
+            ),
+          ],
+        ),
+      ));
 }
