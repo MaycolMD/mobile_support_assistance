@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:project/domain/entities/report.dart';
@@ -176,7 +174,8 @@ class _CreateReportState extends State<CreateReport> {
                             //filled: true,
                             //fillColor: Colors.white,
                             contentPadding:
-                                EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
+                                const EdgeInsetsDirectional.fromSTEB(
+                                    16, 16, 16, 16),
                           ),
                           cursorColor: Colors.deepPurple,
                           maxLines: 5,
@@ -348,7 +347,7 @@ Widget buildDateSelector({
                 ),
               ),
               IconButton(
-                icon: Icon(Icons.calendar_month),
+                icon: const Icon(Icons.calendar_month),
                 onPressed: onPressed,
               ),
             ],
@@ -394,7 +393,7 @@ Widget buildTimeSelector({
                 ),
               ),
               IconButton(
-                icon: Icon(Icons.access_time),
+                icon: const Icon(Icons.access_time),
                 onPressed: onPressed,
               ),
             ],
@@ -420,7 +419,7 @@ Widget dropBoxSelector({
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             // Mientras los datos están siendo cargados
-            return CircularProgressIndicator();
+            return const CircularProgressIndicator();
           } else if (snapshot.hasError) {
             // Si hay un error al cargar los datos
             return Text('Error: ${snapshot.error}');
@@ -436,7 +435,7 @@ Widget dropBoxSelector({
                 ),
               ),
               child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
                 child: DropdownButtonFormField<String>(
                   value: label,
                   items: items
@@ -447,7 +446,7 @@ Widget dropBoxSelector({
                       .toList(),
                   decoration: InputDecoration(
                     hintText: hintText,
-                    labelStyle: TextStyle(
+                    labelStyle: const TextStyle(
                       fontFamily: 'Readex Pro',
                       color: Colors.black,
                       letterSpacing: 0,

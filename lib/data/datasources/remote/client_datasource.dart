@@ -21,7 +21,6 @@ class ClientDataSource {
         UserClient user = UserClient.fromJson(x);
         return user.name;
       }));
-      print(user);
 
       return user;
     } else {

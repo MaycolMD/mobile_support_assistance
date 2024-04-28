@@ -15,4 +15,9 @@ class ReportUseCase {
   Future<void> addReport(Report report) async {
     await _repository.addReport(report);
   }
+
+  Future<List<Report>> getReportsCO(String clientID, String supportID) async {
+    logInfo("Getting clients from coordinator");
+    return await _repository.getReportsCoordinator(clientID, supportID);
+  }
 }

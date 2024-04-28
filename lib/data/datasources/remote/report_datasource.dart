@@ -46,4 +46,28 @@ class ReportDataSource {
       return Future.value(false);
     }
   }
+
+  Future<List<Report>> getReportsCO(String clientID, String supportID) async {
+    List<Report> reports = [];
+    var request = Uri.parse(
+            "https://retoolapi.dev/$apiKey/report?clientName=$clientID&supportName=$supportID")
+        .resolveUri(Uri(queryParameters: {
+      "format": 'json',
+    }));
+
+    var response = await http.get(request);
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+
+      reports = List<Report>.from(data.map((x) {
+        Report r = Report.fromJson(x);
+        return r;
+      }));
+      return reports;
+    } else {
+      logError("Got error code ${response.statusCode}");
+      return Future.error('Error code ${response.statusCode}');
+    }
+  }
 }

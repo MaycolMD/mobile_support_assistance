@@ -20,10 +20,10 @@ class RatingReportUSController extends GetxController {
       // Mostrar TextField para ingresar ID de cliente
       Get.dialog(
         AlertDialog(
-          title: Text('Enter Client ID'),
+          title: const Text('Enter Client ID'),
           content: TextField(
             controller: clientController,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: 'Enter Client ID',
             ),
           ),
@@ -38,7 +38,7 @@ class RatingReportUSController extends GetxController {
                 clientController.clear();
                 Get.back();
               },
-              child: Text('Submit'),
+              child: const Text('Submit'),
             ),
           ],
         ),
@@ -53,10 +53,10 @@ class RatingReportUSController extends GetxController {
       // Mostrar TextField para ingresar ID de soporte
       Get.dialog(
         AlertDialog(
-          title: Text('Enter Support ID'),
+          title: const Text('Enter Support ID'),
           content: TextField(
             controller: supportController,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: 'Enter Support ID',
             ),
           ),

@@ -9,7 +9,7 @@ class RecapReport extends StatefulWidget {
 }
 
 class _RecapReportState extends State<RecapReport> {
-  int _number = 4; // Con un get hay que tomar el rate que le dieron
+  final int _number = 4; // Con un get hay que tomar el rate que le dieron
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +18,7 @@ class _RecapReportState extends State<RecapReport> {
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
+              padding: const EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
               child: AppBar(
                 toolbarHeight: 30,
                 actions: [
@@ -27,7 +27,7 @@ class _RecapReportState extends State<RecapReport> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Padding(
+                      const Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 50, 0),
                         child: Text(
                           '[ID] report',
@@ -40,9 +40,10 @@ class _RecapReportState extends State<RecapReport> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
                         child: IconButton(
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.close_rounded,
                             color: Colors.deepPurple,
                             size: 25,
@@ -58,9 +59,9 @@ class _RecapReportState extends State<RecapReport> {
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 40, 0, 20),
+              padding: const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 20),
               child: SingleChildScrollView(
-                  child: Container(
+                  child: SizedBox(
                       width: 350,
                       child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -71,19 +72,19 @@ class _RecapReportState extends State<RecapReport> {
                                 context: context,
                                 label: 'Status',
                                 hintText: 'Status report'),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             buildTextField(
                                 context: context,
                                 label: 'Client ',
                                 hintText: 'Client username'),
-                            SizedBox(height: 10),
+                            const SizedBox(height: 10),
                             buildTextField(
                                 context: context,
                                 label: 'Date   ',
                                 hintText: "Support's date"),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Container(
@@ -98,8 +99,9 @@ class _RecapReportState extends State<RecapReport> {
                                 borderRadius: BorderRadius.circular(
                                     12), // Borde redondeado
                               ),
-                              padding: EdgeInsets.all(10), // Espaciado interno
-                              child: SingleChildScrollView(
+                              padding:
+                                  const EdgeInsets.all(10), // Espaciado interno
+                              child: const SingleChildScrollView(
                                 // Para que la información sea scrollable si es muy larga
                                 child: Text(
                                   'Description from supporter', // Texto a mostrar
@@ -110,31 +112,31 @@ class _RecapReportState extends State<RecapReport> {
                                 ),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             buildTextField(
                                 context: context,
                                 label: 'Start Time',
                                 hintText: 'Start Time'),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             buildTextField(
                                 context: context,
                                 label: 'End Time  ',
                                 hintText: 'End Time'),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
-                            Container(
+                            SizedBox(
                               width: double.infinity,
                               height: 100,
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Align(
+                                  const Align(
                                     alignment: AlignmentDirectional(0, 0),
                                     child: Text(
                                       'Rate',
@@ -144,7 +146,7 @@ class _RecapReportState extends State<RecapReport> {
                                       ),
                                     ),
                                   ),
-                                  SizedBox(width: 10),
+                                  const SizedBox(width: 10),
                                   // Lista de iconos para mostrar las estrellas
                                   for (int i = 0; i < 5; i++)
                                     Icon(
@@ -175,7 +177,7 @@ Widget buildTextField(
     width: double.infinity,
     height: 50,
     child: Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+      padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
@@ -183,19 +185,19 @@ Widget buildTextField(
         children: [
           Text(
             label,
-            style: TextStyle(
+            style: const TextStyle(
                 color: Colors.black,
                 fontSize: 17.0,
                 fontFamily: 'Roboto',
                 fontWeight: FontWeight.bold,
                 decoration: TextDecoration.none),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Expanded(
               child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
+            padding: const EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
             child: InkWell(
               splashColor: Colors.transparent,
               focusColor: Colors.transparent,
@@ -213,10 +215,10 @@ Widget buildTextField(
                   ),
                 ),
                 child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(12, 10, 0, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(12, 10, 0, 0),
                   child: Text(
                     hintText,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontFamily: 'Readex Pro',
                         letterSpacing: 0,
                         fontSize: 15,

@@ -48,7 +48,7 @@ class _ListSupportersState extends State<ListSupporters> {
                   endIndent: 24,
                   color: Theme.of(context).dividerColor,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 SizedBox(
@@ -60,18 +60,17 @@ class _ListSupportersState extends State<ListSupporters> {
                         return Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8),
                           child: buildCard(
-                        context: context,
-                        usID: '[US ID]',
-                        usUsername: 'maycolMd',
-                        countReports: '2',
-                        avgRating: 3.0),
+                              context: context,
+                              usID: '[US ID]',
+                              usUsername: 'maycolMd',
+                              countReports: '2',
+                              avgRating: 3.0),
                         );
                       }),
                     ),
                   ),
                 ),
-                
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 ElevatedButton(
                   key: const Key('ButtonGoBack'),
                   onPressed: () {
@@ -143,7 +142,7 @@ Widget buildCard({
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.person, size: 24, color: Colors.deepPurple),
+              const Icon(Icons.person, size: 24, color: Colors.deepPurple),
               const SizedBox(width: 5),
               Text(
                 usUsername,
@@ -161,7 +160,7 @@ Widget buildCard({
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.description, size: 24, color: Colors.deepPurple),
+              const Icon(Icons.description, size: 24, color: Colors.deepPurple),
               const SizedBox(width: 5),
               Text(
                 'Number of reports: $countReports',
@@ -179,7 +178,7 @@ Widget buildCard({
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.grade, size: 24, color: Colors.deepPurple),
+              const Icon(Icons.grade, size: 24, color: Colors.deepPurple),
               const SizedBox(width: 5),
               Text(
                 'Average Rating: $avgRating',
@@ -198,11 +197,10 @@ Widget buildCard({
           child: LinearProgressIndicator(
             value: progress,
             backgroundColor: Colors.grey[300],
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.deepPurple),
+            valueColor: const AlwaysStoppedAnimation<Color>(Colors.deepPurple),
           ),
         ),
       ],
     ),
   );
 }
-

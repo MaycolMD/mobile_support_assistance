@@ -1,23 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:project/domain/entities/report.dart';
 import 'package:project/ui/controllers/user_support/main_us_controller.dart';
 
-class MainUS extends StatefulWidget {
-  const MainUS({super.key});
-
-  @override
-  _MainUSState createState() => _MainUSState();
-}
-
-class _MainUSState extends State<MainUS> {
+class MainUS extends StatelessWidget {
   final MainUSController _controller = Get.put(MainUSController());
-  final children = <Widget>[];
+
   @override
   Widget build(BuildContext context) {
-    for (var w in _controller.reports) {
-      children.add(CustomRowWidget(context: context, id: w.id.toString()));
-    }
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Center(
@@ -27,10 +16,9 @@ class _MainUSState extends State<MainUS> {
               backgroundColor: Colors.white,
               actions: [
                 Padding(
-                  //iconbuttonsalir
                   padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
                   child: IconButton(
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.exit_to_app_outlined,
                       color: Colors.deepPurple,
                       size: 25,
@@ -42,59 +30,84 @@ class _MainUSState extends State<MainUS> {
                 )
               ],
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Card(
-                  color: Colors.deepPurple,
-                  child: Icon(
-                    Icons.tag_faces_sharp,
-                    size: 80,
-                    color: Colors.white,
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
-                  child: Text('[User email address]',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20.0,
-                          fontFamily: 'Roboto',
-                          fontWeight: FontWeight.bold,
-                          decoration: TextDecoration.none)),
-                ),
-                Divider(
-                  color: Colors.grey,
-                  height: 44,
-                  thickness: 2,
-                ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
-                  child: ListView(
-                    padding: EdgeInsets.zero,
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    children: children,
-                  ),
-                )
-              ],
+            FutureBuilder(
+              future: _controller
+                  .getReports(), // Espera a que se completen las futuras operaciones
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator(); // Muestra un indicador de carga mientras se espera
+                } else if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                } else {
+                  return Expanded(
+                    child: Column(
+                      children: [
+                        const Card(
+                          color: Colors.deepPurple,
+                          child: Icon(
+                            Icons.tag_faces_sharp,
+                            size: 80,
+                            color: Colors.white,
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                          child: Text(
+                            '[User email address]',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 20.0,
+                              fontFamily: 'Roboto',
+                              fontWeight: FontWeight.bold,
+                              decoration: TextDecoration.none,
+                            ),
+                          ),
+                        ),
+                        const Divider(
+                          color: Colors.grey,
+                          height: 44,
+                          thickness: 2,
+                        ),
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              16, 12, 16, 0),
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: _controller.reports.length,
+                            itemBuilder: (context, index) {
+                              final report = _controller.reports[index];
+                              return CustomRowWidget(
+                                context: context,
+                                id: report.id.toString(),
+                              );
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 50, 0, 0),
+                          child: ElevatedButton(
+                            key: const Key('ButtonCreateReport'),
+                            onPressed: () {
+                              Get.toNamed('/CreateReport');
+                            },
+                            style: const ButtonStyle(
+                              backgroundColor:
+                                  MaterialStatePropertyAll(Colors.deepPurple),
+                            ),
+                            child: const Text(
+                              'Add Report',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+              },
             ),
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 50, 0, 0),
-              child: ElevatedButton(
-                  key: Key('ButtonCreateReport'),
-                  onPressed: () {
-                    Get.toNamed('/CreateReport');
-                  },
-                  child: Text('Add Report',
-                      style: TextStyle(color: Colors.white, fontSize: 20)),
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStatePropertyAll(Colors.deepPurple),
-                  )),
-            )
           ],
         ),
       ),
@@ -133,7 +146,7 @@ Widget CustomRowWidget({
                   onPressed: () {
                     Get.toNamed('/RecapReport');
                   },
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.add,
                     color: Colors.black,
                     size: 24,
@@ -147,11 +160,11 @@ Widget CustomRowWidget({
             ),
             Expanded(
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Text(
                   'Id Report: $id',
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontFamily: 'Readex Pro',
                     letterSpacing: 0,
                     fontSize: 16,
