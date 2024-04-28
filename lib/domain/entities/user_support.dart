@@ -1,5 +1,5 @@
-class User {
-  User({
+class UserSupport {
+  UserSupport({
     this.id,
     required this.name,
     required this.email,
@@ -13,7 +13,7 @@ class User {
   String role;
   String password;
 
-  factory User.fromJson(Map<String, dynamic> json) => User(
+  factory UserSupport.fromJson(Map<String, dynamic> json) => UserSupport(
       id: json["id"],
       name: json["Name"],
       email: json["username"],
@@ -22,9 +22,9 @@ class User {
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "Name": name,
-        "username": email,
+        "name": name,
+        "role": role,
+        "email": email,
         "password": password,
-        "type": role
       };
 }

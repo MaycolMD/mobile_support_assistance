@@ -80,7 +80,9 @@ class _CreateUserState extends State<CreateUser> {
                   const SizedBox(
                     height: 50,
                   ),
-                  buildSubmitButton(onPressed: () => Get.back()),
+                  buildSubmitButton(onPressed: () {
+                    _controllers.createSupportUser();
+                  }),
                   const SizedBox(
                     height: 20,
                   ),
