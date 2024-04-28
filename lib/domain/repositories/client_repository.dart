@@ -1,11 +1,11 @@
 import 'package:project/data/datasources/remote/client_datasource.dart';
 import 'package:project/domain/entities/user_client.dart';
 
-class Repository {
+class ClientRepository {
   late ClientDataSource _clientDataSource;
   String token = "";
 
-  Repository() {
+  ClientRepository() {
     _clientDataSource = ClientDataSource();
   }
 

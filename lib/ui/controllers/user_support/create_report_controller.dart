@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
+import 'package:project/domain/entities/report.dart';
 import 'package:project/domain/use_case/client_usecase.dart';
+import 'package:project/domain/use_case/report_usecase.dart';
 
 class CreateReportController extends GetxController {
   List<String> _clients = <String>[].obs;
   final ClientUseCase clientUseCase = Get.put(ClientUseCase());
+  final ReportUseCase reportUseCase = Get.put(ReportUseCase());
+
   final TextEditingController descriptionController = TextEditingController();
 
   // Otros campos de estado
@@ -54,5 +58,9 @@ class CreateReportController extends GetxController {
       update(); // Actualiza la interfaz de usuario
     }
     return pickedTime;
+  }
+
+  addReport(Report report) async {
+    await reportUseCase.addReport(report);
   }
 }
