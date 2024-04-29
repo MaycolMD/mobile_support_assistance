@@ -13,8 +13,8 @@ class SupportRepository {
   Future<List<UserSupport>> getSupports() async =>
       await _supportDataSource.getSupports();
 
-  Future<bool> isGetSupportByEmail(String email) async =>
-      await _supportDataSource.isGetSupportByEmail(email);
+  Future<bool> isGetSupport(String email, String password) async =>
+      await _supportDataSource.isGetSupport(email, password);
 
   Future<bool> executeSupportUser(UserSupport user) async =>
       await _supportDataSource.addSupport(user);

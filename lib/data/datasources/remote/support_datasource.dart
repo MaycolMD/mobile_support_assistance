@@ -31,19 +31,25 @@ class SupportDataSource {
     }
   }
 
-  Future<bool> isGetSupportByEmail(String email) async {
-    final response = await http.get(
-      Uri.parse("https://retoolapi.dev/$apiKey/support?email=$email"),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-    );
+  Future<bool> isGetSupport(String email, String password) async {
+    try {
+      final response = await http.get(
+        Uri.parse(
+            "https://retoolapi.dev/$apiKey/support?email=$email&password=$password"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
 
-    if (response.statusCode == 200) {
-      return jsonDecode(response.body).isNotEmpty;
-    } else {
-      logError("Got error code ${response.statusCode}");
-      return Future.value(false);
+      if (response.statusCode == 200) {
+        return jsonDecode(response.body).isNotEmpty;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      // Error desconocido
+      logError("Error: $e");
+      return false;
     }
   }
 

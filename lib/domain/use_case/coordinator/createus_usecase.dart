@@ -10,8 +10,8 @@ class SupportUserRepositoryUseCase {
     return await _repository.getSupports();
   }
 
-  Future<bool> isGetSupportByEmail(String email) async {
-    return await _repository.isGetSupportByEmail(email);
+  Future<bool> isGetSupport(String email, String password) async {
+    return _repository.isGetSupport(email, password);
   }
 
   Future<void> addSupportUser(

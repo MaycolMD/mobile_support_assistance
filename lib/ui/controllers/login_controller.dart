@@ -1,22 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:project/domain/entities/user_support.dart';
 import 'package:project/domain/use_case/coordinator/createus_usecase.dart';
-import 'package:project/domain/use_case/report_usecase.dart';
 
 class LoginController extends GetxController {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final SupportUserRepositoryUseCase _supportcase =
       Get.put(SupportUserRepositoryUseCase());
-
-  List<UserSupport> _supports = <UserSupport>[].obs;
-  List<UserSupport> get supports => _supports;
-
-  Future<List<UserSupport>> getSupports() async {
-    _supports = await _supportcase.getSupports();
-    return _supports;
-  }
 
   Future<void> validateLogin() async {
     if (!validateEmail() || !validatePassword()) {
@@ -29,19 +19,11 @@ class LoginController extends GetxController {
       if ((email == "a@a.com" || email == "b@b.com") && password == "123456") {
         clearControllers();
         Get.offNamed('/MainPageUC');
-      } else if (await _supportcase.isGetSupportByEmail(email)) {
-        _supports = await getSupports();
-        print(_supports);
-        for (var element in supports) {
-          if (element.email == email && element.password == password) {
-            clearControllers();
-            Get.offNamed('/MainUS');
-          } else {
-            Get.snackbar('Please check your password', 'It does not match!!');
-          }
-        }
+      } else if (await _supportcase.isGetSupport(email, password)) {
+        clearControllers();
+        Get.offNamed('/MainUS');
       } else {
-        Get.snackbar('Please, check your email', 'It does not exist for us!!');
+        Get.snackbar('Incorrect credentials', 'Check it please!!');
       }
     } catch (e) {
       Get.snackbar(
