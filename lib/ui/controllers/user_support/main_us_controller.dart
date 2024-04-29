@@ -10,11 +10,12 @@ class MainUSController extends GetxController {
 
   @override
   void onInit() {
-    getReports();
+    getReports('', '');
     super.onInit();
   }
 
-  getReports() async {
-    _reports = await _reportUseCase.getReports();
+  getReports(String clientID, String supportID) async {
+    _reports = await _reportUseCase.getReports(clientID, supportID);
+    update();
   }
 }

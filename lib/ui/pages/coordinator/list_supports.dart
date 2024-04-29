@@ -109,11 +109,12 @@ Widget buildCard({
   double progress = (avgRating / 5).clamp(0, 1);
   return Container(
     width: 350,
+    height: 300,
     padding: const EdgeInsets.all(16),
     margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
     decoration: BoxDecoration(
       color: Colors.white,
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(16),
       boxShadow: [
         BoxShadow(
           color: Colors.grey.withOpacity(0.3),
@@ -130,7 +131,7 @@ Widget buildCard({
           child: Text(
             usID,
             style: const TextStyle(
-              fontFamily: 'Readex Pro',
+              fontFamily: 'Roboto',
               fontSize: 28,
               fontWeight: FontWeight.bold,
               color: Colors.deepPurple,
@@ -147,9 +148,9 @@ Widget buildCard({
               Text(
                 usUsername,
                 style: const TextStyle(
-                  fontFamily: 'Readex Pro',
+                  fontFamily: 'Roboto',
                   fontSize: 22,
-                  color: Colors.black87,
+                  color: Colors.black,
                 ),
               ),
             ],
@@ -163,17 +164,17 @@ Widget buildCard({
               const Icon(Icons.description, size: 24, color: Colors.deepPurple),
               const SizedBox(width: 5),
               Text(
-                'Number of reports: $countReports',
+                'Number of Reports: $countReports',
                 style: const TextStyle(
-                  fontFamily: 'Readex Pro',
+                  fontFamily: 'Roboto',
                   fontSize: 22,
-                  color: Colors.black87,
+                  color: Colors.black,
                 ),
               ),
             ],
           ),
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 40),
         Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -183,15 +184,15 @@ Widget buildCard({
               Text(
                 'Average Rating: $avgRating',
                 style: const TextStyle(
-                  fontFamily: 'Readex Pro',
+                  fontFamily: 'Roboto',
                   fontSize: 22,
-                  color: Colors.black87,
+                  color: Colors.black,
                 ),
               ),
             ],
           ),
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 40),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: LinearProgressIndicator(

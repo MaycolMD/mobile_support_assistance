@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:project/ui/controllers/user_support/main_us_controller.dart';
 import './../../../widgets/reportcard.dart';
 import './../../controllers/coordinator/ratingreportus.controller.dart';
 
 class RatingReportUS extends StatelessWidget {
   final RatingReportUSController controller =
       Get.put(RatingReportUSController());
+
+  final MainUSController _controller = Get.put(MainUSController());
 
   RatingReportUS({Key? key}) : super(key: key);
 
@@ -49,28 +52,46 @@ class RatingReportUS extends StatelessWidget {
                   endIndent: 24,
                   color: Theme.of(context).dividerColor,
                 ),
-                SizedBox(
-                  height: 400,
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: List.generate(3, (index) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          child: ReportCard(
-                            reportId: 'Report ${index + 1}',
-                            username: 'US username ${index + 1}',
-                            date: '10/05/2024',
-                            status: 'Pendiente',
-                            onPressed: () {
-                              Get.toNamed('/SpecificReport');
-                            },
-                          ),
-                        );
-                      }),
-                    ),
-                  ),
-                ),
+                Obx(() {
+                  if (controller.shouldRefresh.value) {
+                    return FutureBuilder(
+                        future: _controller.getReports(
+                            controller.selectedClient.value == 'All Clients'
+                                ? ''
+                                : controller.selectedClient.value,
+                            controller.selectedSupport.value == 'All Supports'
+                                ? ''
+                                : controller.selectedSupport.value),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const CircularProgressIndicator();
+                          } else if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          } else {
+                            return Center(
+                              child: SizedBox(
+                                height: 400,
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.vertical,
+                                  child: generateReportsCards(),
+                                ),
+                              ),
+                            );
+                          }
+                        });
+                  } else {
+                    return Center(
+                      child: SizedBox(
+                        height: 400,
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.vertical,
+                          child: generateReportsCards(),
+                        ),
+                      ),
+                    );
+                  }
+                }),
                 const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -131,6 +152,43 @@ class RatingReportUS extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Column generateReportsCards() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List.generate(
+        (_controller.reports.length / 3).ceil(),
+        (rowIndex) {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(3, (colIndex) {
+              final index = rowIndex * 3 + colIndex;
+              if (index < _controller.reports.length) {
+                final report = _controller.reports[index];
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: SizedBox(
+                    width: 400,
+                    child: ReportCard(
+                      reportId: report.id.toString(),
+                      username: report.supportName,
+                      date: report.date,
+                      status: report.status,
+                      onPressed: () {
+                        Get.toNamed('/SpecificReport');
+                      },
+                    ),
+                  ),
+                );
+              } else {
+                return const SizedBox(); // Si no hay más elementos, devuelve un SizedBox
+              }
+            }),
+          );
+        },
       ),
     );
   }

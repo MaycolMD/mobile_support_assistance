@@ -8,6 +8,8 @@ class RatingReportUSController extends GetxController {
   RxString selectedClient = 'All Clients'.obs;
   RxString selectedSupport = 'All Supports'.obs;
 
+  final RxBool shouldRefresh = true.obs;
+
   @override
   void onClose() {
     clientController.dispose();
@@ -33,8 +35,6 @@ class RatingReportUSController extends GetxController {
                 selectedClient.value = clientController.text.isNotEmpty
                     ? clientController.text
                     : 'All Clients';
-                selectedSupport.value = 'All Supports';
-                supportController.clear();
                 clientController.clear();
                 Get.back();
               },
@@ -46,6 +46,7 @@ class RatingReportUSController extends GetxController {
     } else {
       selectedClient.value = 'All Clients';
     }
+    shouldRefresh.value = true;
   }
 
   void selectSupport() {
@@ -66,8 +67,6 @@ class RatingReportUSController extends GetxController {
                 selectedSupport.value = supportController.text.isNotEmpty
                     ? supportController.text
                     : 'All Supports';
-                selectedClient.value = 'All Clients';
-                clientController.clear();
                 supportController.clear();
                 Get.back();
               },
@@ -79,6 +78,7 @@ class RatingReportUSController extends GetxController {
     } else {
       selectedSupport.value = 'All Supports';
     }
+    shouldRefresh.value = true;
   }
 
   void goToMainPage() {

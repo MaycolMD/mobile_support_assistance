@@ -9,13 +9,9 @@ class ReportRepository {
     _reportDataSource = ReportDataSource();
   }
 
-  Future<List<Report>> getReports() async =>
-      await _reportDataSource.getReports();
+  Future<List<Report>> getReports(String clientID, String supportID) async =>
+      await _reportDataSource.getReports(clientID, supportID);
 
   Future<bool> addReport(Report report) async =>
       await _reportDataSource.addReport(report);
-
-  Future<List<Report>> getReportsCoordinator(
-          String clientID, String supportID) async =>
-      await _reportDataSource.getReportsCO(clientID, supportID);
 }

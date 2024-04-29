@@ -31,8 +31,8 @@ class MainUS extends StatelessWidget {
               ],
             ),
             FutureBuilder(
-              future: _controller
-                  .getReports(), // Espera a que se completen las futuras operaciones
+              future: _controller.getReports(
+                  '', ''), // Espera a que se completen las futuras operaciones
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const CircularProgressIndicator(); // Muestra un indicador de carga mientras se espera

@@ -5,17 +5,27 @@ import 'package:project/domain/entities/report.dart';
 
 class ReportDataSource {
   final String apiKey = 'B3xFwU';
-  Future<List<Report>> getReports() async {
+
+  Future<List<Report>> getReports(String clientID, String supportID) async {
     List<Report> reports = [];
-    var request = Uri.parse("https://retoolapi.dev/$apiKey/report")
-        .resolveUri(Uri(queryParameters: {
+    var queryParams = {
       "format": 'json',
-    }));
+    };
+
+    if (clientID.isNotEmpty) {
+      queryParams['clientName'] = clientID;
+    }
+
+    if (supportID.isNotEmpty) {
+      queryParams['supportName'] = supportID;
+    }
+
+    var request = Uri.parse("https://retoolapi.dev/$apiKey/report")
+        .replace(queryParameters: queryParams);
 
     var response = await http.get(request);
 
     if (response.statusCode == 200) {
-      //logInfo(response.body);
       final data = jsonDecode(response.body);
 
       reports = List<Report>.from(data.map((x) {
@@ -44,30 +54,6 @@ class ReportDataSource {
     } else {
       logError("Got error code ${response.statusCode}");
       return Future.value(false);
-    }
-  }
-
-  Future<List<Report>> getReportsCO(String clientID, String supportID) async {
-    List<Report> reports = [];
-    var request = Uri.parse(
-            "https://retoolapi.dev/$apiKey/report?clientName=$clientID&supportName=$supportID")
-        .resolveUri(Uri(queryParameters: {
-      "format": 'json',
-    }));
-
-    var response = await http.get(request);
-
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-
-      reports = List<Report>.from(data.map((x) {
-        Report r = Report.fromJson(x);
-        return r;
-      }));
-      return reports;
-    } else {
-      logError("Got error code ${response.statusCode}");
-      return Future.error('Error code ${response.statusCode}');
     }
   }
 }
