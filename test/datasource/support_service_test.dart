@@ -15,7 +15,7 @@ void main() {
   setUp(() {
     httpClient = http.Client();
     datasource = SupportDataSource(client: httpClient);
-    newUser = UserSupport(id: 10012, name: 'Support Client', email: 'support@a.com', password: '1234567890', role: 'Support');
+    newUser = UserSupport(id: 10, name: 'Support Client', email: 'support@a.com', password: '1234567890', role: 'Support');
   });
 
   tearDown(() {
@@ -30,7 +30,7 @@ void main() {
     List<UserSupport> users = await datasource.getSupports();
     // Using firstWhere with orElse to handle the case where no user is found
     UserSupport? createdUser =
-        users.firstWhereOrNull((user) => user.id == newUser.id);
+        users.firstWhereOrNull((user) { print(user.id); return (user.id == newUser.id) ;});
 
     // // Check if the user was indeed found
     expect(createdUser, isNotNull);

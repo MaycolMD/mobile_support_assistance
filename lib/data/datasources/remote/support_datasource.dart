@@ -5,24 +5,25 @@ import 'package:project/domain/entities/user_support.dart';
 
 class SupportDataSource {
   final http.Client httpClient;
-  final String apiKey = 'aBAPC7';
+  final String apiKey = 'XIjwDO';
   SupportDataSource({http.Client? client}) : httpClient = client ??  http.Client();
 
   Future<List<UserSupport>> getSupports() async {
-    List<UserSupport> users = [];
+    List<UserSupport> users;
     var request = Uri.parse("https://retoolapi.dev/$apiKey/support")
         .resolveUri(Uri(queryParameters: {
       "format": 'json',
     }));
 
     var response = await httpClient.get(request);
-
+    print(response.statusCode);
     if (response.statusCode == 200) {
       //logInfo(response.body);
       final data = jsonDecode(response.body);
 
       users = List<UserSupport>.from(data.map((x) {
         UserSupport us = UserSupport.fromJson(x);
+        print(us.id);
         return us;
       }));
       print(users);
