@@ -56,4 +56,50 @@ class ReportDataSource {
       return Future.value(false);
     }
   }
+
+  Future<bool> deleteReport(String id) async {
+  final response = await http.delete(
+    Uri.parse("https://retoolapi.dev/$apiKey/report/$id"),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+  );
+
+  if (response.statusCode == 204) {
+    // El reporte fue eliminado correctamente
+    return true;
+  } else if (response.statusCode == 404) {
+    // El reporte no fue encontrado
+    logError("Report with id $id not found");
+    return false;
+  } else {
+    // Ocurrió algún error
+    logError("Got error code ${response.statusCode}");
+    return false;
+  }
+}
+
+Future<bool> updateReport(Report report) async {
+  final response = await http.put(
+    Uri.parse("https://retoolapi.dev/$apiKey/report/${report.id}"),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(report.toJson()),
+  );
+
+  if (response.statusCode == 200) {
+    // El reporte fue actualizado correctamente
+    return true;
+  } else if (response.statusCode == 404) {
+    // El reporte no fue encontrado
+    logError("Report with id ${report.id} not found");
+    return false;
+  } else {
+    // Ocurrió algún error
+    logError("Got error code ${response.statusCode}");
+    return false;
+  }
+}
+
 }

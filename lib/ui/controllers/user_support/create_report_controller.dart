@@ -7,8 +7,8 @@ import 'package:project/domain/use_case/report_usecase.dart';
 
 class CreateReportController extends GetxController {
   List<String> _clients = <String>[].obs;
-  final ClientUseCase clientUseCase = Get.put(ClientUseCase());
-  final ReportUseCase reportUseCase = Get.put(ReportUseCase());
+  final ClientUseCase clientUseCase = Get.find();
+  final ReportUseCase reportUseCase = Get.find();
 
   final TextEditingController descriptionController = TextEditingController();
 
@@ -62,5 +62,17 @@ class CreateReportController extends GetxController {
 
   addReport(Report report) async {
     await reportUseCase.addReport(report);
+  }
+
+  getReports(String clientID, String supportID) async {
+    await reportUseCase.getReports(clientID,supportID);
+  }
+
+    updateReport(Report report) async {
+    await reportUseCase.updateReport(report);
+  }
+
+  deleteReport(String id) async {
+    await reportUseCase.deleteReport(id);
   }
 }

@@ -15,13 +15,6 @@ class _CreateReportState extends State<CreateReport> {
   final CreateReportController controller = Get.put(CreateReportController());
   String client = "";
 
-/*
-  String? _selectedClient;
-  List<String> _clientList = ['Client1', 'Client2', 'ClientN'];
-  DateTime? _selectedDate;
-  TimeOfDay? _selectedTime1;
-  TimeOfDay? _selectedTime2;
-*/
   @override
   Widget build(BuildContext context) {
     return Scaffold(

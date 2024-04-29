@@ -14,4 +14,10 @@ class ReportRepository {
 
   Future<bool> addReport(Report report) async =>
       await _reportDataSource.addReport(report);
+
+  Future<bool> deleteReport(String id) async =>
+      await _reportDataSource.deleteReport(id);
+
+  Future<bool> updateReport(Report report) async =>
+      await _reportDataSource.addReport(report);
 }

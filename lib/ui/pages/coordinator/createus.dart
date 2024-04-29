@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import './../../../widgets/text_field.dart';
 import './../../../widgets/back_button.dart';
 import './../../../widgets/submit_button.dart';
-import './../../controllers/coordinator/createus.controller.dart';
+import '../../controllers/coordinator/us.controller.dart';
 
 class CreateUser extends StatefulWidget {
   const CreateUser({super.key});
