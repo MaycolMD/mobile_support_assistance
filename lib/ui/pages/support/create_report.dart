@@ -95,7 +95,7 @@ class _CreateReportState extends State<CreateReport> {
                                     context: context,
                                     label: controller.selectedClient,
                                     hintText: 'Select a client',
-                                    itemsFuture: controller.getClients(),
+                                    itemsFuture: controller.getClientsName(),
                                     onChanged: (newValue) => {
                                           setState(() {
                                             controller.selectedClient =
@@ -269,9 +269,9 @@ class _CreateReportState extends State<CreateReport> {
                                     (controller.selectedTimeEnd).toString(),
                                 
                                     (controller.selectedTimeStart).toString(),
-                                 "",
+                                 1,
                                     controller.descriptionController.text,
-                                "veremos");
+                                1);
                             controller.descriptionController
                                 .clear(); // Borrar el contenido del campo de descripción
                             controller

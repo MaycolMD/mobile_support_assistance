@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
 import 'package:project/domain/entities/report.dart';
+import 'package:project/domain/entities/user_client.dart';
 import 'package:project/domain/use_case/client_usecase.dart';
 import 'package:project/domain/use_case/report_usecase.dart';
 
 class CreateReportController extends GetxController {
-  List<String> _clients = <String>[].obs;
+  List<UserClient> _clients = <UserClient>[].obs;
   final ClientUseCase clientUseCase = Get.find();
   final ReportUseCase reportUseCase = Get.find();
 
@@ -14,15 +15,24 @@ class CreateReportController extends GetxController {
 
   // Otros campos de estado
   String? selectedClient;
-  List<String> get clients => _clients;
+  List<UserClient> get clients => _clients;
   DateTime? selectedDate;
   TimeOfDay? selectedTimeStart;
   TimeOfDay? selectedTimeEnd;
 
-  Future<List<String>> getClients() async {
+  Future<List<UserClient>> getClients() async {
     logInfo("Getting clients from controller");
     _clients = await clientUseCase.getClients();
     return _clients;
+  }
+
+  Future<List<String>> getClientsName() async {
+    List<String> names = <String>[].obs;
+    _clients = await getClients();
+    for (var element in _clients) {
+      names.add(element.name);
+    }
+    return names;
   }
 
   Future<DateTime?> selectDate(BuildContext context) async {
@@ -66,9 +76,9 @@ class CreateReportController extends GetxController {
     String status,
     String endTime,
     String startTime,
-    String clientName,
+    int clientID,
     String description,
-    String supportName,
+    int supportID,
   ) async {
     await reportUseCase.addReport(
       date,
@@ -76,9 +86,9 @@ class CreateReportController extends GetxController {
       status,
       endTime,
       startTime,
-      clientName,
+      clientID,
       description,
-      supportName,
+      supportID,
     );
   }
 
@@ -93,9 +103,9 @@ class CreateReportController extends GetxController {
     String status,
     String endTime,
     String startTime,
-    String clientName,
+    int clientID,
     String description,
-    String supportName,
+    int supportID,
   ) async {
     await reportUseCase.updateReport(
       id,
@@ -104,9 +114,9 @@ class CreateReportController extends GetxController {
       status,
       endTime,
       startTime,
-      clientName,
+      clientID,
       description,
-      supportName,
+      supportID,
     );
   }
 

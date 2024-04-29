@@ -9,7 +9,7 @@ class ClientRepository {
     _clientDataSource = ClientDataSource();
   }
 
-  Future<List<String>> getClients() async =>
+  Future<List<UserClient>> getClients() async =>
       await _clientDataSource.getClients();
 
   Future<bool> addClient(UserClient client) async =>

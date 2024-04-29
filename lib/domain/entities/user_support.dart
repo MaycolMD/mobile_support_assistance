@@ -15,7 +15,7 @@ class UserSupport {
 
   factory UserSupport.fromJson(Map<String, dynamic> json) => UserSupport(
       id: json["id"],
-      name: json["Name"],
+      name: json["name"],
       email: json["username"],
       password: json["password"],
       role: json["type"]);

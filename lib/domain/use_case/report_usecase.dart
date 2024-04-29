@@ -18,9 +18,9 @@ class ReportUseCase {
     String status,
     String endTime,
     String startTime,
-    String clientName,
+    int clientID,
     String description,
-    String supportName,
+    int supportID,
   ) async {
     Report report = Report(
       date: date,
@@ -28,9 +28,9 @@ class ReportUseCase {
       status: status,
       endTime: endTime,
       startTime: startTime,
-      clientName: clientName,
+      clientID: clientID,
       description: description,
-      supportName: supportName,
+      supportID: supportID,
     );
     await _repository.addReport(report);
   }
@@ -46,9 +46,9 @@ class ReportUseCase {
     String status,
     String endTime,
     String startTime,
-    String clientName,
+    int clientID,
     String description,
-    String supportName,
+    int supportID,
   ) async {
     Report report = Report(
       id: id,
@@ -57,9 +57,9 @@ class ReportUseCase {
       status: status,
       endTime: endTime,
       startTime: startTime,
-      clientName: clientName,
+      clientID: clientID,
       description: description,
-      supportName: supportName,
+      supportID: supportID,
     );
     await _repository.updateReport(report);
   }
