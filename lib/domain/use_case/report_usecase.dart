@@ -12,7 +12,26 @@ class ReportUseCase {
     return await _repository.getReports(clientID, supportID);
   }
 
-  Future<void> addReport(Report report) async {
+  Future<void> addReport(
+    String date,
+    int rating,
+    String status,
+    String endTime,
+    String startTime,
+    int clientID,
+    String description,
+    int supportID,
+  ) async {
+    Report report = Report(
+      date: date,
+      rating: rating,
+      status: status,
+      endTime: endTime,
+      startTime: startTime,
+      clientID: clientID,
+      description: description,
+      supportID: supportID,
+    );
     await _repository.addReport(report);
   }
 
@@ -20,7 +39,28 @@ class ReportUseCase {
     await _repository.deleteReport(id);
   }
 
-  Future<void> updateReport(Report reporte) async {
-    await _repository.updateReport(reporte);
+  Future<void> updateReport(
+    int id,
+    String date,
+    int rating,
+    String status,
+    String endTime,
+    String startTime,
+    int clientID,
+    String description,
+    int supportID,
+  ) async {
+    Report report = Report(
+      id: id,
+      date: date,
+      rating: rating,
+      status: status,
+      endTime: endTime,
+      startTime: startTime,
+      clientID: clientID,
+      description: description,
+      supportID: supportID,
+    );
+    await _repository.updateReport(report);
   }
 }

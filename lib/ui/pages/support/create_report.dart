@@ -263,18 +263,15 @@ class _CreateReportState extends State<CreateReport> {
                       child: ElevatedButton(
                           key: const Key('ButtonSubmitReportUS'),
                           onPressed: () async {
-                            await controller.addReport(Report(
-                                date: (controller.selectedDate).toString(),
-                                rating: 0,
-                                status: "Pending",
-                                endTime:
+                            await controller.addReport((controller.selectedDate).toString(),
+                                0,
+                                "Pending",
                                     (controller.selectedTimeEnd).toString(),
-                                startTime:
+                                
                                     (controller.selectedTimeStart).toString(),
-                                clientID: 1,
-                                description:
+                                 1,
                                     controller.descriptionController.text,
-                                supportID: 1));
+                                1);
                             controller.descriptionController
                                 .clear(); // Borrar el contenido del campo de descripción
                             controller
