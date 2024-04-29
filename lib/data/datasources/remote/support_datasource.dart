@@ -6,6 +6,47 @@ import 'package:project/domain/entities/user_support.dart';
 class SupportDataSource {
   final String apiKey = 'aBAPC7';
 
+  Future<List<UserSupport>> getSupports() async {
+    List<UserSupport> users = [];
+    var request = Uri.parse("https://retoolapi.dev/$apiKey/support")
+        .resolveUri(Uri(queryParameters: {
+      "format": 'json',
+    }));
+
+    var response = await http.get(request);
+
+    if (response.statusCode == 200) {
+      //logInfo(response.body);
+      final data = jsonDecode(response.body);
+
+      users = List<UserSupport>.from(data.map((x) {
+        UserSupport us = UserSupport.fromJson(x);
+        return us;
+      }));
+      print(users);
+      return users;
+    } else {
+      logError("Got error code ${response.statusCode}");
+      return Future.error('Error code ${response.statusCode}');
+    }
+  }
+
+  Future<bool> isGetSupportByEmail(String email) async {
+    final response = await http.get(
+      Uri.parse("https://retoolapi.dev/$apiKey/support?email=$email"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body).isNotEmpty;
+    } else {
+      logError("Got error code ${response.statusCode}");
+      return Future.value(false);
+    }
+  }
+
   Future<bool> addSupport(UserSupport userSupport) async {
     final response = await http.post(
       Uri.parse("https://retoolapi.dev/$apiKey/support"),
