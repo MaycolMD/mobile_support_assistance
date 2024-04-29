@@ -20,7 +20,6 @@ List<UserClient> users;
     var response = await httpClient.get(request);
 
     if (response.statusCode == 200) {
-      //logInfo(response.body);
       final data = jsonDecode(response.body);
 
       users = List<UserClient>.from(data.map((x) {
@@ -44,8 +43,6 @@ List<UserClient> users;
       body: jsonEncode(client.toJson()),
     );
 
-
-    print(response.statusCode);
     if (response.statusCode == 201) {
       //logInfo(response.body);
       return Future.value(true);
@@ -62,7 +59,7 @@ List<UserClient> users;
       'Content-Type': 'application/json; charset=UTF-8',
     },
   );
-  print(response.statusCode);
+
   if (response.statusCode == 200) {
     return true;
   } else if (response.statusCode == 404) {
