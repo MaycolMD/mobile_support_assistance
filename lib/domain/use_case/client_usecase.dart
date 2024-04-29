@@ -4,15 +4,16 @@ import 'package:project/domain/entities/user_client.dart';
 import 'package:project/domain/repositories/client_repository.dart';
 
 class ClientUseCase {
-  final ClientRepository _repository;
-  ClientUseCase(this._repository);
+  final ClientRepository _repository = Get.put(ClientRepository());
+  ClientUseCase();
 
   Future<List<String>> getClients() async {
     logInfo("Getting clients from useCase");
     return await _repository.getClients();
   }
 
-  Future<void> addClient(UserClient client) async {
+  Future<void> addClient(int id, String name) async {
+    UserClient client = UserClient(id: id, name: name);
     await _repository.addClient(client);
   }
 
@@ -20,7 +21,8 @@ class ClientUseCase {
     await _repository.deleteClient(id);
   }
 
-  Future<void> updateClient(UserClient client) async {
+  Future<void> updateClient(int id, String name) async {
+    UserClient client = UserClient(id: id, name: name);
     await _repository.updateClient(client);
   }
 }

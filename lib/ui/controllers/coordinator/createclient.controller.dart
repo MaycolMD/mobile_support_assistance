@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:project/domain/entities/user_client.dart';
 import 'package:project/domain/use_case/client_usecase.dart';
 
 class FormControllers extends GetxController {
@@ -8,16 +7,16 @@ class FormControllers extends GetxController {
   final TextEditingController nameController = TextEditingController();
   final ClientUseCase _clientUseCase = Get.find();
 
-  addClient(UserClient client) async {
-    await _clientUseCase.addClient(client);
+  addClient(int id, String name) async {
+    await _clientUseCase.addClient(id, name);
   }
 
   getClients() async {
     await _clientUseCase.getClients();
   }
   
-  updateClient(UserClient client) async {
-    await _clientUseCase.updateClient(client);
+  updateClient(int id, String name) async {
+    await _clientUseCase.updateClient(id, name);
   }
 
   deleteClient(int id) async {

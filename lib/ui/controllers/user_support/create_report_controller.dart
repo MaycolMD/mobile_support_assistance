@@ -60,16 +60,54 @@ class CreateReportController extends GetxController {
     return pickedTime;
   }
 
-  addReport(Report report) async {
-    await reportUseCase.addReport(report);
+  addReport(
+    String date,
+    int rating,
+    String status,
+    String endTime,
+    String startTime,
+    String clientName,
+    String description,
+    String supportName,
+  ) async {
+    await reportUseCase.addReport(
+      date,
+      rating,
+      status,
+      endTime,
+      startTime,
+      clientName,
+      description,
+      supportName,
+    );
   }
 
   getReports(String clientID, String supportID) async {
     await reportUseCase.getReports(clientID,supportID);
   }
 
-    updateReport(Report report) async {
-    await reportUseCase.updateReport(report);
+  updateReport(
+    int id,
+    String date,
+    int rating,
+    String status,
+    String endTime,
+    String startTime,
+    String clientName,
+    String description,
+    String supportName,
+  ) async {
+    await reportUseCase.updateReport(
+      id,
+      date,
+      rating,
+      status,
+      endTime,
+      startTime,
+      clientName,
+      description,
+      supportName,
+    );
   }
 
   deleteReport(String id) async {
