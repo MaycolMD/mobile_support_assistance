@@ -95,7 +95,7 @@ class _CreateReportState extends State<CreateReport> {
                                     context: context,
                                     label: controller.selectedClient,
                                     hintText: 'Select a client',
-                                    itemsFuture: controller.getClients(),
+                                    itemsFuture: controller.getClientsName(),
                                     onChanged: (newValue) => {
                                           setState(() {
                                             controller.selectedClient =

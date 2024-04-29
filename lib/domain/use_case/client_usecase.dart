@@ -7,7 +7,7 @@ class ClientUseCase {
   final ClientRepository _repository;
   ClientUseCase(this._repository);
 
-  Future<List<String>> getClients() async {
+  Future<List<UserClient>> getClients() async {
     logInfo("Getting clients from useCase");
     return await _repository.getClients();
   }

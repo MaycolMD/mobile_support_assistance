@@ -4,7 +4,9 @@ import 'package:http/http.dart' as http;
 import 'package:project/domain/entities/user_support.dart';
 
 class SupportDataSource {
+  final http.Client httpClient;
   final String apiKey = 'aBAPC7';
+  SupportDataSource({http.Client? client}) : httpClient = client ??  http.Client();
 
   Future<List<UserSupport>> getSupports() async {
     List<UserSupport> users = [];
@@ -13,7 +15,7 @@ class SupportDataSource {
       "format": 'json',
     }));
 
-    var response = await http.get(request);
+    var response = await httpClient.get(request);
 
     if (response.statusCode == 200) {
       //logInfo(response.body);
@@ -33,7 +35,7 @@ class SupportDataSource {
 
   Future<bool> isGetSupport(String email, String password) async {
     try {
-      final response = await http.get(
+      final response = await httpClient.get(
         Uri.parse(
             "https://retoolapi.dev/$apiKey/support?email=$email&password=$password"),
         headers: <String, String>{
@@ -54,14 +56,14 @@ class SupportDataSource {
   }
 
   Future<bool> addSupport(UserSupport userSupport) async {
-    final response = await http.post(
+    final response = await httpClient.post(
       Uri.parse("https://retoolapi.dev/$apiKey/support"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(userSupport.toJson()),
     );
-
+    print(response.statusCode);
     if (response.statusCode == 201) {
       logInfo(response.body);
       return Future.value(true);
@@ -73,7 +75,7 @@ class SupportDataSource {
 
   Future<bool> checkEmailExists(String email) async {
     try {
-      final response = await http.get(
+      final response = await httpClient.get(
         Uri.parse("https://retoolapi.dev/$apiKey/support?email=$email"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
@@ -92,14 +94,14 @@ class SupportDataSource {
   }
 
   Future<bool> deleteSupport(int id) async {
-  final response = await http.delete(
+  final response = await httpClient.delete(
     Uri.parse("https://retoolapi.dev/$apiKey/support/$id"),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
   );
 
-  if (response.statusCode == 204) {
+  if (response.statusCode == 200) {
     // El usuario de soporte fue eliminado correctamente
     return true;
   } else if (response.statusCode == 404) {
@@ -114,7 +116,7 @@ class SupportDataSource {
 }
 
 Future<bool> updateSupport(UserSupport userSupport) async {
-  final response = await http.put(
+  final response = await httpClient.put(
     Uri.parse("https://retoolapi.dev/$apiKey/support/${userSupport.id}"),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
