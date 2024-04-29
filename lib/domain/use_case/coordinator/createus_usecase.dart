@@ -6,6 +6,14 @@ class SupportUserRepositoryUseCase {
   final SupportRepository _repository = Get.put(SupportRepository());
   SupportUserRepositoryUseCase();
 
+  Future<List<UserSupport>> getSupports() async {
+    return await _repository.getSupports();
+  }
+
+  Future<bool> isGetSupportByEmail(String email) async {
+    return await _repository.isGetSupportByEmail(email);
+  }
+
   Future<void> addSupportUser(
       int id, String name, String email, String password, String role) async {
     bool emailExists = await _repository.checkEmailExists(email);
