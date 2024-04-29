@@ -278,10 +278,10 @@ class _CreateReportState extends State<CreateReport> {
                                     (controller.selectedTimeEnd).toString(),
                                 startTime:
                                     (controller.selectedTimeStart).toString(),
-                                clientName: "",
+                                clientID: 1,
                                 description:
                                     controller.descriptionController.text,
-                                supportName: "veremos"));
+                                supportID: 1));
                             controller.descriptionController
                                 .clear(); // Borrar el contenido del campo de descripción
                             controller

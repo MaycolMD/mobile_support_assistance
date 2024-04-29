@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:project/domain/entities/report.dart';
 
 class ReportDataSource {
-  final String apiKey = 'B3xFwU';
+  final String apiKey = '85lR9B';
 
   Future<List<Report>> getReports(String clientID, String supportID) async {
     List<Report> reports = [];
@@ -13,11 +13,11 @@ class ReportDataSource {
     };
 
     if (clientID.isNotEmpty) {
-      queryParams['clientName'] = clientID;
+      queryParams['clientID'] = clientID;
     }
 
     if (supportID.isNotEmpty) {
-      queryParams['supportName'] = supportID;
+      queryParams['supportID'] = supportID;
     }
 
     var request = Uri.parse("https://retoolapi.dev/$apiKey/report")

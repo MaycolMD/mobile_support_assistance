@@ -4,7 +4,12 @@ import 'package:http/http.dart' as http;
 import 'package:project/domain/entities/user_client.dart';
 
 class ClientDataSource {
+  final http.Client httpClient;
   final String apiKey = 'XzNd0U';
+
+
+  ClientDataSource({http.Client? client}) : httpClient = client ??  http.Client();
+
   Future<List<String>> getClients() async {
     var request = Uri.parse("https://retoolapi.dev/$apiKey/client")
         .resolveUri(Uri(queryParameters: {

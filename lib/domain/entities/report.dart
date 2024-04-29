@@ -6,9 +6,9 @@ class Report {
       required this.status,
       required this.endTime,
       required this.startTime,
-      required this.clientName,
+      required this.clientID,
       required this.description,
-      required this.supportName});
+      required this.supportID});
 
   int? id;
   String date;
@@ -16,9 +16,9 @@ class Report {
   String status;
   String endTime;
   String startTime;
-  String clientName;
+  int clientID;
   String description;
-  String supportName;
+  int supportID;
 
   factory Report.fromJson(Map<String, dynamic> json) => Report(
       id: json["id"],
@@ -27,9 +27,9 @@ class Report {
       status: json["status"],
       endTime: json["endTime"],
       startTime: json["startTime"],
-      clientName: json["clientName"],
+      clientID: json["clientID"],
       description: json["description"],
-      supportName: json["supportName"]);
+      supportID: json["supportID"]);
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -38,8 +38,8 @@ class Report {
         "status": status,
         "endTime": endTime,
         "startTime": startTime,
-        "clientName": clientName,
+        "clientName": supportID,
         "description": description,
-        "supportName": supportName
+        "supportName": supportID
       };
 }

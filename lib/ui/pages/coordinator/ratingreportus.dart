@@ -174,7 +174,7 @@ class RatingReportUS extends StatelessWidget {
                     width: 400,
                     child: ReportCard(
                       reportId: report.id.toString(),
-                      username: report.supportName,
+                      username: report.supportID.toString(),
                       date: report.date,
                       status: report.status,
                       onPressed: () {
