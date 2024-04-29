@@ -90,4 +90,50 @@ class SupportDataSource {
       return false;
     }
   }
+
+  Future<bool> deleteSupport(int id) async {
+  final response = await http.delete(
+    Uri.parse("https://retoolapi.dev/$apiKey/support/$id"),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+  );
+
+  if (response.statusCode == 204) {
+    // El usuario de soporte fue eliminado correctamente
+    return true;
+  } else if (response.statusCode == 404) {
+    // El usuario de soporte no fue encontrado
+    logError("Support user with id $id not found");
+    return false;
+  } else {
+    // Ocurrió algún error
+    logError("Got error code ${response.statusCode}");
+    return false;
+  }
+}
+
+Future<bool> updateSupport(UserSupport userSupport) async {
+  final response = await http.put(
+    Uri.parse("https://retoolapi.dev/$apiKey/support/${userSupport.id}"),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(userSupport.toJson()),
+  );
+
+  if (response.statusCode == 200) {
+    // El usuario de soporte fue actualizado correctamente
+    return true;
+  } else if (response.statusCode == 404) {
+    // El usuario de soporte no fue encontrado
+    logError("Support user with id ${userSupport.id} not found");
+    return false;
+  } else {
+    // Ocurrió algún error
+    logError("Got error code ${response.statusCode}");
+    return false;
+  }
+}
+
 }

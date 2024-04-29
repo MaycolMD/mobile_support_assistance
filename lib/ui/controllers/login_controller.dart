@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:project/domain/use_case/coordinator/createus_usecase.dart';
+import 'package:project/domain/use_case/us_usecase.dart';
 
 class LoginController extends GetxController {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final SupportUserRepositoryUseCase _supportcase =
-      Get.put(SupportUserRepositoryUseCase());
+      Get.find();
 
   Future<void> validateLogin() async {
     if (!validateEmail() || !validatePassword()) {

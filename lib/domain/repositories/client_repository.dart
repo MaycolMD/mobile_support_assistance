@@ -14,4 +14,10 @@ class ClientRepository {
 
   Future<bool> addClient(UserClient client) async =>
       await _clientDataSource.addClient(client);
+  
+  Future<bool> updateClient(UserClient client) async =>
+      await _clientDataSource.updateClient(client);
+  
+  Future<bool> deleteClient(int id) async =>
+      await _clientDataSource.deleteClient(id);
 }

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:project/domain/use_case/coordinator/createus_usecase.dart';
+import 'package:project/domain/entities/user_support.dart';
+import 'package:project/domain/use_case/us_usecase.dart';
 
 class FormControllers extends GetxController {
   final SupportUserRepositoryUseCase _createSupportUserUseCase =
-      SupportUserRepositoryUseCase();
+      Get.find();
+
 
   final TextEditingController userIdController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
@@ -32,6 +34,19 @@ class FormControllers extends GetxController {
     } catch (e) {
       Get.snackbar('Error', 'No se ha podido crear el usuario. error: $e');
     }
+  }
+
+  
+  getSupports() async {
+    await _createSupportUserUseCase.getSupports();
+  }
+  
+  updateSupport(UserSupport client) async {
+    await _createSupportUserUseCase.updateSupport(client);
+  }
+
+  deleteSupport(int id) async {
+    await _createSupportUserUseCase.deleteSupport(id);
   }
 
   bool validateUserId() {

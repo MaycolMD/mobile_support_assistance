@@ -21,4 +21,10 @@ class SupportRepository {
 
   Future<bool> checkEmailExists(String email) async =>
       await _supportDataSource.checkEmailExists(email);
+
+  Future<bool> deleteSupport(int id) async =>
+      await _supportDataSource.deleteSupport(id);
+
+  Future<bool> updateSupport(UserSupport user) async =>
+      await _supportDataSource.updateSupport(user);
 }

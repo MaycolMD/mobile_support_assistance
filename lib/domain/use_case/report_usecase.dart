@@ -15,4 +15,12 @@ class ReportUseCase {
   Future<void> addReport(Report report) async {
     await _repository.addReport(report);
   }
+
+  Future<void> deleteReport(String id) async {
+    await _repository.deleteReport(id);
+  }
+
+  Future<void> updateReport(Report reporte) async {
+    await _repository.updateReport(reporte);
+  }
 }
