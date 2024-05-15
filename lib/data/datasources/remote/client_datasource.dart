@@ -7,11 +7,11 @@ class ClientDataSource {
   final http.Client httpClient;
   final String apiKey = 'XzNd0U';
 
-
-  ClientDataSource({http.Client? client}) : httpClient = client ??  http.Client();
+  ClientDataSource({http.Client? client})
+      : httpClient = client ?? http.Client();
 
   Future<List<UserClient>> getClients() async {
-List<UserClient> users;
+    List<UserClient> users;
     var request = Uri.parse("https://retoolapi.dev/$apiKey/client")
         .resolveUri(Uri(queryParameters: {
       "format": 'json',
@@ -53,42 +53,41 @@ List<UserClient> users;
   }
 
   Future<bool> deleteClient(int id) async {
-  final response = await httpClient.delete(
-    Uri.parse("https://retoolapi.dev/$apiKey/client/$id"),
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-  );
+    final response = await httpClient.delete(
+      Uri.parse("https://retoolapi.dev/$apiKey/client/$id"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
 
-  if (response.statusCode == 200) {
-    return true;
-  } else if (response.statusCode == 404) {
-    logError("Client with id $id not found");
-    return false;
-  } else {
-    logError("Got error code ${response.statusCode}");
-    return false;
+    if (response.statusCode == 200) {
+      return true;
+    } else if (response.statusCode == 404) {
+      logError("Client with id $id not found");
+      return false;
+    } else {
+      logError("Got error code ${response.statusCode}");
+      return false;
+    }
   }
-}
 
-Future<bool> updateClient(UserClient client) async {
-  final response = await httpClient.put(
-    Uri.parse("https://retoolapi.dev/$apiKey/client/${client.id}"),
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-    body: jsonEncode(client.toJson()),
-  );
+  Future<bool> updateClient(UserClient client) async {
+    final response = await httpClient.put(
+      Uri.parse("https://retoolapi.dev/$apiKey/client/${client.id}"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(client.toJson()),
+    );
 
-  if (response.statusCode == 200) {
-    return true;
-  } else if (response.statusCode == 404) {
-    logError("Client with id ${client.id} not found");
-    return false;
-  } else {
-    logError("Got error code ${response.statusCode}");
-    return false;
+    if (response.statusCode == 200) {
+      return true;
+    } else if (response.statusCode == 404) {
+      logError("Client with id ${client.id} not found");
+      return false;
+    } else {
+      logError("Got error code ${response.statusCode}");
+      return false;
+    }
   }
-}
-
 }

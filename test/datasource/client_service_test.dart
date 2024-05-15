@@ -16,7 +16,6 @@ void main() {
     newUser = UserClient(id: 10, name: 'Tester Client');
   });
 
-
   tearDown(() {
     httpClient.close(); // Close the client to clean up resources
   });
@@ -29,8 +28,10 @@ void main() {
     // Step 2: Retrieve the user to get the ID
     List<UserClient> users = await clientDataSource.getClients();
     // Using firstWhere with orElse to handle the case where no user is found
-    UserClient? createdUser =
-        users.firstWhereOrNull((user) { print(user.id); return (user.id == newUser.id) ;});
+    UserClient? createdUser = users.firstWhereOrNull((user) {
+      print(user.id);
+      return (user.id == newUser.id);
+    });
 
     // // Check if the user was indeed found
     expect(createdUser, isNotNull);
@@ -43,7 +44,8 @@ void main() {
     expect(updateResult, isTrue);
     print('deleteUser: ${createdUser.id}');
     // Step 4: Delete the entry
-    bool deleteResult = await clientDataSource.deleteClient(createdUser.id!); // Assert non-null ID with '!'
+    bool deleteResult = await clientDataSource
+        .deleteClient(createdUser.id!); // Assert non-null ID with '!'
     expect(deleteResult, isTrue);
   });
 }

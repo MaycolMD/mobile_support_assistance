@@ -17,7 +17,7 @@ void main() {
       // Inicialización del mock y la instancia de ClientUseCase
       mockClientRepository = MockClientRepository();
       clientUseCase = ClientUseCase();
-      
+
       // Reemplaza la instancia inyectada por Get con el mock
       Get.put<ClientRepository>(mockClientRepository);
     });
@@ -28,7 +28,8 @@ void main() {
         UserClient(id: 2, name: 'Delphinia Kenafaque'),
         UserClient(id: 3, name: 'Katerine Jakubowsky'),
       ];
-      when(mockClientRepository.getClients()).thenAnswer((_) async => mockUserClients);
+      when(mockClientRepository.getClients())
+          .thenAnswer((_) async => mockUserClients);
 
       // Act
       final result = await clientUseCase.getClients();
@@ -39,8 +40,8 @@ void main() {
 
     test('addClient should call addClient method of repository', () async {
       // Arrange
-      final int id = 1;
-      final String name = 'New User';
+      final int id = 18;
+      final String name = 'Maycol Moreno';
       final UserClient clientToAdd = UserClient(id: id, name: name);
 
       // Act
@@ -50,9 +51,10 @@ void main() {
       verify(mockClientRepository.addClient(clientToAdd)).called(1);
     });
 
-    test('deleteClient should call deleteClient method of repository', () async {
+    test('deleteClient should call deleteClient method of repository',
+        () async {
       // Arrange
-      final int idToDelete = 6;
+      final int idToDelete = 5;
 
       // Act
       await clientUseCase.deleteClient(idToDelete);
@@ -61,11 +63,13 @@ void main() {
       verify(mockClientRepository.deleteClient(idToDelete)).called(1);
     });
 
-    test('updateClient should call updateClient method of repository', () async {
+    test('updateClient should call updateClient method of repository',
+        () async {
       // Arrange
-      final int idToUpdate = 4;
-      final String newName = 'Updated Name';
-      final UserClient clientToUpdate = UserClient(id: idToUpdate, name: newName);
+      final int idToUpdate = 15;
+      final String newName = 'Natalia Mendoza';
+      final UserClient clientToUpdate =
+          UserClient(id: idToUpdate, name: newName);
 
       // Act
       await clientUseCase.updateClient(idToUpdate, newName);
