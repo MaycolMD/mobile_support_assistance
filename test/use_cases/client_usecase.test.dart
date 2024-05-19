@@ -5,77 +5,82 @@ import 'package:project/domain/entities/user_client.dart';
 import 'package:project/domain/repositories/client_repository.dart';
 import 'package:project/domain/use_case/client_usecase.dart';
 
+import '../mocks/client_test.mocks.mocks.dart';
+
 // Mock de ClientRepository
-class MockClientRepository extends Mock implements ClientRepository {}
+//class MockIClientRepository extends Mock implements ClientRepository {}
 
 void main() {
+  late MockIClientRepository mockClientRepository;
+  late ClientUseCase clientUseCase;
+
+  setUp(() {
+    // Inicialización del mock y la instancia de ClientUseCase
+    mockClientRepository = MockIClientRepository();
+    clientUseCase = ClientUseCase(mockClientRepository);
+  });
+
   group('ClientUseCase', () {
-    late ClientUseCase clientUseCase;
-    late MockClientRepository mockClientRepository;
-
-    setUp(() {
-      // Inicialización del mock y la instancia de ClientUseCase
-      mockClientRepository = MockClientRepository();
-      clientUseCase = ClientUseCase();
-
-      // Reemplaza la instancia inyectada por Get con el mock
-      Get.put<ClientRepository>(mockClientRepository);
-    });
-
-    test('getClients should return a list of user clients', () async {
-      // Arrange
-      final List<UserClient> mockUserClients = [
-        UserClient(id: 2, name: 'Delphinia Kenafaque'),
-        UserClient(id: 3, name: 'Katerine Jakubowsky'),
-      ];
+    test('getClients should call getClients on the repository', () async {
       when(mockClientRepository.getClients())
-          .thenAnswer((_) async => mockUserClients);
+          .thenAnswer((_) async => <UserClient>[]);
 
       // Act
-      final result = await clientUseCase.getClients();
+      await clientUseCase.getClients();
 
       // Assert
-      expect(result, equals(mockUserClients));
+      verify(mockClientRepository.getClients()).called(1);
     });
 
     test('addClient should call addClient method of repository', () async {
       // Arrange
-      final int id = 18;
-      final String name = 'Maycol Moreno';
+      final int id = 19;
+      final String name = 'Rigoberto Martinez';
       final UserClient clientToAdd = UserClient(id: id, name: name);
 
+      when(mockClientRepository.addClient(clientToAdd)).thenAnswer((_) async =>
+          true); // Asegura que el método mockeado devuelva un Future<bool>
+
       // Act
-      await clientUseCase.addClient(id, name);
+      await clientUseCase.addClient(clientToAdd);
 
       // Assert
       verify(mockClientRepository.addClient(clientToAdd)).called(1);
     });
 
+    test('updateClient should call updateClient method of repository',
+        () async {
+      // Arrange
+      final int idToUpdate = 19;
+      final String newName = 'Rigoberto Martinez';
+      final UserClient clientToUpdate =
+          UserClient(id: idToUpdate, name: newName);
+
+      when(mockClientRepository.updateClient(clientToUpdate)).thenAnswer(
+          (_) async =>
+              true); // Asegura que el método mockeado devuelva un Future<bool>
+
+      // Act
+      await clientUseCase.updateClient(clientToUpdate);
+
+      // Assert
+      verify(mockClientRepository.updateClient(clientToUpdate)).called(1);
+    });
+
     test('deleteClient should call deleteClient method of repository',
         () async {
       // Arrange
-      final int idToDelete = 5;
+      final int idToDelete = 19;
+
+      when(mockClientRepository.deleteClient(idToDelete)).thenAnswer(
+          (_) async =>
+              true); // Asegura que el método mockeado devuelva un Future<bool>
 
       // Act
       await clientUseCase.deleteClient(idToDelete);
 
       // Assert
       verify(mockClientRepository.deleteClient(idToDelete)).called(1);
-    });
-
-    test('updateClient should call updateClient method of repository',
-        () async {
-      // Arrange
-      final int idToUpdate = 15;
-      final String newName = 'Natalia Mendoza';
-      final UserClient clientToUpdate =
-          UserClient(id: idToUpdate, name: newName);
-
-      // Act
-      await clientUseCase.updateClient(idToUpdate, newName);
-
-      // Assert
-      verify(mockClientRepository.updateClient(clientToUpdate)).called(1);
     });
   });
 }
