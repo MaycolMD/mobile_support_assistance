@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:loggy/loggy.dart';
 import 'package:http/http.dart' as http;
-import 'package:project/data/datasources/remote/I_client_datasource.dart';
+import 'package:project/data/datasources/remote/interfaces/I_client_datasource.dart';
 import 'package:project/domain/entities/user_client.dart';
 
 class ClientDataSource implements IClientDataSource {

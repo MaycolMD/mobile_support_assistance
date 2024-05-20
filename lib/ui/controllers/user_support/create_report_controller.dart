@@ -80,20 +80,21 @@ class CreateReportController extends GetxController {
     String description,
     int supportID,
   ) async {
-    await reportUseCase.addReport(
-      date,
-      rating,
-      status,
-      endTime,
-      startTime,
-      clientID,
-      description,
-      supportID,
+    Report report = Report(
+      date: date,
+      rating: rating,
+      status: status,
+      endTime: endTime,
+      startTime: startTime,
+      clientID: clientID,
+      description: description,
+      supportID: supportID,
     );
+    await reportUseCase.addReport(report);
   }
 
   getReports(String clientID, String supportID) async {
-    await reportUseCase.getReports(clientID,supportID);
+    await reportUseCase.getReports(clientID, supportID);
   }
 
   updateReport(
@@ -107,17 +108,18 @@ class CreateReportController extends GetxController {
     String description,
     int supportID,
   ) async {
-    await reportUseCase.updateReport(
-      id,
-      date,
-      rating,
-      status,
-      endTime,
-      startTime,
-      clientID,
-      description,
-      supportID,
+    Report report = Report(
+      id: id,
+      date: date,
+      rating: rating,
+      status: status,
+      endTime: endTime,
+      startTime: startTime,
+      clientID: clientID,
+      description: description,
+      supportID: supportID,
     );
+    await reportUseCase.updateReport(report);
   }
 
   deleteReport(String id) async {

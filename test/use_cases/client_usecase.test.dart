@@ -1,11 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:get/get.dart';
 import 'package:mockito/mockito.dart';
 import 'package:project/domain/entities/user_client.dart';
-import 'package:project/domain/repositories/client_repository.dart';
 import 'package:project/domain/use_case/client_usecase.dart';
 
-import '../mocks/client_test.mocks.mocks.dart';
+import '../mocks/client_mocks/client_test.mocks.mocks.dart';
 
 // Mock de ClientRepository
 //class MockIClientRepository extends Mock implements ClientRepository {}

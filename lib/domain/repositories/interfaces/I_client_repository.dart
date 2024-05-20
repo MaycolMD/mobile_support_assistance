@@ -1,4 +1,4 @@
-import 'package:project/data/datasources/remote/I_client_datasource.dart';
+import 'package:project/data/datasources/remote/interfaces/I_client_datasource.dart';
 import 'package:project/domain/entities/user_client.dart';
 
 abstract class IClientRepository {

@@ -4,7 +4,7 @@ import 'package:project/domain/use_case/report_usecase.dart';
 
 class MainUSController extends GetxController {
   List<Report> _reports = <Report>[].obs;
-  final ReportUseCase _reportUseCase = Get.put(ReportUseCase());
+  final ReportUseCase _reportUseCase = Get.find();
 
   List<Report> get reports => _reports;
 

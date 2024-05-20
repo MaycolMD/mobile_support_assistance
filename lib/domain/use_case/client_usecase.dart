@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
 import 'package:project/domain/entities/user_client.dart';
-import 'package:project/domain/repositories/I_client_repository.dart';
+import 'package:project/domain/repositories/interfaces/I_client_repository.dart';
 import 'package:project/domain/repositories/client_repository.dart';
 
 class ClientUseCase {

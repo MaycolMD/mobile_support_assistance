@@ -1,18 +1,19 @@
 import 'dart:convert';
 import 'package:loggy/loggy.dart';
 import 'package:http/http.dart' as http;
+import 'package:project/data/datasources/remote/interfaces/I_report_datasource.dart';
 import 'package:project/domain/entities/report.dart';
 
-class ReportDataSource {
+class ReportDataSource implements IReportDataSource {
   final http.Client httpClient;
   final String apiKey = '85lR9B';
-
 
   ReportDataSource({http.Client? client})
       : httpClient = client ?? http.Client();
 
+  @override
   Future<List<Report>> getAllReports() async {
-    List<Report> reports;
+    List<Report> reports = [];
     var request = Uri.parse("https://retoolapi.dev/$apiKey/report")
         .resolveUri(Uri(queryParameters: {
       "format": 'json',
@@ -27,13 +28,14 @@ class ReportDataSource {
         return r;
       }));
 
-      return reports;
+      return Future.value(reports);
     } else {
       logError("Got error code ${response.statusCode}");
       return Future.error('Error code ${response.statusCode}');
     }
   }
 
+  @override
   Future<List<Report>> getReports(String clientID, String supportID) async {
     List<Report> reports = [];
     var queryParams = {
@@ -60,13 +62,14 @@ class ReportDataSource {
         Report r = Report.fromJson(x);
         return r;
       }));
-      return reports;
+      return Future.value(reports);
     } else {
       logError("Got error code ${response.statusCode}");
       return Future.error('Error code ${response.statusCode}');
     }
   }
 
+  @override
   Future<bool> addReport(Report report) async {
     final response = await httpClient.post(
       Uri.parse("https://retoolapi.dev/$apiKey/report"),
@@ -85,6 +88,7 @@ class ReportDataSource {
     }
   }
 
+  @override
   Future<bool> deleteReport(String id) async {
     final response = await httpClient.delete(
       Uri.parse("https://retoolapi.dev/$apiKey/report/$id"),
@@ -95,18 +99,19 @@ class ReportDataSource {
 
     if (response.statusCode == 200) {
       // El reporte fue eliminado correctamente
-      return true;
+      return Future.value(true);
     } else if (response.statusCode == 404) {
       // El reporte no fue encontrado
       logError("Report with id $id not found");
-      return false;
+      return Future.value(false);
     } else {
       // Ocurrió algún error
       logError("Got error code ${response.statusCode}");
-      return false;
+      return Future.value(false);
     }
   }
 
+  @override
   Future<bool> updateReport(Report report) async {
     final response = await httpClient.put(
       Uri.parse("https://retoolapi.dev/$apiKey/report/${report.id}"),
@@ -118,15 +123,15 @@ class ReportDataSource {
 
     if (response.statusCode == 200) {
       // El reporte fue actualizado correctamente
-      return true;
+      return Future.value(true);
     } else if (response.statusCode == 404) {
       // El reporte no fue encontrado
       logError("Report with id ${report.id} not found");
-      return false;
+      return Future.value(false);
     } else {
       // Ocurrió algún error
       logError("Got error code ${response.statusCode}");
-      return false;
+      return Future.value(false);
     }
   }
 }
