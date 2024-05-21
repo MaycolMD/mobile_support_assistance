@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:html';
+import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
 import 'package:http/http.dart' as http;
 import 'package:project/data/datasources/remote/interfaces/I_support_datasource.dart';
@@ -49,17 +51,22 @@ class SupportDataSource implements ISupportDataSource {
       );
 
       if (response.statusCode == 200) {
-        return jsonDecode(response.body).isNotEmpty;
+        final r = jsonDecode(response.body);
+        if (r is List && r.isEmpty) {
+          return Future.value(false);
+        }
+        return Future.value(true);
       } else {
-        return false;
+        return Future.value(false);
       }
     } catch (e) {
       // Error desconocido
       logError("Error: $e");
-      return false;
+      return Future.value(false);
     }
   }
 
+  @override
   Future<bool> addSupport(UserSupport userSupport) async {
     final response = await httpClient.post(
       Uri.parse("https://retoolapi.dev/$apiKey/support"),

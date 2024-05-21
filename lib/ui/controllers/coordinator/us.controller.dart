@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:project/domain/entities/user_support.dart';
 import 'package:project/domain/use_case/us_usecase.dart';
 
 class FormControllers extends GetxController {
-  final SupportUserRepositoryUseCase _createSupportUserUseCase = Get.find();
+  final SupportUseCase _supportUseCase = Get.find();
 
   final TextEditingController userIdController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
@@ -21,8 +22,18 @@ class FormControllers extends GetxController {
 
     String role = 'support';
     try {
-      await _createSupportUserUseCase.addSupportUser(
-          id, name.trim(), email.trim(), password, role);
+      if (await _supportUseCase.checkEmailExists(email)) {
+        throw Exception('El correo electrónico ya está en uso');
+      }
+
+      UserSupport userSupport = UserSupport(
+        id: id,
+        name: name,
+        email: email,
+        password: password,
+        role: role,
+      );
+      await _supportUseCase.addSupport(userSupport);
       Get.snackbar('Éxito', 'El usuario de soporte ha sido creado');
     } catch (e) {
       Get.snackbar('Error', 'No se ha podido crear el usuario. error: $e');
@@ -30,7 +41,7 @@ class FormControllers extends GetxController {
   }
 
   getSupports() async {
-    await _createSupportUserUseCase.getSupports();
+    await _supportUseCase.getSupports();
   }
 
   // Método para actualizar un usuario de soporte
@@ -43,8 +54,15 @@ class FormControllers extends GetxController {
     }
 
     try {
-      await _createSupportUserUseCase.updateSupport(
-          id, name.trim(), email.trim(), password, 'support');
+      UserSupport support = UserSupport(
+        id: id,
+        name: name.trim(),
+        email: email.trim(),
+        password: password,
+        role: 'support',
+      );
+
+      await _supportUseCase.updateSupport(support);
       Get.snackbar('Success', 'User has been updated!!');
     } catch (e) {
       Get.snackbar('Error', 'Something wrong. error: $e');
@@ -53,7 +71,7 @@ class FormControllers extends GetxController {
 
   // Método para eliminar un usuario de soporte
   Future<void> deleteSupport(int id) async {
-    await _createSupportUserUseCase.deleteSupport(id);
+    await _supportUseCase.deleteSupport(id);
   }
 
   bool validateUserId(int id) {

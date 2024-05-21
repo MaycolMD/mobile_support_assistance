@@ -5,7 +5,7 @@ import 'package:project/domain/use_case/us_usecase.dart';
 class LoginController extends GetxController {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  final SupportUserRepositoryUseCase _supportcase = Get.find();
+  final SupportUseCase _supportcase = Get.find();
 
   Future<void> validateLogin() async {
     if (!validateEmail() || !validatePassword()) {
