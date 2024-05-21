@@ -3,8 +3,7 @@ import 'package:get/get.dart';
 import 'package:project/domain/use_case/us_usecase.dart';
 
 class FormControllers extends GetxController {
-  final SupportUserRepositoryUseCase _createSupportUserUseCase =
-      SupportUserRepositoryUseCase();
+  final SupportUserRepositoryUseCase _createSupportUserUseCase = Get.find();
 
   final TextEditingController userIdController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
@@ -12,7 +11,7 @@ class FormControllers extends GetxController {
   final TextEditingController passwordController = TextEditingController();
   // Método para crear un nuevo usuario de soporte
   Future<void> createSupportUser(
-    int id, String name, String email, String password) async {
+      int id, String name, String email, String password) async {
     if (!validateUserId(id) ||
         !validateName(name) ||
         !validateEmail(email) ||
@@ -30,15 +29,16 @@ class FormControllers extends GetxController {
     }
   }
 
-  
   getSupports() async {
     await _createSupportUserUseCase.getSupports();
   }
-  
+
   // Método para actualizar un usuario de soporte
   Future<void> updateSupport(
-    int id, String name, String email, String password) async {
-    if (!validateName(name) || !validateEmail(email) || !validatePassword(password)) {
+      int id, String name, String email, String password) async {
+    if (!validateName(name) ||
+        !validateEmail(email) ||
+        !validatePassword(password)) {
       return;
     }
 

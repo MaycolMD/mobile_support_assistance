@@ -1,12 +1,14 @@
-import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
 import 'package:project/domain/entities/report.dart';
 import 'package:project/domain/repositories/interfaces/I_report_repository.dart';
-import 'package:project/domain/repositories/report_repository.dart';
 
 class ReportUseCase {
   final IReportRepository _repository;
   ReportUseCase(this._repository);
+
+  Future<List<Report>> getAllReports() async {
+    return await _repository.getAllReports();
+  }
 
   Future<List<Report>> getReports(String clientID, String supportID) async {
     logInfo("Getting reports from useCase");

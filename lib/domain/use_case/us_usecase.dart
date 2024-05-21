@@ -1,10 +1,9 @@
-import 'package:project/domain/repositories/repository_support.dart';
+import 'package:project/domain/repositories/interfaces/I_support_repository.dart';
 import 'package:project/domain/entities/user_support.dart';
-import 'package:get/get.dart';
 
 class SupportUserRepositoryUseCase {
-  final SupportRepository _repository = Get.put(SupportRepository());
-  SupportUserRepositoryUseCase();
+  final ISupportRepository _repository;
+  SupportUserRepositoryUseCase(this._repository);
 
   Future<List<UserSupport>> getSupports() async {
     return await _repository.getSupports();
@@ -30,7 +29,7 @@ class SupportUserRepositoryUseCase {
       role: role,
     );
 
-    await _repository.executeSupportUser(userSupport);
+    await _repository.addSupport(userSupport);
   }
 
   Future<void> deleteSupport(int id) async {
@@ -38,17 +37,15 @@ class SupportUserRepositoryUseCase {
   }
 
   Future<void> updateSupport(
-  int id, String name, String email, String password, String role) async {
-  
-  UserSupport userSupport = UserSupport(
-    id: id,
-    name: name,
-    email: email,
-    password: password,
-    role: role,
-  );
+      int id, String name, String email, String password, String role) async {
+    UserSupport userSupport = UserSupport(
+      id: id,
+      name: name,
+      email: email,
+      password: password,
+      role: role,
+    );
 
-  await _repository.updateSupport(userSupport);
-}
-
+    await _repository.updateSupport(userSupport);
+  }
 }
