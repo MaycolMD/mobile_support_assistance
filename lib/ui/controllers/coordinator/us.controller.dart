@@ -12,8 +12,8 @@ class FormControllers extends GetxController {
   final TextEditingController passwordController = TextEditingController();
   // Método para crear un nuevo usuario de soporte
   Future<void> createSupportUser(
-      int id, String name, String email, String password) async {
-    if (!validateUserId(id) ||
+      int idInt, String name, String email, String password) async {
+    if (!validateUserId(idInt) ||
         !validateName(name) ||
         !validateEmail(email) ||
         !validatePassword(password)) {
@@ -27,7 +27,7 @@ class FormControllers extends GetxController {
       }
 
       UserSupport userSupport = UserSupport(
-        id: id,
+        id: idInt,
         name: name,
         email: email,
         password: password,

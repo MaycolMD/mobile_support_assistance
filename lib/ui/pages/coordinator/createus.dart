@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import './../../../widgets/text_field.dart';
 import './../../../widgets/back_button.dart';
 import './../../../widgets/submit_button.dart';
@@ -45,7 +46,7 @@ class _CreateUserState extends State<CreateUser> {
                   ),
                   const SizedBox(height: 20),
                   const Text(
-                    'NEW REPORTING USER',
+                    'NEW SUPPORT USER',
                     style: TextStyle(
                       fontSize: 40,
                     ),
@@ -80,7 +81,12 @@ class _CreateUserState extends State<CreateUser> {
                     height: 50,
                   ),
                   buildSubmitButton(onPressed: () {
-                    _controllers.createSupportUser(_controllers.userIdController.value as int, _controllers.nameController as String, _controllers.emailController as String, _controllers.passwordController as String );
+                    _controllers.createSupportUser(
+                        int.parse(_controllers.userIdController.text),
+                        _controllers.nameController.text,
+                        _controllers.emailController.text,
+                        _controllers.passwordController.text);
+                    Get.back();
                   }),
                   const SizedBox(
                     height: 20,

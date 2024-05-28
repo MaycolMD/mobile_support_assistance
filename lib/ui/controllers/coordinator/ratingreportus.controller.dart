@@ -1,20 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:project/domain/entities/report.dart';
+import 'package:project/domain/use_case/report_usecase.dart';
 
 class RatingReportUSController extends GetxController {
+  final RxList<Report> _reports = <Report>[].obs;
+
+  final ReportUseCase _reportUseCase = Get.find();
+
   final TextEditingController clientController = TextEditingController();
   final TextEditingController supportController = TextEditingController();
+
+  final RxBool shouldRefresh = true.obs;
+
+  List<Report> get reports => _reports;
 
   RxString selectedClient = 'All Clients'.obs;
   RxString selectedSupport = 'All Supports'.obs;
 
-  final RxBool shouldRefresh = true.obs;
-
   @override
   void onClose() {
+    getAllReports();
     clientController.dispose();
     supportController.dispose();
     super.onClose();
+  }
+
+  Future<void> getAllReports() async {
+    _reports.value = await _reportUseCase.getAllReports();
   }
 
   void selectClient() {
@@ -82,6 +95,6 @@ class RatingReportUSController extends GetxController {
   }
 
   void goToMainPage() {
-    Get.toNamed('/MainPageUC');
+    Get.offNamed('/MainPageUC');
   }
 }

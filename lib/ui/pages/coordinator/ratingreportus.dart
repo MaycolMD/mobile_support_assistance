@@ -55,13 +55,7 @@ class RatingReportUS extends StatelessWidget {
                 Obx(() {
                   if (controller.shouldRefresh.value) {
                     return FutureBuilder(
-                        future: _controller.getReports(
-                            controller.selectedClient.value == 'All Clients'
-                                ? ''
-                                : controller.selectedClient.value,
-                            controller.selectedSupport.value == 'All Supports'
-                                ? ''
-                                : controller.selectedSupport.value),
+                        future: controller.getAllReports(),
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
@@ -157,17 +151,18 @@ class RatingReportUS extends StatelessWidget {
   }
 
   Column generateReportsCards() {
+    int size = controller.reports.length;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(
-        (_controller.reports.length / 3).ceil(),
+        (size / 3).ceil(),
         (rowIndex) {
           return Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(3, (colIndex) {
               final index = rowIndex * 3 + colIndex;
-              if (index < _controller.reports.length) {
-                final report = _controller.reports[index];
+              if (index < size) {
+                final report = controller.reports[index];
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: SizedBox(
