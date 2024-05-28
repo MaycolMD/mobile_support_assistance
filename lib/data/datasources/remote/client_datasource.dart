@@ -48,42 +48,41 @@ class ClientDataSource {
   }
 
   Future<bool> deleteClient(int id) async {
-  final response = await http.delete(
-    Uri.parse("https://retoolapi.dev/$apiKey/client/$id"),
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-  );
+    final response = await http.delete(
+      Uri.parse("https://retoolapi.dev/$apiKey/client/$id"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
 
-  if (response.statusCode == 204) {
-    return true;
-  } else if (response.statusCode == 404) {
-    logError("Client with id $id not found");
-    return false;
-  } else {
-    logError("Got error code ${response.statusCode}");
-    return false;
+    if (response.statusCode == 204) {
+      return true;
+    } else if (response.statusCode == 404) {
+      logError("Client with id $id not found");
+      return false;
+    } else {
+      logError("Got error code ${response.statusCode}");
+      return false;
+    }
   }
-}
 
-Future<bool> updateClient(UserClient client) async {
-  final response = await http.put(
-    Uri.parse("https://retoolapi.dev/$apiKey/client/${client.id}"),
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-    body: jsonEncode(client.toJson()),
-  );
+  Future<bool> updateClient(UserClient client) async {
+    final response = await http.put(
+      Uri.parse("https://retoolapi.dev/$apiKey/client/${client.id}"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(client.toJson()),
+    );
 
-  if (response.statusCode == 200) {
-    return true;
-  } else if (response.statusCode == 404) {
-    logError("Client with id ${client.id} not found");
-    return false;
-  } else {
-    logError("Got error code ${response.statusCode}");
-    return false;
+    if (response.statusCode == 200) {
+      return true;
+    } else if (response.statusCode == 404) {
+      logError("Client with id ${client.id} not found");
+      return false;
+    } else {
+      logError("Got error code ${response.statusCode}");
+      return false;
+    }
   }
-}
-
 }
