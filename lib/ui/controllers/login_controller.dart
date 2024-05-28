@@ -6,7 +6,7 @@ class LoginController extends GetxController {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final SupportUserRepositoryUseCase _supportcase =
-      Get.find();
+      Get.put(SupportUserRepositoryUseCase());
 
   Future<void> validateLogin() async {
     if (!validateEmail() || !validatePassword()) {

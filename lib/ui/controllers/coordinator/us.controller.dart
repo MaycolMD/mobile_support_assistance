@@ -5,8 +5,7 @@ import 'package:project/domain/use_case/us_usecase.dart';
 
 class FormControllers extends GetxController {
   final SupportUserRepositoryUseCase _createSupportUserUseCase =
-      Get.find();
-
+      SupportUserRepositoryUseCase();
 
   final TextEditingController userIdController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
@@ -36,11 +35,10 @@ class FormControllers extends GetxController {
     }
   }
 
-  
   getSupports() async {
     await _createSupportUserUseCase.getSupports();
   }
-  
+
   updateSupport(UserSupport client) async {
     await _createSupportUserUseCase.updateSupport(client);
   }

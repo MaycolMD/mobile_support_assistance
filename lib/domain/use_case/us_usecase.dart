@@ -3,8 +3,8 @@ import 'package:project/domain/entities/user_support.dart';
 import 'package:get/get.dart';
 
 class SupportUserRepositoryUseCase {
-  final SupportRepository _repository;
-  SupportUserRepositoryUseCase(this._repository);
+  final SupportRepository _repository = Get.put(SupportRepository());
+  SupportUserRepositoryUseCase();
 
   Future<List<UserSupport>> getSupports() async {
     return await _repository.getSupports();

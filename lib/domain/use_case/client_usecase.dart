@@ -4,8 +4,8 @@ import 'package:project/domain/entities/user_client.dart';
 import 'package:project/domain/repositories/client_repository.dart';
 
 class ClientUseCase {
-  final ClientRepository _repository;
-  ClientUseCase(this._repository);
+  final ClientRepository _repository = Get.put(ClientRepository());
+  ClientUseCase();
 
   Future<List<String>> getClients() async {
     logInfo("Getting clients from useCase");
