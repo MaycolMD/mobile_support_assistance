@@ -6,7 +6,7 @@ import 'package:project/domain/entities/user_client.dart';
 
 class ClientDataSource implements IClientDataSource {
   final http.Client httpClient;
-  final String apiKey = 'XzNd0U';
+  final String apiKey = '5k2z53';
 
   ClientDataSource({http.Client? client})
       : httpClient = client ?? http.Client();

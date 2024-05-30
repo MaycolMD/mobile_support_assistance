@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project/domain/use_case/us_usecase.dart';
+import 'package:project/ui/pages/coordinator/main_uc.dart';
+import 'package:project/ui/pages/support/main_us.dart';
 
 class LoginController extends GetxController {
   TextEditingController emailController = TextEditingController();
@@ -20,7 +22,7 @@ class LoginController extends GetxController {
         Get.offNamed('/MainPageUC');
       } else if (await _supportcase.isGetSupport(email, password)) {
         clearControllers();
-        Get.offNamed('/MainUS');
+        Get.to(() => MainUS(), arguments: [email]);
       } else {
         Get.snackbar('Incorrect credentials', 'Check it please!!');
       }

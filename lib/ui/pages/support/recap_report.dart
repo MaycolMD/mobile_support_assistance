@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:project/domain/entities/report.dart';
+import 'package:project/ui/controllers/report/report_controller.dart';
 import 'package:project/widgets/build_text_field.dart';
 
 class RecapReport extends StatefulWidget {
@@ -10,9 +12,46 @@ class RecapReport extends StatefulWidget {
 }
 
 class _RecapReportState extends State<RecapReport> {
-  final int _number = 4; // Con un get hay que tomar el rate que le dieron
+  final ReportController _controller = Get.put(ReportController());
+  final int _number = int.parse(Get.arguments[0]); //
+  late Report report;
+  late String clientName;
+
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: _controller.getReportById(_number),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          report = _controller.report;
+          return build2(context, report);
+        } else {
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        }
+      },
+    );
+  }
+
+  @override
+  Widget build2(BuildContext context, Report report) {
+    return FutureBuilder(
+        future: _controller.getClientNameOnReport(report.clientID),
+        builder: ((context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            clientName = _controller.selectedClient.toString();
+            return RecapReport(context, report, clientName);
+          } else {
+            return const Scaffold(
+              body: Center(child: CircularProgressIndicator()),
+            );
+          }
+        }));
+  }
+
+  @override
+  Widget RecapReport(BuildContext context, Report report, String clientName) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Center(
@@ -28,30 +67,16 @@ class _RecapReportState extends State<RecapReport> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const Padding(
+                      Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 50, 0),
                         child: Text(
-                          '[ID] report',
+                          'REPORT #$_number',
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: 24.0,
                               fontFamily: 'Roboto',
                               fontWeight: FontWeight.bold,
                               decoration: TextDecoration.none),
-                        ),
-                      ),
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
-                        child: IconButton(
-                          icon: const Icon(
-                            Icons.close_rounded,
-                            color: Colors.deepPurple,
-                            size: 25,
-                          ),
-                          onPressed: () {
-                            Get.toNamed('MainUS');
-                          },
                         ),
                       )
                     ],
@@ -72,19 +97,19 @@ class _RecapReportState extends State<RecapReport> {
                             buildTextField(
                                 context: context,
                                 label: 'Status',
-                                hintText: 'Status report'),
+                                hintText: '${report.status}'),
                             const SizedBox(
                               height: 10,
                             ),
                             buildTextField(
                                 context: context,
                                 label: 'Client ',
-                                hintText: 'Client username'),
+                                hintText: '${clientName}'),
                             const SizedBox(height: 10),
                             buildTextField(
                                 context: context,
                                 label: 'Date   ',
-                                hintText: "Support's date"),
+                                hintText: '${report.date}'),
                             const SizedBox(
                               height: 10,
                             ),
@@ -102,10 +127,10 @@ class _RecapReportState extends State<RecapReport> {
                               ),
                               padding:
                                   const EdgeInsets.all(10), // Espaciado interno
-                              child: const SingleChildScrollView(
+                              child: SingleChildScrollView(
                                 // Para que la información sea scrollable si es muy larga
                                 child: Text(
-                                  'Description from supporter', // Texto a mostrar
+                                  '${report.description}', // Texto a mostrar
                                   style: TextStyle(
                                     fontFamily: 'Readex Pro',
                                     letterSpacing: 0,
@@ -119,14 +144,14 @@ class _RecapReportState extends State<RecapReport> {
                             buildTextField(
                                 context: context,
                                 label: 'Start Time',
-                                hintText: 'Start Time'),
+                                hintText: '${report.startTime}'),
                             const SizedBox(
                               height: 10,
                             ),
                             buildTextField(
                                 context: context,
                                 label: 'End Time  ',
-                                hintText: 'End Time'),
+                                hintText: '${report.endTime}'),
                             const SizedBox(
                               height: 10,
                             ),
@@ -152,7 +177,7 @@ class _RecapReportState extends State<RecapReport> {
                                   for (int i = 0; i < 5; i++)
                                     Icon(
                                       Icons.star_rounded,
-                                      color: i < _number
+                                      color: i < report.rating
                                           ? Colors.deepPurple
                                           : Colors.grey,
                                       size: 30,

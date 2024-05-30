@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project/ui/controllers/user_support/main_us_controller.dart';
+import 'package:project/ui/pages/support/create_report.dart';
 import 'package:project/widgets/custom_row.dart';
 
 class MainUS extends StatelessWidget {
   final MainUSController _controller = Get.put(MainUSController());
+  String email = Get.arguments[0];
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +34,8 @@ class MainUS extends StatelessWidget {
               ],
             ),
             FutureBuilder(
-              future: _controller
-                  .getAllReports(), // Espera a que se completen las futuras operaciones
+              future: _controller.getAllReports(
+                  email), // Espera a que se completen las futuras operaciones
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const CircularProgressIndicator(); // Muestra un indicador de carga mientras se espera
@@ -51,11 +53,11 @@ class MainUS extends StatelessWidget {
                             color: Colors.white,
                           ),
                         ),
-                        const Padding(
+                        Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
                           child: Text(
-                            '[User email address]',
-                            style: TextStyle(
+                            'Welcome, $email',
+                            style: const TextStyle(
                               color: Colors.black,
                               fontSize: 20.0,
                               fontFamily: 'Roboto',
@@ -90,7 +92,8 @@ class MainUS extends StatelessWidget {
                           child: ElevatedButton(
                             key: const Key('ButtonCreateReport'),
                             onPressed: () {
-                              Get.toNamed('/CreateReport');
+                              Get.to(() => const CreateReport(),
+                                  arguments: [email]);
                             },
                             style: const ButtonStyle(
                               backgroundColor:

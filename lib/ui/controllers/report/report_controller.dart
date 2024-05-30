@@ -3,36 +3,45 @@ import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
 import 'package:project/domain/entities/report.dart';
 import 'package:project/domain/entities/user_client.dart';
+import 'package:project/domain/entities/user_support.dart';
 import 'package:project/domain/use_case/client_usecase.dart';
 import 'package:project/domain/use_case/report_usecase.dart';
+import 'package:project/domain/use_case/us_usecase.dart';
 
-class CreateReportController extends GetxController {
-  List<UserClient> _clients = <UserClient>[].obs;
+class ReportController extends GetxController {
+  RxList<String> clientsName = <String>[].obs;
+
   final ClientUseCase clientUseCase = Get.find();
+  final SupportUseCase supportUseCase = Get.find();
   final ReportUseCase reportUseCase = Get.find();
 
-  final TextEditingController descriptionController = TextEditingController();
+  List<String> get clientsNameList => clientsName;
+
+  late Report report;
 
   // Otros campos de estado
   String? selectedClient;
-  List<UserClient> get clients => _clients;
+  int? selectedClientID;
+  int? supportID;
   DateTime? selectedDate;
   TimeOfDay? selectedTimeStart;
   TimeOfDay? selectedTimeEnd;
 
-  Future<List<UserClient>> getClients() async {
-    logInfo("Getting clients from controller");
-    _clients = await clientUseCase.getClients();
-    return _clients;
+  @override
+  void onInit() {
+    // getClientsName(); // do not run this code there because code will be crashed!!!!
+    super.onInit();
   }
 
-  Future<List<String>> getClientsName() async {
-    List<String> names = <String>[].obs;
-    _clients = await getClients();
-    for (var element in _clients) {
-      names.add(element.name);
+  Future<void> getClientsName() async {
+    RxList<UserClient> clients = <UserClient>[].obs;
+    clients.value = await clientUseCase.getClients();
+
+    for (var client in clients) {
+      clientsName.add(client.name);
     }
-    return names;
+
+    clientsName;
   }
 
   Future<DateTime?> selectDate(BuildContext context) async {
@@ -76,10 +85,30 @@ class CreateReportController extends GetxController {
     String status,
     String endTime,
     String startTime,
-    int clientID,
+    String clientName,
     String description,
-    int supportID,
+    String supportEmail,
   ) async {
+    RxList<UserClient> clients = <UserClient>[].obs;
+    clients.value = await clientUseCase.getClients();
+
+    int clientID = 0;
+    for (var client in clients) {
+      if (client.name == clientName) {
+        clientID = client.id!;
+      }
+    }
+
+    RxList<UserSupport> supports = <UserSupport>[].obs;
+    supports.value = await supportUseCase.getSupports();
+
+    int supportID = 0;
+    for (var support in supports) {
+      if (support.email == supportEmail) {
+        supportID = support.id!;
+      }
+    }
+
     Report report = Report(
       date: date,
       rating: rating,
@@ -95,6 +124,34 @@ class CreateReportController extends GetxController {
 
   getReports(String clientID, String supportID) async {
     await reportUseCase.getReports(clientID, supportID);
+  }
+
+  Future<void> getReportById(int id) async {
+    RxList<Report> reports = <Report>[].obs;
+    reports.value = await reportUseCase.getAllReports();
+
+    late Report reportTemp;
+    for (var report in reports) {
+      if (report.id == id) {
+        reportTemp = report;
+      }
+    }
+
+    report = reportTemp;
+  }
+
+  Future<void> getClientNameOnReport(int id) async {
+    RxList<UserClient> clients = <UserClient>[].obs;
+    clients.value = await clientUseCase.getClients();
+
+    late String name;
+    for (var client in clients) {
+      if (client.id == id) {
+        name = client.name;
+      }
+    }
+
+    selectedClient = name;
   }
 
   updateReport(

@@ -38,7 +38,7 @@ class Report {
         "status": status,
         "endTime": endTime,
         "startTime": startTime,
-        "clientID": supportID,
+        "clientID": clientID,
         "description": description,
         "supportID": supportID
       };

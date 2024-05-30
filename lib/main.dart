@@ -15,6 +15,7 @@ import 'package:project/domain/repositories/support_repository.dart';
 import 'package:project/domain/use_case/client_usecase.dart';
 import 'package:project/domain/use_case/report_usecase.dart';
 import 'package:project/domain/use_case/us_usecase.dart';
+import 'package:project/ui/controllers/login_controller.dart';
 import 'package:project/ui/pages/coordinator/list_supports.dart';
 import 'package:project/ui/pages/login/login.dart';
 import 'package:project/ui/pages/support/create_report.dart';
@@ -38,6 +39,8 @@ void main() {
   Get.put(ClientUseCase(Get.find()));
   Get.put(ReportUseCase(Get.find()));
   Get.put(SupportUseCase(Get.find()));
+
+  Get.put(LoginController());
 
   runApp(const MyApp());
 }

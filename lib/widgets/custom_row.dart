@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:project/ui/pages/support/recap_report.dart';
 
 Widget customRowWidget({
   required BuildContext context,
@@ -31,7 +31,7 @@ Widget customRowWidget({
                 ),
                 child: IconButton(
                   onPressed: () {
-                    Get.toNamed('/RecapReport');
+                    Get.to(() => const RecapReport(), arguments: [id]);
                   },
                   icon: const Icon(
                     Icons.add,
@@ -41,7 +41,7 @@ Widget customRowWidget({
                   iconSize: 24,
                   padding: EdgeInsets.zero,
                   splashRadius: 24,
-                  tooltip: 'Add',
+                  tooltip: 'Review',
                 ),
               ),
             ),
