@@ -38,8 +38,8 @@ class Report {
         "status": status,
         "endTime": endTime,
         "startTime": startTime,
-        "clientName": supportID,
+        "clientID": supportID,
         "description": description,
-        "supportName": supportID
+        "supportID": supportID
       };
 }

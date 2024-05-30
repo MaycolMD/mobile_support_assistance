@@ -270,7 +270,8 @@ class _CreateReportState extends State<CreateReport> {
                                 (controller.selectedTimeEnd).toString(),
                                 (controller.selectedTimeStart).toString(),
                                 1,
-                                controller.descriptionController.text,
+                                controller.descriptionController.value
+                                    .toString(),
                                 1);
                             controller.descriptionController
                                 .clear(); // Borrar el contenido del campo de descripción
