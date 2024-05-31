@@ -44,6 +44,11 @@ class FormControllers extends GetxController {
     await _supportUseCase.getSupports();
   }
 
+  getSupportByName(String name) async {
+    UserSupport? u = await _supportUseCase.getSupportByName(name);
+    return u;
+  }
+
   // Método para actualizar un usuario de soporte
   Future<void> updateSupport(
       int id, String name, String email, String password) async {

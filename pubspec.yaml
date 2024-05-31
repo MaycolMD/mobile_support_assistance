@@ -41,6 +41,9 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   http: ^1.2.1
   loggy: ^2.0.3
+  hive:
+  hive_flutter:
+  connectivity_plus:
 
 dev_dependencies:
   flutter_test:
@@ -55,6 +58,7 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^3.0.0
   test: ^1.24.9
+  hive_generator:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

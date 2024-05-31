@@ -7,6 +7,8 @@ abstract class ISupportDataSource {
 
   Future<bool> addSupport(UserSupport userSupport);
 
+  Future<UserSupport?> getSupportByName(String name);
+
   Future<bool> checkEmailExists(String email);
 
   Future<bool> deleteSupport(int id);

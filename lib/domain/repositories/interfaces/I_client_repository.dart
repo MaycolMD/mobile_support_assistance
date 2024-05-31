@@ -8,6 +8,8 @@ abstract class IClientRepository {
 
   Future<List<UserClient>> getClients();
 
+  Future<UserClient?> getClientByName(String name);
+
   Future<bool> addClient(UserClient user);
 
   Future<bool> updateClient(UserClient user);

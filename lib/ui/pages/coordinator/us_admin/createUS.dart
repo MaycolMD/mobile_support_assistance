@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:project/domain/use_case/us_usecase.dart';
+import 'package:project/ui/controllers/user_support/us_controller.dart';
 import 'package:project/ui/pages/coordinator/us_admin/us_admin_page.dart';
+import '../../../../domain/entities/user_support.dart';
 import '../../../../widgets/text_field.dart';
 import '../../../../widgets/back_button.dart';
 import '../../../../widgets/submit_button.dart';
@@ -17,6 +20,10 @@ class _CreateUserState extends State<CreateUser> {
   final _formKey = GlobalKey<FormState>();
   String? email = Get.arguments[0];
   final FormControllers _controllers = FormControllers();
+  final USController controller = Get.put(USController());
+
+  final RxList<UserSupport> _supports = <UserSupport>[].obs;
+  final SupportUseCase _supportUseCase = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -87,6 +94,8 @@ class _CreateUserState extends State<CreateUser> {
                         _controllers.nameController.text,
                         _controllers.emailController.text,
                         _controllers.passwordController.text);
+
+                    Get.delete<USController>();
                     Get.back();
                   }),
                   const SizedBox(
@@ -105,7 +114,7 @@ class _CreateUserState extends State<CreateUser> {
   Widget buildGoBackButton() {
     return OutlinedButton(
       key: const Key('ButtonGoBack'),
-      onPressed: () {
+      onPressed: () async {
         Get.to(() => AdminPageUS(), arguments: [email]);
       },
       style: ButtonStyle(

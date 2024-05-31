@@ -8,6 +8,8 @@ abstract class ISupportRepository {
 
   Future<List<UserSupport>> getSupports();
 
+  Future<UserSupport?> getSupportByName(String name);
+
   Future<bool> isGetSupport(String email, String password);
 
   Future<bool> addSupport(UserSupport userSupport);

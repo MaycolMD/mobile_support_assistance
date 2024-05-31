@@ -13,6 +13,10 @@ class SupportRepository implements ISupportRepository {
       await _supportDataSource.getSupports();
 
   @override
+  Future<UserSupport?> getSupportByName(String name) async =>
+      await _supportDataSource.getSupportByName(name);
+
+  @override
   Future<bool> isGetSupport(String email, String password) async =>
       await _supportDataSource.isGetSupport(email, password);
 
@@ -31,5 +35,4 @@ class SupportRepository implements ISupportRepository {
   @override
   Future<bool> updateSupport(UserSupport user) async =>
       await _supportDataSource.updateSupport(user);
-
 }

@@ -1,28 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
-import 'package:project/domain/entities/user_support.dart';
-import 'package:project/ui/controllers/user_support/us_controller.dart';
-import 'package:project/ui/pages/coordinator/us_admin/createus.dart';
-import 'package:project/ui/pages/coordinator/us_admin/updateUS.dart';
+import 'package:project/domain/entities/user_client.dart';
+
+import 'package:project/ui/controllers/client/client_controller.dart';
 import 'package:project/ui/pages/coordinator/us_admin/us_admin_page.dart';
 
 import '../../../../widgets/submit_button.dart';
 import '../../../../widgets/text_field.dart';
-import '../../../controllers/coordinator/us.controller.dart';
+import '../../../controllers/coordinator/createclient.controller.dart';
 
-class deleteUS extends StatefulWidget {
-  const deleteUS({super.key});
+class DeleteClient extends StatefulWidget {
+  const DeleteClient({super.key});
 
   @override
-  State<deleteUS> createState() => _deleteUSState();
+  State<DeleteClient> createState() => _deleteClientState();
 }
 
-class _deleteUSState extends State<deleteUS> {
-  String email = Get.arguments[0];
-  final USController controller = Get.put(USController());
-  Future<void>? supportNamesFuture;
-  String selectedSupport = '';
+class _deleteClientState extends State<DeleteClient> {
+  String name = Get.arguments[0];
+  final ClientController controller = Get.put(ClientController());
+  Future<void>? clientNamesFuture;
+  String selectedclient = '';
   final _formKey = GlobalKey<FormState>();
 
   bool showUserDataInput = false;
@@ -37,10 +36,10 @@ class _deleteUSState extends State<deleteUS> {
   @override
   void initState() {
     super.initState();
-    supportNamesFuture = controller.getSupportsName().then((_) {
-      if (controller.supportsNameList.isNotEmpty) {
+    clientNamesFuture = controller.getClientsName().then((_) {
+      if (controller.clientsNameList.isNotEmpty) {
         setState(() {
-          selectedSupport = controller.supportsNameList.first;
+          selectedclient = controller.clientsNameList.first;
         });
       }
     });
@@ -56,10 +55,10 @@ class _deleteUSState extends State<deleteUS> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<void>(
-      future: supportNamesFuture,
+      future: clientNamesFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
-          List<String> supportsName = controller.supportsNameList;
+          List<String> clientsName = controller.clientsNameList;
           return Scaffold(
             resizeToAvoidBottomInset: false,
             body: Center(
@@ -87,7 +86,7 @@ class _deleteUSState extends State<deleteUS> {
                         ),
                         const SizedBox(height: 20),
                         const Text(
-                          'REMOVE A SUPPORT USER',
+                          'REMOVE A CLIENT USER',
                           style: TextStyle(
                             fontSize: 40,
                           ),
@@ -121,11 +120,11 @@ class _deleteUSState extends State<deleteUS> {
                                 ),
                                 child: DropdownButtonHideUnderline(
                                   child: DropdownButton<String>(
-                                    value: selectedSupport,
+                                    value: selectedclient,
                                     icon: const Icon(Icons.arrow_downward),
                                     isExpanded:
                                         true, // Asegura que el DropdownButton ocupe todo el ancho del SizedBox
-                                    items: supportsName
+                                    items: clientsName
                                         .map<DropdownMenuItem<String>>(
                                             (String value) {
                                       return DropdownMenuItem<String>(
@@ -135,7 +134,7 @@ class _deleteUSState extends State<deleteUS> {
                                     }).toList(),
                                     selectedItemBuilder:
                                         (BuildContext context) {
-                                      return supportsName
+                                      return clientsName
                                           .map<Widget>((String value) {
                                         return Center(
                                           child: Text(
@@ -150,7 +149,7 @@ class _deleteUSState extends State<deleteUS> {
                                     },
                                     onChanged: (String? value) {
                                       setState(() {
-                                        selectedSupport = value!;
+                                        selectedclient = value!;
                                       });
                                     },
                                   ),
@@ -163,13 +162,11 @@ class _deleteUSState extends State<deleteUS> {
                                 // Acción para el botón de la lupa
 
                                 try {
-                                  UserSupport? user = await _controllers
-                                      .getSupportByName(selectedSupport);
+                                  UserClient? user = await _controllers
+                                      .getClientByName(selectedclient);
 
                                   userIdController.text = user!.id.toString();
                                   nameController.text = user.name;
-                                  emailController.text = user.email;
-                                  passwordController.text = user.password;
 
                                   showUserDataInputWidget();
                                 } catch (e) {
@@ -209,8 +206,8 @@ class _deleteUSState extends State<deleteUS> {
       key: const Key('ButtonGoBack'),
       onPressed: () {
         // Limpiar el controlador asociado a UpdateUS antes de navegar de regreso
-        Get.delete<USController>();
-        Get.to(() => AdminPageUS(), arguments: [email]);
+        Get.delete<ClientController>();
+        Get.to(() => AdminPageUS(), arguments: [name]);
       },
       style: ButtonStyle(
         padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
@@ -251,26 +248,15 @@ class _deleteUSState extends State<deleteUS> {
           const SizedBox(height: 20),
           buildTextField('Name', nameController, nameController.text,
               isEditable: false),
-          const SizedBox(height: 20),
-          buildTextField('Email', emailController, emailController.text,
-              isEditable: false),
-          const SizedBox(height: 20),
-          buildTextField(
-            'Password',
-            passwordController,
-            passwordController.text,
-            isEditable: false,
-            isObscureText: true,
-          ),
           const SizedBox(height: 50),
           buildSubmitButton(
             onPressed: () {
               print(int.parse(userIdController.text));
               print(nameController.text);
 
-              _controllers.deleteSupport(int.parse(userIdController.text));
+              _controllers.deleteClient(int.parse(userIdController.text));
 
-              Get.delete<USController>();
+              Get.delete<ClientController>();
               Get.back();
             },
           ),

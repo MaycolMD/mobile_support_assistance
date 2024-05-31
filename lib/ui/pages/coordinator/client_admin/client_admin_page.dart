@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:project/ui/pages/coordinator/client_admin/client_admin_page.dart';
+import 'package:project/domain/entities/user_support.dart';
+import 'package:project/ui/controllers/user_support/us_controller.dart';
 import 'package:project/ui/pages/coordinator/client_admin/createclient.dart';
-import 'package:project/ui/pages/coordinator/list_supports.dart';
-import 'package:project/ui/pages/coordinator/ratingreportus.dart';
-import 'package:project/ui/pages/coordinator/us_admin/us_admin_page.dart';
+import 'package:project/ui/pages/coordinator/client_admin/deleteClient.dart';
+import 'package:project/ui/pages/coordinator/client_admin/updateClient.dart';
+import 'package:project/ui/pages/coordinator/main_uc.dart';
+import 'package:project/ui/pages/coordinator/us_admin/createUS.dart';
+import 'package:project/ui/pages/coordinator/us_admin/deleteUS.dart';
+import 'package:project/ui/pages/coordinator/us_admin/updateUS.dart';
 
-class MainPageUC extends StatefulWidget {
-  const MainPageUC({super.key});
+class AdminPageClient extends StatefulWidget {
+  const AdminPageClient({super.key});
 
   @override
-  _MainPageUCState createState() => _MainPageUCState();
+  _AdminPageUSState createState() => _AdminPageUSState();
 }
 
-class _MainPageUCState extends State<MainPageUC> {
+class _AdminPageUSState extends State<AdminPageClient> {
   String? email = Get.arguments[0];
-
+  final USController _controller = Get.put(USController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,20 +47,10 @@ class _MainPageUCState extends State<MainPageUC> {
                 ),
                 const SizedBox(height: 20),
                 const Text(
-                  'Coordinator',
+                  'Administration for Clients',
                   style: TextStyle(fontSize: 30),
                 ),
                 const SizedBox(height: 20),
-                Text(
-                  email.toString(),
-                  style: const TextStyle(
-                    fontSize: 25,
-                    decoration: TextDecoration.underline,
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
                 Divider(
                   height: 44,
                   thickness: 1,
@@ -67,40 +61,35 @@ class _MainPageUCState extends State<MainPageUC> {
                 const SizedBox(
                   height: 50,
                 ),
+                const SizedBox(
+                  height: 50,
+                ),
                 Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     _buildCustomCard(
-                      'US Admin',
+                      'Add a Client',
                       onTap: () {
-                        Get.to(() => AdminPageUS(), arguments: [email]);
+                        Get.to(() => CreateClient(), arguments: [email]);
                       },
                       icon: Icons.person_add,
                     ),
                     const SizedBox(width: 250),
                     _buildCustomCard(
-                      'Client Admin',
+                      'Update a Client',
                       onTap: () {
-                        Get.to(() => AdminPageClient(), arguments: [email]);
+                        Get.to(() => UpdateClient(), arguments: [email]);
                       },
-                      icon: Icons.group_add,
+                      icon: Icons.create_rounded,
                     ),
                     const SizedBox(width: 250),
                     _buildCustomCard(
-                      'Reports',
+                      'Remove a Client',
                       onTap: () {
-                        Get.to(() => RatingReportUS(), arguments: [email]);
+                        Get.to(() => DeleteClient(), arguments: [email]);
                       },
-                      icon: Icons.description,
-                    ),
-                    const SizedBox(width: 250),
-                    _buildCustomCard(
-                      'Supports',
-                      onTap: () {
-                        Get.to(() => ListSupporters(), arguments: [email]);
-                      },
-                      icon: Icons.people_alt,
+                      icon: Icons.group_remove,
                     ),
                   ],
                 ),
@@ -110,7 +99,7 @@ class _MainPageUCState extends State<MainPageUC> {
                 ElevatedButton(
                   key: const Key('ButtonGoBack'),
                   onPressed: () {
-                    Get.toNamed('/');
+                    Get.to(() => MainPageUC(), arguments: [email]);
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
@@ -143,7 +132,6 @@ class _MainPageUCState extends State<MainPageUC> {
     );
   }
 
-  // ignore: non_constant_identifier_names
   Widget _buildCustomCard(String title,
       {required VoidCallback onTap, required IconData icon}) {
     return Container(
@@ -190,6 +178,43 @@ class _MainPageUCState extends State<MainPageUC> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _getXlistView() {
+    return Obx(
+      () => ListView.builder(
+        itemCount: _controller.supports.length,
+        itemBuilder: (context, index) {
+          UserSupport support = _controller.supports[index];
+          return Dismissible(
+            key: UniqueKey(),
+            background: Container(
+                color: Colors.red,
+                alignment: Alignment.centerLeft,
+                child: const Padding(
+                  padding: EdgeInsets.only(left: 20),
+                  child: Text(
+                    "Deleting",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                )),
+            onDismissed: (direction) {
+              _controller.deleteSupport(support.id!);
+            },
+            child: Card(
+              child: ListTile(
+                leading: Text(support.id.toString()),
+                title: Text(support.name),
+                subtitle: Text(support.email),
+                onTap: () {
+                  Get.to(() => const UpdateUS(), arguments: [email]);
+                },
+              ),
+            ),
+          );
+        },
       ),
     );
   }

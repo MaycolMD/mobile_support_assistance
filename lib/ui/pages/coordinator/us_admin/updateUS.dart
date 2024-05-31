@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:project/domain/entities/user_support.dart';
 import 'package:project/ui/controllers/user_support/us_controller.dart';
 import 'package:project/ui/pages/coordinator/us_admin/us_admin_page.dart';
+import '../../../../widgets/submit_button.dart';
+import '../../../../widgets/text_field.dart';
+import '../../../controllers/coordinator/us.controller.dart';
 
 class UpdateUS extends StatefulWidget {
   const UpdateUS({super.key});
@@ -14,8 +18,17 @@ class _UpdateUSState extends State<UpdateUS> {
   String email = Get.arguments[0];
   final USController controller = Get.put(USController());
   Future<void>? supportNamesFuture;
-  String? selectedSupport;
+  String selectedSupport = '';
   final _formKey = GlobalKey<FormState>();
+
+  bool showUserDataInput = false;
+
+  final userIdController = TextEditingController();
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  final FormControllers _controllers = FormControllers();
 
   @override
   void initState() {
@@ -26,6 +39,13 @@ class _UpdateUSState extends State<UpdateUS> {
           selectedSupport = controller.supportsNameList.first;
         });
       }
+    });
+  }
+
+  // Función para mostrar el widget de entrada de datos
+  void showUserDataInputWidget() {
+    setState(() {
+      showUserDataInput = true;
     });
   }
 
@@ -84,30 +104,82 @@ class _UpdateUSState extends State<UpdateUS> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            DropdownButton<String>(
-                              value: selectedSupport,
-                              icon: const Icon(Icons.arrow_downward),
-                              items: supportsName.map<DropdownMenuItem<String>>(
-                                  (String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                              onChanged: (String? value) {
-                                setState(() {
-                                  selectedSupport = value!;
-                                });
-                              },
+                            SizedBox(
+                              width: 600.0,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.deepPurple, // Color del borde
+                                    width: 2.0, // Ancho del borde
+                                  ),
+                                  borderRadius: BorderRadius.circular(
+                                      8.0), // Radio de los bordes
+                                ),
+                                child: DropdownButtonHideUnderline(
+                                  child: DropdownButton<String>(
+                                    value: selectedSupport,
+                                    icon: const Icon(Icons.arrow_downward),
+                                    isExpanded:
+                                        true, // Asegura que el DropdownButton ocupe todo el ancho del SizedBox
+                                    items: supportsName
+                                        .map<DropdownMenuItem<String>>(
+                                            (String value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Center(child: Text(value)),
+                                      );
+                                    }).toList(),
+                                    selectedItemBuilder:
+                                        (BuildContext context) {
+                                      return supportsName
+                                          .map<Widget>((String value) {
+                                        return Center(
+                                          child: Text(
+                                            value,
+                                            style: const TextStyle(
+                                              color: Colors
+                                                  .black, // Estilo del texto del valor seleccionado
+                                            ),
+                                          ),
+                                        );
+                                      }).toList();
+                                    },
+                                    onChanged: (String? value) {
+                                      setState(() {
+                                        selectedSupport = value!;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
                             ),
                             IconButton(
                               icon: const Icon(Icons.search),
-                              onPressed: () {
+                              onPressed: () async {
                                 // Acción para el botón de la lupa
+
+                                try {
+                                  UserSupport? user = await _controllers
+                                      .getSupportByName(selectedSupport);
+
+                                  userIdController.text = user!.id.toString();
+                                  nameController.text = user.name;
+                                  emailController.text = user.email;
+                                  passwordController.text = user.password;
+
+                                  showUserDataInputWidget();
+                                } catch (e) {
+                                  Get.snackbar('Error',
+                                      'No se pudo obtener los datos del usuario. Error: $e');
+                                }
                               },
                             ),
                           ],
                         ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        buildUserDataInputWidget(),
                         const SizedBox(
                           height: 20,
                         ),
@@ -132,6 +204,8 @@ class _UpdateUSState extends State<UpdateUS> {
     return OutlinedButton(
       key: const Key('ButtonGoBack'),
       onPressed: () {
+        // Limpiar el controlador asociado a UpdateUS antes de navegar de regreso
+        Get.delete<USController>();
         Get.to(() => AdminPageUS(), arguments: [email]);
       },
       style: ButtonStyle(
@@ -161,5 +235,45 @@ class _UpdateUSState extends State<UpdateUS> {
         ),
       ),
     );
+  }
+
+  // Widget para mostrar los datos de entrada
+  Widget buildUserDataInputWidget() {
+    if (showUserDataInput) {
+      return Column(
+        children: [
+          buildTextField('US_ID', userIdController, 'Enter User ID'),
+          const SizedBox(height: 20),
+          buildTextField('Name', nameController, 'Enter Name'),
+          const SizedBox(height: 20),
+          buildTextField('Email', emailController, 'Enter Email'),
+          const SizedBox(height: 20),
+          buildTextField(
+            'Password',
+            passwordController,
+            'Enter Password',
+            isObscureText: true,
+          ),
+          const SizedBox(height: 50),
+          buildSubmitButton(
+            onPressed: () {
+              print(int.parse(userIdController.text));
+              print(nameController.text);
+
+              _controllers.updateSupport(
+                  int.parse(userIdController.text),
+                  nameController.text,
+                  emailController.text,
+                  passwordController.text);
+              Get.back();
+            },
+          ),
+        ],
+      );
+    } else {
+      return const Column(
+        children: [],
+      );
+    }
   }
 }

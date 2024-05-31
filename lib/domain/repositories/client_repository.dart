@@ -14,6 +14,10 @@ class ClientRepository implements IClientRepository {
       await _clientDataSource.getClients();
 
   @override
+  Future<UserClient?> getClientByName(String name) async =>
+      await _clientDataSource.getClientByName(name);
+
+  @override
   Future<bool> addClient(UserClient client) async =>
       await _clientDataSource.addClient(client);
 

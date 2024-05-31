@@ -17,6 +17,11 @@ class FormControllers extends GetxController {
     await _clientUseCase.getClients();
   }
 
+  getClientByName(String name) async {
+    UserClient? u = await _clientUseCase.getClientByName(name);
+    return u;
+  }
+
   updateClient(int id, String name) async {
     UserClient client = UserClient(id: id, name: name);
     await _clientUseCase.updateClient(client);

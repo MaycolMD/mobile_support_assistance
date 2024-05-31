@@ -20,17 +20,14 @@ class SupportDataSource implements ISupportDataSource {
     }));
 
     var response = await httpClient.get(request);
-    print(response.statusCode);
     if (response.statusCode == 200) {
       //logInfo(response.body);
       final data = jsonDecode(response.body);
 
       users = List<UserSupport>.from(data.map((x) {
         UserSupport us = UserSupport.fromJson(x);
-        print(us.id);
         return us;
       }));
-      print(users);
       return Future.value(users);
     } else {
       logError("Got error code ${response.statusCode}");
@@ -66,6 +63,31 @@ class SupportDataSource implements ISupportDataSource {
   }
 
   @override
+  Future<UserSupport?> getSupportByName(String name) async {
+    try {
+      final response = await httpClient.get(
+        Uri.parse("https://retoolapi.dev/$apiKey/support?name=$name"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final userData = jsonDecode(response.body);
+        if (userData is List && userData.isNotEmpty) {
+          // Si se encontró el usuario, devolver sus datos
+
+          return UserSupport.fromJson(userData[
+              0]); // Suponiendo que el servidor devuelve solo un usuario
+        }
+      }
+    } catch (e) {
+      print("Error: $e");
+    }
+    return null; // Devolver null si no se encontró el usuario o hubo un error
+  }
+
+  @override
   Future<bool> addSupport(UserSupport userSupport) async {
     final response = await httpClient.post(
       Uri.parse("https://retoolapi.dev/$apiKey/support"),
@@ -74,7 +96,6 @@ class SupportDataSource implements ISupportDataSource {
       },
       body: jsonEncode(userSupport.toJson()),
     );
-    print(response.statusCode);
     if (response.statusCode == 201) {
       logInfo(response.body);
       return Future.value(true);

@@ -13,6 +13,10 @@ class ClientUseCase {
     return await _repository.getClients();
   }
 
+  Future<UserClient?> getClientByName(String name) async {
+    return await _repository.getClientByName(name);
+  }
+
   Future<void> addClient(UserClient client) async {
     await _repository.addClient(client);
   }

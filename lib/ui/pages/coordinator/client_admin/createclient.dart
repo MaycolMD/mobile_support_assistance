@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project/domain/entities/user_client.dart';
-import './../../../widgets/text_field.dart';
-import './../../../widgets/back_button.dart';
-import './../../../widgets/submit_button.dart';
-import './../../controllers/coordinator/createclient.controller.dart';
+import '../../../../widgets/text_field.dart';
+import '../../../../widgets/back_button.dart';
+import '../../../../widgets/submit_button.dart';
+import '../../../controllers/coordinator/createclient.controller.dart';
 
 class CreateClient extends StatefulWidget {
   const CreateClient({super.key});

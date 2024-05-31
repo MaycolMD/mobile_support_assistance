@@ -45,6 +45,16 @@ class USController extends GetxController {
     print(_supports);
   }
 
+  Future<UserSupport?> getSupportByName(String name) async {
+    try {
+      final userData = await _supportUseCase.getSupportByName(name);
+      return userData;
+    } catch (e) {
+      print("Error obteniendo usuario: $e");
+      return null;
+    }
+  }
+
   Future<void> getSupportsName() async {
     final RxList<UserSupport> _supportsTemp = <UserSupport>[].obs;
     _supportsTemp.value = await _supportUseCase.getSupports();
