@@ -3,7 +3,7 @@ import 'package:loggy/loggy.dart';
 import 'package:project/domain/entities/user_client.dart';
 import 'package:project/domain/use_case/client_usecase.dart';
 
-class ReportController extends GetxController {
+class ClientController extends GetxController {
   RxList<String> clientsName = <String>[].obs;
 
   final ClientUseCase clientUseCase = Get.find();

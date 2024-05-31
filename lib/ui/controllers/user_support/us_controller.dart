@@ -46,8 +46,8 @@ class USController extends GetxController {
   }
 
   Future<void> getSupportsName() async {
-    final RxList<UserSupport> _supports = <UserSupport>[].obs;
-    _supports.value = await _supportUseCase.getSupports();
+    final RxList<UserSupport> _supportsTemp = <UserSupport>[].obs;
+    _supportsTemp.value = await _supportUseCase.getSupports();
 
     for (var support in _supports) {
       supportsNameList.add(support.name);

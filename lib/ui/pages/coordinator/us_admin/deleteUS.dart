@@ -27,7 +27,7 @@ class _deleteUSState extends State<deleteUS> {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           logInfo("Add user from UI");
-          Get.to(() => const CreateUser());
+          Get.to(() => const CreateUser(), arguments: [email]);
         },
         child: const Icon(Icons.add),
       ),
@@ -40,7 +40,6 @@ class _deleteUSState extends State<deleteUS> {
         itemCount: userController.supports.length,
         itemBuilder: (context, index) {
           UserSupport user = userController.supports[index];
-          print(user);
           return Dismissible(
             key: UniqueKey(),
             background: Container(
@@ -59,8 +58,31 @@ class _deleteUSState extends State<deleteUS> {
             child: Card(
               child: ListTile(
                 leading: Text(user.id.toString()),
-                title: Text(user.name),
-                subtitle: Text(user.email),
+                title: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(user.name, textAlign: TextAlign.center),
+                    Text(user.email, textAlign: TextAlign.center),
+                  ],
+                ),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.edit),
+                      onPressed: () {
+                        Get.to(() => const UpdateUS(),
+                            arguments: [user, user.id]);
+                      },
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.delete),
+                      onPressed: () {
+                        userController.deleteSupport(user.id!);
+                      },
+                    ),
+                  ],
+                ),
                 onTap: () {
                   Get.to(() => const UpdateUS(), arguments: [user, user.id]);
                 },

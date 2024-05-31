@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project/ui/controllers/user_support/us_controller.dart';
 import 'package:project/ui/pages/coordinator/us_admin/us_admin_page.dart';
-import 'package:project/ui/pages/support/main_us.dart';
 
 class UpdateUS extends StatefulWidget {
   const UpdateUS({super.key});
@@ -33,60 +32,62 @@ class _UpdateUSState extends State<UpdateUS> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<void>(
-        future: supportNamesFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            List<String> suppotsName = controller.supportsNameList;
-            String selectedSupport = controller.supportsNameList.first;
-            return Scaffold(
-              resizeToAvoidBottomInset: false,
-              body: Center(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(20.0, 50, 20.0, 12.0),
-                  child: SingleChildScrollView(
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        children: [
-                          Card(
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
-                            color: Theme.of(context).primaryColor,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(12),
-                              child: Icon(
-                                Icons.tag_faces_sharp,
-                                color: Theme.of(context).colorScheme.background,
-                                size: 80,
-                              ),
+      future: supportNamesFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          List<String> supportsName = controller.supportsNameList;
+          return Scaffold(
+            resizeToAvoidBottomInset: false,
+            body: Center(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(20.0, 50, 20.0, 12.0),
+                child: SingleChildScrollView(
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        Card(
+                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                          color: Theme.of(context).primaryColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(12),
+                            child: Icon(
+                              Icons.tag_faces_sharp,
+                              color: Theme.of(context).colorScheme.background,
+                              size: 80,
                             ),
                           ),
-                          const SizedBox(height: 20),
-                          const Text(
-                            'UPDATE A SUPPORT USER',
-                            style: TextStyle(
-                              fontSize: 40,
-                            ),
+                        ),
+                        const SizedBox(height: 20),
+                        const Text(
+                          'UPDATE A SUPPORT USER',
+                          style: TextStyle(
+                            fontSize: 40,
                           ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Divider(
-                            height: 44,
-                            thickness: 1,
-                            indent: 24,
-                            endIndent: 24,
-                            color: Theme.of(context).dividerColor,
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          DropdownButton<String>(
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Divider(
+                          height: 44,
+                          thickness: 1,
+                          indent: 24,
+                          endIndent: 24,
+                          color: Theme.of(context).dividerColor,
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            DropdownButton<String>(
                               value: selectedSupport,
                               icon: const Icon(Icons.arrow_downward),
-                              items: suppotsName.map<DropdownMenuItem<String>>(
+                              items: supportsName.map<DropdownMenuItem<String>>(
                                   (String value) {
                                 return DropdownMenuItem<String>(
                                   value: value,
@@ -94,28 +95,37 @@ class _UpdateUSState extends State<UpdateUS> {
                                 );
                               }).toList(),
                               onChanged: (String? value) {
-                                // This is called when the user selects an item.
                                 setState(() {
                                   selectedSupport = value!;
                                 });
-                              }),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          buildGoBackButton(),
-                        ],
-                      ),
+                              },
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.search),
+                              onPressed: () {
+                                // Acción para el botón de la lupa
+                              },
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        buildGoBackButton(),
+                      ],
                     ),
                   ),
                 ),
               ),
-            );
-          } else {
-            return const Scaffold(
-              body: Center(child: CircularProgressIndicator()),
-            );
-          }
-        });
+            ),
+          );
+        } else {
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        }
+      },
+    );
   }
 
   Widget buildGoBackButton() {
