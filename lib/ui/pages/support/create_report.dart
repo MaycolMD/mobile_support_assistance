@@ -35,6 +35,7 @@ class _CreateReportState extends State<CreateReport> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             List<String> clientsName = controller.clientsNameList;
+            String dropdownValue = controller.clientsNameList.first;
             print(clientsName);
             return Scaffold(
               resizeToAvoidBottomInset: false,

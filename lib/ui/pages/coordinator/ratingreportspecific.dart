@@ -15,7 +15,7 @@ class RatingReport extends StatefulWidget {
 
 class _RatingReportState extends State<RatingReport> {
   final _formKey = GlobalKey<FormState>();
-
+  String? email = Get.arguments[0];
   final FormControllers _controllers = FormControllers();
 
   @override

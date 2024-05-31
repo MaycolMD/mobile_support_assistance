@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project/domain/entities/user_support.dart';
 import 'package:project/ui/controllers/coordinator/list_supports_controller.dart';
+import 'package:project/ui/pages/coordinator/main_uc.dart';
 
 class ListSupporters extends StatefulWidget {
   const ListSupporters({super.key});
@@ -12,7 +13,7 @@ class ListSupporters extends StatefulWidget {
 
 class _ListSupportersState extends State<ListSupporters> {
   ListSupportsController controller = Get.put(ListSupportsController());
-
+  String? email = Get.arguments[0];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -179,7 +180,7 @@ class _ListSupportersState extends State<ListSupporters> {
                 ElevatedButton(
                   key: const Key('ButtonGoBack'),
                   onPressed: () {
-                    Get.offNamed('/MainPageUC');
+                    Get.to(() => MainPageUC(), arguments: [email]);
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(

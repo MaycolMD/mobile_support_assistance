@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:project/ui/controllers/user_support/main_us_controller.dart';
+import 'package:project/ui/controllers/user_support/us_controller.dart';
 import 'package:project/ui/pages/support/create_report.dart';
 import 'package:project/widgets/custom_row.dart';
 
 class MainUS extends StatelessWidget {
-  final MainUSController _controller = Get.put(MainUSController());
+  final USController _controller = Get.put(USController());
   String email = Get.arguments[0];
 
   @override

@@ -15,7 +15,7 @@ class CreateClient extends StatefulWidget {
 
 class _CreateClientState extends State<CreateClient> {
   final _formKey = GlobalKey<FormState>();
-
+  String? email = Get.arguments[0];
   final FormControllers _controllers = FormControllers();
 
   @override

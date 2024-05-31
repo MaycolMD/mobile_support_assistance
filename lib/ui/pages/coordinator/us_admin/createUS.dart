@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import './../../../widgets/text_field.dart';
-import './../../../widgets/back_button.dart';
-import './../../../widgets/submit_button.dart';
-import '../../controllers/coordinator/us.controller.dart';
+import 'package:project/ui/pages/coordinator/us_admin/us_admin_page.dart';
+import '../../../../widgets/text_field.dart';
+import '../../../../widgets/back_button.dart';
+import '../../../../widgets/submit_button.dart';
+import '../../../controllers/coordinator/us.controller.dart';
 
 class CreateUser extends StatefulWidget {
   const CreateUser({super.key});
@@ -14,7 +15,7 @@ class CreateUser extends StatefulWidget {
 
 class _CreateUserState extends State<CreateUser> {
   final _formKey = GlobalKey<FormState>();
-
+  String? email = Get.arguments[0];
   final FormControllers _controllers = FormControllers();
 
   @override
@@ -96,6 +97,41 @@ class _CreateUserState extends State<CreateUser> {
               ),
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildGoBackButton() {
+    return OutlinedButton(
+      key: const Key('ButtonGoBack'),
+      onPressed: () {
+        Get.to(() => AdminPageUS(), arguments: [email]);
+      },
+      style: ButtonStyle(
+        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+          const EdgeInsets.symmetric(
+            horizontal: 20,
+            vertical: 12,
+          ),
+        ),
+        shape: MaterialStateProperty.all<OutlinedBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+        side: MaterialStateProperty.all<BorderSide>(
+          const BorderSide(
+            color: Colors.deepPurple, // Borde morado
+            width: 2, // Ancho del borde
+          ),
+        ),
+      ),
+      child: const Text(
+        "Go Back",
+        style: TextStyle(
+          color: Colors.deepPurple, // Color del texto morado
+          fontSize: 20,
         ),
       ),
     );

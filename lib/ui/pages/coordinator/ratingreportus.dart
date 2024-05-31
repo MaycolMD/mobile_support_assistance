@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:project/ui/controllers/user_support/main_us_controller.dart';
+import 'package:project/ui/controllers/user_support/us_controller.dart';
 import './../../../widgets/reportcard.dart';
 import './../../controllers/coordinator/ratingreportus.controller.dart';
 
 class RatingReportUS extends StatelessWidget {
   final RatingReportUSController controller =
       Get.put(RatingReportUSController());
-
-  final MainUSController _controller = Get.put(MainUSController());
+  final USController _controller = Get.put(USController());
 
   RatingReportUS({Key? key}) : super(key: key);
 

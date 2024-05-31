@@ -1,26 +1,33 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:loggy/loggy.dart';
 import 'package:project/domain/entities/report.dart';
 import 'package:project/domain/entities/user_support.dart';
 import 'package:project/domain/use_case/report_usecase.dart';
 import 'package:project/domain/use_case/us_usecase.dart';
 
-class MainUSController extends GetxController {
+class USController extends GetxController {
   final RxList<Report> _reports = <Report>[].obs;
+  final RxList<String> _supportsName = <String>[].obs;
+  final RxList<UserSupport> _supports = <UserSupport>[].obs;
+
   late UserSupport _support;
 
   final SupportUseCase _supportUseCase = Get.find();
   final ReportUseCase _reportUseCase = Get.find();
 
   List<Report> get reports => _reports;
+  List<String> get supportsNameList => _supportsName;
+  List<UserSupport> get supports => _supports;
 
   @override
   void onInit() {
+    getSupportActive();
     super.onInit();
   }
 
   Future<void> getAllReports(String email) async {
     final RxList<UserSupport> _supports = <UserSupport>[].obs;
-
     _supports.value = await _supportUseCase.getSupports();
 
     String supportID = '';
@@ -34,6 +41,22 @@ class MainUSController extends GetxController {
   }
 
   Future<void> getSupportActive() async {
-    await _supportUseCase.getSupports();
+    _supports.value = await _supportUseCase.getSupports();
+    print(_supports);
+  }
+
+  Future<void> getSupportsName() async {
+    final RxList<UserSupport> _supports = <UserSupport>[].obs;
+    _supports.value = await _supportUseCase.getSupports();
+
+    for (var support in _supports) {
+      supportsNameList.add(support.name);
+    }
+  }
+
+  Future<void> deleteSupport(int id) async {
+    logInfo("deleteUser user $id");
+    await _supportUseCase.deleteSupport(id);
+    getSupportActive();
   }
 }
