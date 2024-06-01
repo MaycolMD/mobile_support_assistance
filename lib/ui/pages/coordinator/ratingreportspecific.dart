@@ -27,7 +27,7 @@ class _RatingReportState extends State<RatingReport> {
   final ReportController _controller = Get.put(ReportController());
   final USController _controllerSupport = Get.put(USController());
 
-  double rating = 3;
+  double rating = 0;
 
   var userIdController = TextEditingController();
   var userDateController = TextEditingController();
@@ -180,7 +180,9 @@ class _RatingReportState extends State<RatingReport> {
                           color: Theme.of(context).primaryColor,
                         ),
                         direction: Axis.horizontal,
-                        initialRating: rating,
+                        initialRating: report.status == 'Pending'
+                            ? rating
+                            : report.rating.toDouble(),
                         itemCount: 5,
                         itemSize: 50,
                         glowColor: Theme.of(context).primaryColor,

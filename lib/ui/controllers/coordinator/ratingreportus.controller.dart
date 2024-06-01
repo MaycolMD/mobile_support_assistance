@@ -31,7 +31,7 @@ class RatingReportUSController extends GetxController {
     _reports.value = await _reportUseCase.getAllReports();
   }
 
-  void selectClient() {
+  Future<void> selectClient() async {
     if (selectedClient.value == 'All Clients') {
       // Mostrar TextField para ingresar ID de cliente
       Get.dialog(
@@ -63,7 +63,7 @@ class RatingReportUSController extends GetxController {
     shouldRefresh.value = true;
   }
 
-  void selectSupport() {
+  Future<void> selectSupport() async {
     if (selectedSupport.value == 'All Supports') {
       // Mostrar TextField para ingresar ID de soporte
       Get.dialog(
