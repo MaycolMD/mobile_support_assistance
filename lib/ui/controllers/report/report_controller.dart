@@ -20,6 +20,7 @@ class ReportController extends GetxController {
   List<Report> get reports => _reports;
 
   late Report report;
+  late int numberOfReports;
 
   // Otros campos de estado
   String? selectedClient;
@@ -129,12 +130,30 @@ class ReportController extends GetxController {
     _reports.value = await reportUseCase.getAllReports();
   }
 
-  Future<void> getReportsBySupportID(String supportID) async {
-    _reports.value = await reportUseCase.getReports('', supportID);
-  }
-
   Future<void> getReports(String clientID, String supportID) async {
     _reports.value = await reportUseCase.getReports(clientID, supportID);
+  }
+
+  Future<int> getNumberOfReportsBySupportID(int supportID) async {
+    await getReports('', supportID.toString());
+    int value = _reports.length;
+
+    _reports.clear();
+    return value;
+  }
+
+  Future<int> getAvgRating(int supportID) async {
+    await getReports('', supportID.toString());
+    if (_reports.isEmpty) return 0;
+
+    int valueTemp = 0;
+    for (var report in _reports) {
+      valueTemp += report.rating;
+    }
+
+    double avg = valueTemp / _reports.length;
+    _reports.clear();
+    return avg.toInt().isNaN ? 0 : avg.toInt(); // Manejo de NaN
   }
 
   Future<void> getReportById(int id) async {

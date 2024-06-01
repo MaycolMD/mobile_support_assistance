@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project/domain/entities/user_support.dart';
 import 'package:project/ui/controllers/coordinator/list_supports_controller.dart';
+import 'package:project/ui/controllers/report/report_controller.dart';
 import 'package:project/ui/pages/coordinator/main_uc.dart';
 import 'package:project/ui/pages/coordinator/ratingreportspecific.dart';
 import 'package:project/widgets/reportcardsupport.dart';
@@ -22,6 +23,7 @@ class _ListSupportersState extends State<ListSupporters> {
 
   final RatingReportUSController _controller =
       Get.put(RatingReportUSController());
+  final ReportController _reportController = Get.put(ReportController());
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +92,7 @@ class _ListSupportersState extends State<ListSupporters> {
                         height: 400,
                         child: SingleChildScrollView(
                           scrollDirection: Axis.vertical,
-                          child: generateReportsCards(),
+                          child: generateSupportsCards(),
                         ),
                       ),
                     );
@@ -145,49 +147,29 @@ class _ListSupportersState extends State<ListSupporters> {
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: SizedBox(
                     width: 400,
-                    child: ReportCardSupport(
-                      supportId: support.id.toString(),
-                      username: support.name.toString(),
-                      numReports: 6,
-                      rating: 4,
-                    ),
-                  ),
-                );
-              } else {
-                return const SizedBox(); // Si no hay más elementos, devuelve un SizedBox
-              }
-            }),
-          );
-        },
-      ),
-    );
-  }
-
-  Column generateReportsCards() {
-    int size = _controller.reports.length;
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(
-        (size / 3).ceil(),
-        (rowIndex) {
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(3, (colIndex) {
-              final index = rowIndex * 3 + colIndex;
-              if (index < size) {
-                final report = _controller.reports[index];
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: SizedBox(
-                    width: 400,
-                    child: ReportCard(
-                      reportId: report.id.toString(),
-                      username: report.supportID.toString(),
-                      date: report.date,
-                      status: report.status,
-                      onPressed: () {
-                        Get.to(() => RatingReport(),
-                            arguments: [email, report.id]);
+                    child: FutureBuilder<List<int>>(
+                      future: Future.wait([
+                        _reportController
+                            .getNumberOfReportsBySupportID(support.id!),
+                        _reportController.getAvgRating(support.id!),
+                      ]),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const CircularProgressIndicator();
+                        } else if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        } else {
+                          // Asegurando que los valores sean del tipo correcto
+                          final numReports = snapshot.data?[0] ?? 0;
+                          final rating = snapshot.data?[1] ?? 0;
+                          return ReportCardSupport(
+                            supportId: support.id.toString(),
+                            username: support.name.toString(),
+                            numReports: numReports.isNaN ? 0 : numReports,
+                            rating: rating.isNaN ? 0 : rating,
+                          );
+                        }
                       },
                     ),
                   ),
