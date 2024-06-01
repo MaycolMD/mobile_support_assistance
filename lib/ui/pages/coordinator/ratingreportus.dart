@@ -1,18 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:project/ui/controllers/report/report_controller.dart';
 import 'package:project/ui/controllers/user_support/us_controller.dart';
 import 'package:project/ui/pages/coordinator/main_uc.dart';
 import 'package:project/ui/pages/coordinator/ratingreportspecific.dart';
 import './../../../widgets/reportcard.dart';
 import './../../controllers/coordinator/ratingreportus.controller.dart';
 
-class RatingReportUS extends StatelessWidget {
+class RatingReportUS extends StatefulWidget {
+  const RatingReportUS({Key? key}) : super(key: key);
+
+  @override
+  _RatingReportUSState createState() => _RatingReportUSState();
+}
+
+class _RatingReportUSState extends State<RatingReportUS> {
   final RatingReportUSController controller =
       Get.put(RatingReportUSController());
   final USController _controller = Get.put(USController());
+  final ReportController _reportController = Get.put(ReportController());
 
   String? email = Get.arguments[0];
-  RatingReportUS({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -55,37 +63,22 @@ class RatingReportUS extends StatelessWidget {
                   color: Theme.of(context).dividerColor,
                 ),
                 Obx(() {
-                  if (controller.shouldRefresh.value) {
-                    return FutureBuilder(
-                        future: controller.getAllReports(),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return const CircularProgressIndicator();
-                          } else if (snapshot.hasError) {
-                            return Text('Error: ${snapshot.error}');
-                          } else {
-                            return Center(
-                              child: SizedBox(
-                                height: 400,
-                                child: SingleChildScrollView(
-                                  scrollDirection: Axis.vertical,
-                                  child: generateReportsCards(),
-                                ),
-                              ),
-                            );
-                          }
-                        });
+                  if (controller.selectedSupport == 'All Supports' &&
+                      controller.selectedClient == 'All Clients') {
+                    return generateSpaceCardsAllSupports();
+                  } else if (controller.selectedSupport != 'All Supports' &&
+                      controller.selectedClient == 'All Clients') {
+                    return generateSpaceCardsFilter(
+                        '', controller.selectedSupport.toString());
+                  } else if (controller.selectedClient != 'All Clients' &&
+                      controller.selectedSupport == 'All Supports') {
+                    return generateSpaceCardsFilter(
+                        controller.selectedClient.toString(), '');
                   } else {
-                    return Center(
-                      child: SizedBox(
-                        height: 400,
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.vertical,
-                          child: generateReportsCards(),
-                        ),
-                      ),
-                    );
+                    return generateSpaceCardsFilter(
+                        controller.selectedClient.toString(),
+                        controller.selectedSupport.toString());
+                    ;
                   }
                 }),
                 const SizedBox(height: 20),
@@ -154,8 +147,76 @@ class RatingReportUS extends StatelessWidget {
     );
   }
 
+  Widget generateSpaceCardsAllSupports() {
+    if (controller.shouldRefresh.value) {
+      return FutureBuilder(
+          future: _reportController.getAllReports(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator();
+            } else if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            } else {
+              return Center(
+                child: SizedBox(
+                  height: 400,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: generateReportsCards(),
+                  ),
+                ),
+              );
+            }
+          });
+    } else {
+      return Center(
+        child: SizedBox(
+          height: 400,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: generateReportsCards(),
+          ),
+        ),
+      );
+    }
+  }
+
+  Widget generateSpaceCardsFilter(String clientID, String supportID) {
+    if (controller.shouldRefresh.value) {
+      return FutureBuilder(
+          future: _reportController.getReports(clientID, supportID),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator();
+            } else if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            } else {
+              return Center(
+                child: SizedBox(
+                  height: 400,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: generateReportsCards(),
+                  ),
+                ),
+              );
+            }
+          });
+    } else {
+      return Center(
+        child: SizedBox(
+          height: 400,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: generateReportsCards(),
+          ),
+        ),
+      );
+    }
+  }
+
   Column generateReportsCards() {
-    int size = controller.reports.length;
+    int size = _reportController.reports.length;
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -167,7 +228,7 @@ class RatingReportUS extends StatelessWidget {
             children: List.generate(3, (colIndex) {
               final index = rowIndex * 3 + colIndex;
               if (index < size) {
-                final report = controller.reports[index];
+                final report = _reportController.reports[index];
 
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
