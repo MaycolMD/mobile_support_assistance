@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project/ui/controllers/user_support/us_controller.dart';
+import 'package:project/ui/pages/coordinator/main_uc.dart';
+import 'package:project/ui/pages/coordinator/ratingreportspecific.dart';
 import './../../../widgets/reportcard.dart';
 import './../../controllers/coordinator/ratingreportus.controller.dart';
 
@@ -8,7 +10,7 @@ class RatingReportUS extends StatelessWidget {
   final RatingReportUSController controller =
       Get.put(RatingReportUSController());
   final USController _controller = Get.put(USController());
-
+  String? email = Get.arguments[0];
   RatingReportUS({Key? key}) : super(key: key);
 
   @override
@@ -122,7 +124,9 @@ class RatingReportUS extends StatelessWidget {
                 const SizedBox(height: 20),
                 ElevatedButton(
                   key: const Key('ButtonGoBack'),
-                  onPressed: controller.goToMainPage,
+                  onPressed: () {
+                    Get.to(() => MainPageUC(), arguments: [email]);
+                  },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
                       Colors.deepPurple,
@@ -172,7 +176,8 @@ class RatingReportUS extends StatelessWidget {
                       date: report.date,
                       status: report.status,
                       onPressed: () {
-                        Get.toNamed('/SpecificReport');
+                        Get.to(() => RatingReport(),
+                            arguments: [email, report.id]);
                       },
                     ),
                   ),

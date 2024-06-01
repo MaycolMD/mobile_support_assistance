@@ -4,6 +4,7 @@ import 'package:loggy/loggy.dart';
 import 'package:project/domain/entities/user_client.dart';
 
 import 'package:project/ui/controllers/client/client_controller.dart';
+import 'package:project/ui/pages/coordinator/client_admin/client_admin_page.dart';
 import 'package:project/ui/pages/coordinator/us_admin/us_admin_page.dart';
 
 import '../../../../widgets/submit_button.dart';
@@ -207,7 +208,7 @@ class _deleteClientState extends State<DeleteClient> {
       onPressed: () {
         // Limpiar el controlador asociado a UpdateUS antes de navegar de regreso
         Get.delete<ClientController>();
-        Get.to(() => AdminPageUS(), arguments: [name]);
+        Get.to(() => AdminPageClient(), arguments: [name]);
       },
       style: ButtonStyle(
         padding: MaterialStateProperty.all<EdgeInsetsGeometry>(

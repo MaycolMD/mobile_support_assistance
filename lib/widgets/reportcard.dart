@@ -38,7 +38,7 @@ class ReportCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            'ID $reportId',
+            'ID REPORT - $reportId',
             style: const TextStyle(
               fontFamily: 'Readex Pro',
               letterSpacing: 0,
@@ -48,7 +48,7 @@ class ReportCard extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            'Username: $username',
+            'US ID: $username',
             style: const TextStyle(
               fontFamily: 'Readex Pro',
               letterSpacing: 0,

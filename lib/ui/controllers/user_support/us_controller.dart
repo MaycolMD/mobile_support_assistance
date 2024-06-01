@@ -11,7 +11,7 @@ class USController extends GetxController {
   final RxList<String> _supportsName = <String>[].obs;
   final RxList<UserSupport> _supports = <UserSupport>[].obs;
 
-  late UserSupport _support;
+  late UserSupport support;
 
   final SupportUseCase _supportUseCase = Get.find();
   final ReportUseCase _reportUseCase = Get.find();
@@ -53,6 +53,11 @@ class USController extends GetxController {
       print("Error obteniendo usuario: $e");
       return null;
     }
+  }
+
+  Future<void> getSupportById(int id) async {
+    final userData = await _supportUseCase.getSupportById(id);
+    support = userData!;
   }
 
   Future<void> getSupportsName() async {

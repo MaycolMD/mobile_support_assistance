@@ -14,6 +14,7 @@ class ListSupporters extends StatefulWidget {
 class _ListSupportersState extends State<ListSupporters> {
   ListSupportsController controller = Get.put(ListSupportsController());
   String? email = Get.arguments[0];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

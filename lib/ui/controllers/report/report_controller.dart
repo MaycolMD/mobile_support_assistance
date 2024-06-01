@@ -155,7 +155,7 @@ class ReportController extends GetxController {
   }
 
   updateReport(
-    int id,
+    int? id,
     String date,
     int rating,
     String status,

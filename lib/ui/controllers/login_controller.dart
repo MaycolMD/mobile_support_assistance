@@ -21,7 +21,7 @@ class LoginController extends GetxController {
           true) {
         clearControllers();
         Get.to(() => MainPageUC(), arguments: [email]);
-        Get.offNamed('/MainPageUC');
+        //Get.offNamed('/MainPageUC');
       } else if (await _supportcase.isGetSupport(email, password)) {
         clearControllers();
         Get.to(() => MainUS(), arguments: [email]);

@@ -13,6 +13,10 @@ class SupportUseCase {
     return await _repository.getSupportByName(name);
   }
 
+  Future<UserSupport?> getSupportById(int id) async {
+    return await _repository.getSupportById(id);
+  }
+
   Future<bool> isGetSupport(String email, String password) async {
     return await _repository.isGetSupport(email, password);
   }

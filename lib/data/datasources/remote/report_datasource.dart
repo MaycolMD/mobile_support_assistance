@@ -6,7 +6,7 @@ import 'package:project/domain/entities/report.dart';
 
 class ReportDataSource implements IReportDataSource {
   final http.Client httpClient;
-  final String apiKey = 'mEvQsB';
+  final String apiKey = 'HFJEJb';
 
   ReportDataSource({http.Client? client})
       : httpClient = client ?? http.Client();
@@ -121,7 +121,7 @@ class ReportDataSource implements IReportDataSource {
       body: jsonEncode(report.toJson()),
     );
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       // El reporte fue actualizado correctamente
       return Future.value(true);
     } else if (response.statusCode == 404) {

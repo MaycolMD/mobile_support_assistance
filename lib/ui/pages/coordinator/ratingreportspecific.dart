@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
+import 'package:loggy/loggy.dart';
+import 'package:project/domain/entities/report.dart';
+import 'package:project/domain/entities/user_support.dart';
+import 'package:project/ui/controllers/report/report_controller.dart';
+import 'package:project/ui/controllers/user_support/us_controller.dart';
 import './../../../widgets/text_field.dart';
 import './../../../widgets/back_button.dart';
 import './../../../widgets/submit_button.dart';
-import './../../controllers/coordinator/ratingreportspecific.controller.dart';
 
 class RatingReport extends StatefulWidget {
   const RatingReport({Key? key}) : super(key: key);
@@ -15,11 +19,55 @@ class RatingReport extends StatefulWidget {
 
 class _RatingReportState extends State<RatingReport> {
   final _formKey = GlobalKey<FormState>();
+
   String? email = Get.arguments[0];
-  final FormControllers _controllers = FormControllers();
+  int? id = Get.arguments[1];
+
+  final ReportController _controller = Get.put(ReportController());
+  final USController _controllerSupport = Get.put(USController());
+
+  double rating = 3;
+
+  var userIdController = TextEditingController();
+  var userDateController = TextEditingController();
+  var userStartTimeController = TextEditingController();
+  var userEndTimeController = TextEditingController();
+
+  late Report report;
 
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: _controller.getReportById(id!),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          report = _controller.report;
+          return build2(context, report);
+        } else {
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        }
+      },
+    );
+  }
+
+  Widget build2(BuildContext context, Report report) {
+    return FutureBuilder(
+        future: _controllerSupport.getSupportById(report.supportID),
+        builder: ((context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            UserSupport support = _controllerSupport.support;
+            return buildReport(context, report, support.name);
+          } else {
+            return const Scaffold(
+              body: Center(child: CircularProgressIndicator()),
+            );
+          }
+        }));
+  }
+
+  Widget buildReport(BuildContext context, Report report, String usName) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Center(
@@ -44,8 +92,8 @@ class _RatingReportState extends State<RatingReport> {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  const Text(
-                    'REPORT #[ID] FROM [US USERNAME]',
+                  Text(
+                    'REPORT #${id.toString()} FROM ${usName}',
                     style: TextStyle(fontSize: 40),
                   ),
                   const SizedBox(height: 20),
@@ -62,8 +110,8 @@ class _RatingReportState extends State<RatingReport> {
                     child: buildIconTextField(
                       Icons.person,
                       'Client ID',
-                      _controllers.userIdController,
-                      '1001883069',
+                      userIdController,
+                      report.clientID.toString(),
                       isEditable: false,
                     ),
                   ),
@@ -73,8 +121,8 @@ class _RatingReportState extends State<RatingReport> {
                     child: buildIconTextField(
                       Icons.calendar_today,
                       'Date',
-                      _controllers.userDateController,
-                      '15/02/2024',
+                      userDateController,
+                      report.date,
                       isEditable: false,
                     ),
                   ),
@@ -83,7 +131,7 @@ class _RatingReportState extends State<RatingReport> {
                     width: 800,
                     child: buildReadOnlyTextField(
                       'Description',
-                      'Se observó un aumento significativo en una tendencia creciente en los resultados.',
+                      report.description,
                     ),
                   ),
                   const SizedBox(height: 40),
@@ -92,8 +140,8 @@ class _RatingReportState extends State<RatingReport> {
                     child: buildIconTextField(
                       Icons.access_time,
                       'Start time',
-                      _controllers.userStartTimeController,
-                      '6:00 AM',
+                      userStartTimeController,
+                      report.startTime,
                       isEditable: false,
                     ),
                   ),
@@ -103,8 +151,8 @@ class _RatingReportState extends State<RatingReport> {
                     child: buildIconTextField(
                       Icons.access_time,
                       'End time',
-                      _controllers.userEndTimeController,
-                      '10:00 PM',
+                      userEndTimeController,
+                      report.endTime,
                       isEditable: false,
                     ),
                   ),
@@ -123,7 +171,7 @@ class _RatingReportState extends State<RatingReport> {
                       RatingBar.builder(
                         onRatingUpdate: (newValue) {
                           setState(() {
-                            _controllers.rating = newValue;
+                            rating = newValue;
                           });
                         },
                         itemBuilder: (context, index) => Icon(
@@ -131,7 +179,7 @@ class _RatingReportState extends State<RatingReport> {
                           color: Theme.of(context).primaryColor,
                         ),
                         direction: Axis.horizontal,
-                        initialRating: _controllers.rating,
+                        initialRating: rating,
                         itemCount: 5,
                         itemSize: 50,
                         glowColor: Theme.of(context).primaryColor,
@@ -139,7 +187,20 @@ class _RatingReportState extends State<RatingReport> {
                     ],
                   ),
                   const SizedBox(height: 50),
-                  buildSubmitButton(onPressed: () => Get.back()),
+                  buildSubmitButton(onPressed: () {
+                    print("$id, ${report.id}");
+                    _controller.updateReport(
+                        report.id,
+                        report.date,
+                        rating.toInt(),
+                        "Approved",
+                        report.endTime,
+                        report.startTime,
+                        report.clientID,
+                        report.description,
+                        report.supportID);
+                    Get.back();
+                  }),
                   const SizedBox(height: 20),
                   buildGoBackButton(),
                 ],

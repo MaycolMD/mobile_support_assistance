@@ -214,13 +214,13 @@ class _CreateReportState extends State<CreateReport> {
                                           context: context,
                                           label: 'Start Time',
                                           selectedTime:
-                                              controller.selectedTimeEnd,
+                                              controller.selectedTimeStart,
                                           onPressed: () async {
                                             final pickedTime = await controller
-                                                .selectTime(context, false);
+                                                .selectTime(context, true);
                                             if (pickedTime != null) {
                                               setState(() {
-                                                controller.selectedTimeEnd =
+                                                controller.selectedTimeStart =
                                                     pickedTime;
                                               });
                                             }
@@ -255,15 +255,15 @@ class _CreateReportState extends State<CreateReport> {
                                         ),
                                         buildTimeSelector(
                                           context: context,
-                                          label: 'Start Time',
+                                          label: 'End Time',
                                           selectedTime:
-                                              controller.selectedTimeStart,
+                                              controller.selectedTimeEnd,
                                           onPressed: () async {
                                             final pickedTime = await controller
-                                                .selectTime(context, true);
+                                                .selectTime(context, false);
                                             if (pickedTime != null) {
                                               setState(() {
-                                                controller.selectedTimeStart =
+                                                controller.selectedTimeEnd =
                                                     pickedTime;
                                               });
                                             }
@@ -306,6 +306,7 @@ class _CreateReportState extends State<CreateReport> {
                                         null; // Reiniciar la hora de inicio seleccionada
                                     controller.selectedTimeEnd =
                                         null; // Reiniciar la hora de finalización seleccionada
+                                    Get.delete<ReportController>();
                                     Get.to(() => MainUS(), arguments: [email]);
                                   },
                                   style: const ButtonStyle(

@@ -88,6 +88,31 @@ class SupportDataSource implements ISupportDataSource {
   }
 
   @override
+  Future<UserSupport?> getSupportById(int id) async {
+    try {
+      final response = await httpClient.get(
+        Uri.parse("https://retoolapi.dev/$apiKey/support?id=$id"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final userData = jsonDecode(response.body);
+        if (userData is List && userData.isNotEmpty) {
+          // Si se encontró el usuario, devolver sus datos
+
+          return UserSupport.fromJson(userData[
+              0]); // Suponiendo que el servidor devuelve solo un usuario
+        }
+      }
+    } catch (e) {
+      print("Error: $e");
+    }
+    return null; // Devolver null si no se encontró el usuario o hubo un error
+  }
+
+  @override
   Future<bool> addSupport(UserSupport userSupport) async {
     final response = await httpClient.post(
       Uri.parse("https://retoolapi.dev/$apiKey/support"),

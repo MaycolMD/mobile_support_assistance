@@ -17,6 +17,10 @@ class SupportRepository implements ISupportRepository {
       await _supportDataSource.getSupportByName(name);
 
   @override
+  Future<UserSupport?> getSupportById(int id) async =>
+      await _supportDataSource.getSupportById(id);
+
+  @override
   Future<bool> isGetSupport(String email, String password) async =>
       await _supportDataSource.isGetSupport(email, password);
 

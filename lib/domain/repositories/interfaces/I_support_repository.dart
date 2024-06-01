@@ -10,6 +10,8 @@ abstract class ISupportRepository {
 
   Future<UserSupport?> getSupportByName(String name);
 
+  Future<UserSupport?> getSupportById(int id);
+
   Future<bool> isGetSupport(String email, String password);
 
   Future<bool> addSupport(UserSupport userSupport);

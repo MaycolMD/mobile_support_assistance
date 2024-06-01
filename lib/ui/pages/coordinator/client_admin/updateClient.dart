@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:loggy/loggy.dart';
 import 'package:project/domain/entities/user_client.dart';
 import 'package:project/ui/controllers/coordinator/createclient.controller.dart';
 import 'package:project/ui/pages/coordinator/client_admin/client_admin_page.dart';
@@ -246,8 +247,8 @@ class _UpdateClientState extends State<UpdateClient> {
           const SizedBox(height: 50),
           buildSubmitButton(
             onPressed: () {
-              print(int.parse(userIdController.text));
-              print(nameController.text);
+              logInfo(int.parse(userIdController.text));
+              logInfo(nameController.text);
 
               _controllers.updateClient(
                   int.parse(userIdController.text), nameController.text);
