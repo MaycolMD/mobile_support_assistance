@@ -9,7 +9,6 @@ import 'package:project/ui/pages/coordinator/us_admin/us_admin_page.dart';
 
 import '../../../../widgets/submit_button.dart';
 import '../../../../widgets/text_field.dart';
-import '../../../controllers/coordinator/createclient.controller.dart';
 
 class DeleteClient extends StatefulWidget {
   const DeleteClient({super.key});
@@ -31,8 +30,6 @@ class _deleteClientState extends State<DeleteClient> {
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-
-  final FormControllers _controllers = FormControllers();
 
   @override
   void initState() {
@@ -163,7 +160,7 @@ class _deleteClientState extends State<DeleteClient> {
                                 // Acción para el botón de la lupa
 
                                 try {
-                                  UserClient? user = await _controllers
+                                  UserClient? user = await controller
                                       .getClientByName(selectedclient);
 
                                   userIdController.text = user!.id.toString();
@@ -255,7 +252,7 @@ class _deleteClientState extends State<DeleteClient> {
               print(int.parse(userIdController.text));
               print(nameController.text);
 
-              _controllers.deleteClient(int.parse(userIdController.text));
+              controller.deleteClient(int.parse(userIdController.text));
 
               Get.delete<ClientController>();
               Get.back();

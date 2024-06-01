@@ -10,13 +10,11 @@ import 'package:project/domain/use_case/us_usecase.dart';
 
 class ReportController extends GetxController {
   final RxList<Report> _reports = <Report>[].obs;
-  RxList<String> clientsName = <String>[].obs;
 
   final ClientUseCase clientUseCase = Get.find();
   final SupportUseCase supportUseCase = Get.find();
   final ReportUseCase reportUseCase = Get.find();
 
-  List<String> get clientsNameList => clientsName;
   List<Report> get reports => _reports;
 
   late Report report;
@@ -33,19 +31,7 @@ class ReportController extends GetxController {
   @override
   void onInit() {
     getAllReports();
-    // getClientsName(); // do not run this code there because code will be crashed!!!!
     super.onInit();
-  }
-
-  Future<void> getClientsName() async {
-    RxList<UserClient> clients = <UserClient>[].obs;
-    clients.value = await clientUseCase.getClients();
-
-    for (var client in clients) {
-      clientsName.add(client.name);
-    }
-
-    clientsName;
   }
 
   Future<DateTime?> selectDate(BuildContext context) async {

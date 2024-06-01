@@ -7,7 +7,6 @@ import '../../../../domain/entities/user_support.dart';
 import '../../../../widgets/text_field.dart';
 import '../../../../widgets/back_button.dart';
 import '../../../../widgets/submit_button.dart';
-import '../../../controllers/coordinator/us.controller.dart';
 
 class CreateUser extends StatefulWidget {
   const CreateUser({super.key});
@@ -19,11 +18,15 @@ class CreateUser extends StatefulWidget {
 class _CreateUserState extends State<CreateUser> {
   final _formKey = GlobalKey<FormState>();
   String? email = Get.arguments[0];
-  final FormControllers _controllers = FormControllers();
   final USController controller = Get.put(USController());
 
   final RxList<UserSupport> _supports = <UserSupport>[].obs;
   final SupportUseCase _supportUseCase = Get.find();
+
+  var userIdController = TextEditingController();
+  var nameController = TextEditingController();
+  var emailController = TextEditingController();
+  var passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -73,27 +76,24 @@ class _CreateUserState extends State<CreateUser> {
                     height: 20,
                   ),
                   const SizedBox(height: 20),
-                  buildTextField(
-                      'US_ID', _controllers.userIdController, 'Enter User ID'),
+                  buildTextField('US_ID', userIdController, 'Enter User ID'),
+                  const SizedBox(height: 20),
+                  buildTextField('Name', nameController, 'Enter Name'),
+                  const SizedBox(height: 20),
+                  buildTextField('Email', emailController, 'Enter Email'),
                   const SizedBox(height: 20),
                   buildTextField(
-                      'Name', _controllers.nameController, 'Enter Name'),
-                  const SizedBox(height: 20),
-                  buildTextField(
-                      'Email', _controllers.emailController, 'Enter Email'),
-                  const SizedBox(height: 20),
-                  buildTextField('Password', _controllers.passwordController,
-                      'Enter Password',
+                      'Password', passwordController, 'Enter Password',
                       isObscureText: true),
                   const SizedBox(
                     height: 50,
                   ),
                   buildSubmitButton(onPressed: () {
-                    _controllers.createSupportUser(
-                        int.parse(_controllers.userIdController.text),
-                        _controllers.nameController.text,
-                        _controllers.emailController.text,
-                        _controllers.passwordController.text);
+                    controller.createSupportUser(
+                        int.parse(userIdController.text),
+                        nameController.text,
+                        emailController.text,
+                        passwordController.text);
 
                     Get.delete<USController>();
                     Get.back();

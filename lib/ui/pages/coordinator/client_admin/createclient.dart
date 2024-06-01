@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project/domain/entities/user_client.dart';
+import 'package:project/ui/controllers/client/client_controller.dart';
 import '../../../../widgets/text_field.dart';
 import '../../../../widgets/back_button.dart';
 import '../../../../widgets/submit_button.dart';
-import '../../../controllers/coordinator/createclient.controller.dart';
 
 class CreateClient extends StatefulWidget {
   const CreateClient({super.key});
@@ -16,7 +16,9 @@ class CreateClient extends StatefulWidget {
 class _CreateClientState extends State<CreateClient> {
   final _formKey = GlobalKey<FormState>();
   String? email = Get.arguments[0];
-  final FormControllers _controllers = FormControllers();
+  var userIdController = TextEditingController();
+  var nameController = TextEditingController();
+  final ClientController _controller = Get.put(ClientController());
 
   @override
   Widget build(BuildContext context) {
@@ -65,20 +67,18 @@ class _CreateClientState extends State<CreateClient> {
                   const SizedBox(
                     height: 20,
                   ),
-                  buildTextField('Client ID', _controllers.userIdController,
-                      'Enter Client ID'),
+                  buildTextField(
+                      'Client ID', userIdController, 'Enter Client ID'),
                   const SizedBox(
                     height: 20,
                   ),
-                  buildTextField(
-                      'Name', _controllers.nameController, 'Enter Name'),
+                  buildTextField('Name', nameController, 'Enter Name'),
                   const SizedBox(
                     height: 50,
                   ),
                   buildSubmitButton(onPressed: () async {
-                    await _controllers.addClient(
-                        int.parse(_controllers.userIdController.text),
-                        _controllers.nameController.text);
+                    await _controller.addClient(
+                        int.parse(userIdController.text), nameController.text);
                     Get.back();
                   }),
                   const SizedBox(

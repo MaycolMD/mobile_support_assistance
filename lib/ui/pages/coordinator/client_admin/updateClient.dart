@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
 import 'package:project/domain/entities/user_client.dart';
-import 'package:project/ui/controllers/coordinator/createclient.controller.dart';
 import 'package:project/ui/pages/coordinator/client_admin/client_admin_page.dart';
 import '../../../../widgets/submit_button.dart';
 import '../../../../widgets/text_field.dart';
@@ -28,8 +27,6 @@ class _UpdateClientState extends State<UpdateClient> {
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-
-  final FormControllers _controllers = FormControllers();
 
   @override
   void initState() {
@@ -160,7 +157,7 @@ class _UpdateClientState extends State<UpdateClient> {
                                 // Acción para el botón de la lupa
 
                                 try {
-                                  UserClient? user = await _controllers
+                                  UserClient? user = await controller
                                       .getClientByName(selectedclient);
 
                                   userIdController.text = user!.id.toString();
@@ -250,7 +247,7 @@ class _UpdateClientState extends State<UpdateClient> {
               logInfo(int.parse(userIdController.text));
               logInfo(nameController.text);
 
-              _controllers.updateClient(
+              controller.updateClient(
                   int.parse(userIdController.text), nameController.text);
               Get.back();
             },

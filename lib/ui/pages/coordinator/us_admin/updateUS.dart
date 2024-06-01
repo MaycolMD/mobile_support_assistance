@@ -5,7 +5,6 @@ import 'package:project/ui/controllers/user_support/us_controller.dart';
 import 'package:project/ui/pages/coordinator/us_admin/us_admin_page.dart';
 import '../../../../widgets/submit_button.dart';
 import '../../../../widgets/text_field.dart';
-import '../../../controllers/coordinator/us.controller.dart';
 
 class UpdateUS extends StatefulWidget {
   const UpdateUS({super.key});
@@ -27,8 +26,6 @@ class _UpdateUSState extends State<UpdateUS> {
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-
-  final FormControllers _controllers = FormControllers();
 
   @override
   void initState() {
@@ -159,7 +156,7 @@ class _UpdateUSState extends State<UpdateUS> {
                                 // Acción para el botón de la lupa
 
                                 try {
-                                  UserSupport? user = await _controllers
+                                  UserSupport? user = await controller
                                       .getSupportByName(selectedSupport);
 
                                   userIdController.text = user!.id.toString();
@@ -260,7 +257,7 @@ class _UpdateUSState extends State<UpdateUS> {
               print(int.parse(userIdController.text));
               print(nameController.text);
 
-              _controllers.updateSupport(
+              controller.updateSupport(
                   int.parse(userIdController.text),
                   nameController.text,
                   emailController.text,

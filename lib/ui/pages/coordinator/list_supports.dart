@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project/domain/entities/user_support.dart';
-import 'package:project/ui/controllers/coordinator/list_supports_controller.dart';
 import 'package:project/ui/controllers/report/report_controller.dart';
+import 'package:project/ui/controllers/user_support/us_controller.dart';
 import 'package:project/ui/pages/coordinator/main_uc.dart';
 import 'package:project/ui/pages/coordinator/ratingreportspecific.dart';
 import 'package:project/widgets/reportcardsupport.dart';
 
 import '../../../widgets/reportcard.dart';
-import '../../controllers/coordinator/ratingreportus.controller.dart';
 
 class ListSupporters extends StatefulWidget {
   const ListSupporters({super.key});
@@ -18,12 +17,14 @@ class ListSupporters extends StatefulWidget {
 }
 
 class _ListSupportersState extends State<ListSupporters> {
-  ListSupportsController controller = Get.put(ListSupportsController());
   String? email = Get.arguments[0];
 
-  final RatingReportUSController _controller =
-      Get.put(RatingReportUSController());
+  var clientController = TextEditingController();
+  var supportController = TextEditingController();
+
+  final RxBool shouldRefresh = true.obs;
   final ReportController _reportController = Get.put(ReportController());
+  final USController _controller = Get.put(USController());
 
   @override
   Widget build(BuildContext context) {
@@ -65,9 +66,9 @@ class _ListSupportersState extends State<ListSupporters> {
                 ),
                 const SizedBox(height: 10),
                 Obx(() {
-                  if (controller.shouldRefresh.value) {
+                  if (shouldRefresh.value) {
                     return FutureBuilder(
-                        future: controller.getSupports(),
+                        future: _controller.getSupportActive(),
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
@@ -131,7 +132,7 @@ class _ListSupportersState extends State<ListSupporters> {
   }
 
   Column generateSupportsCards() {
-    int size = controller.supports.length;
+    int size = _controller.supports.length;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(
@@ -142,7 +143,7 @@ class _ListSupportersState extends State<ListSupporters> {
             children: List.generate(3, (colIndex) {
               final index = rowIndex * 3 + colIndex;
               if (index < size) {
-                final support = controller.supports[index];
+                final support = _controller.supports[index];
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: SizedBox(

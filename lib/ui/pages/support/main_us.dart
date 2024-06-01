@@ -34,7 +34,7 @@ class MainUS extends StatelessWidget {
               ],
             ),
             FutureBuilder(
-              future: _controller.getAllReports(
+              future: _controller.getAllReportsByEmail(
                   email), // Espera a que se completen las futuras operaciones
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {

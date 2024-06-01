@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
 import 'package:project/domain/entities/report.dart';
 import 'package:project/domain/entities/user_support.dart';
+import 'package:project/ui/controllers/client/client_controller.dart';
 import 'package:project/ui/controllers/report/report_controller.dart';
 import 'package:project/ui/controllers/user_support/us_controller.dart';
-import '../../controllers/coordinator/ratingreportus.controller.dart';
 import './../../../widgets/text_field.dart';
 import './../../../widgets/back_button.dart';
 import './../../../widgets/submit_button.dart';
@@ -202,9 +202,9 @@ class _RatingReportState extends State<RatingReport> {
                         report.clientID,
                         report.description,
                         report.supportID);
-                    Get.find<RatingReportUSController>().shouldRefresh.value =
+                    Get.find<ClientController>().shouldRefresh.value =
                         true; // Aquí refrescas la página
-
+                    Get.find<USController>().shouldRefresh.value = true;
                     Get.back();
                   }),
                   const SizedBox(height: 20),

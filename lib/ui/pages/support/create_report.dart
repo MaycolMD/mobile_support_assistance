@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:project/domain/entities/report.dart';
+import 'package:project/ui/controllers/client/client_controller.dart';
 import 'package:project/ui/controllers/report/report_controller.dart';
 import 'package:project/ui/pages/support/main_us.dart';
 
@@ -14,6 +15,7 @@ class CreateReport extends StatefulWidget {
 
 class _CreateReportState extends State<CreateReport> {
   String email = Get.arguments[0];
+  final ClientController clientController = Get.put(ClientController());
   final ReportController controller = Get.put(ReportController());
   var descriptionController = TextEditingController();
   Future<void>? _clientsNameFuture;
@@ -21,9 +23,9 @@ class _CreateReportState extends State<CreateReport> {
   @override
   void initState() {
     super.initState();
-    _clientsNameFuture = controller.getClientsName().then((_) {
-      if (controller.clientsNameList.isNotEmpty) {
-        controller.selectedClient = controller.clientsNameList.first;
+    _clientsNameFuture = clientController.getClientsName().then((_) {
+      if (clientController.clientsNameList.isNotEmpty) {
+        controller.selectedClient = clientController.clientsNameList.first;
       }
     });
   }
@@ -34,7 +36,7 @@ class _CreateReportState extends State<CreateReport> {
         future: _clientsNameFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            List<String> clientsName = controller.clientsNameList;
+            List<String> clientsName = clientController.clientsNameList;
             return Scaffold(
               resizeToAvoidBottomInset: false,
               body: Center(
@@ -103,7 +105,8 @@ class _CreateReportState extends State<CreateReport> {
                                             context: context,
                                             value: controller.selectedClient,
                                             hintText: 'Select a client',
-                                            items: controller.clientsNameList,
+                                            items: clientController
+                                                .clientsNameList,
                                             onChanged: (String? newValue) => {
                                                   setState(() {
                                                     controller.selectedClient =
@@ -307,6 +310,7 @@ class _CreateReportState extends State<CreateReport> {
                                     controller.selectedTimeEnd =
                                         null; // Reiniciar la hora de finalización seleccionada
                                     Get.delete<ReportController>();
+                                    Get.delete<ClientController>();
                                     Get.to(() => MainUS(), arguments: [email]);
                                   },
                                   style: const ButtonStyle(

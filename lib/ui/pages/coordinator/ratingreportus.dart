@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:project/ui/controllers/client/client_controller.dart';
 import 'package:project/ui/controllers/report/report_controller.dart';
 import 'package:project/ui/controllers/user_support/us_controller.dart';
 import 'package:project/ui/pages/coordinator/main_uc.dart';
 import 'package:project/ui/pages/coordinator/ratingreportspecific.dart';
 import './../../../widgets/reportcard.dart';
-import './../../controllers/coordinator/ratingreportus.controller.dart';
 
 class RatingReportUS extends StatefulWidget {
   const RatingReportUS({Key? key}) : super(key: key);
@@ -15,10 +15,9 @@ class RatingReportUS extends StatefulWidget {
 }
 
 class _RatingReportUSState extends State<RatingReportUS> {
-  final RatingReportUSController controller =
-      Get.put(RatingReportUSController());
   final USController _controller = Get.put(USController());
   final ReportController _reportController = Get.put(ReportController());
+  final ClientController _clientController = Get.put(ClientController());
 
   String? email = Get.arguments[0];
 
@@ -63,21 +62,22 @@ class _RatingReportUSState extends State<RatingReportUS> {
                   color: Theme.of(context).dividerColor,
                 ),
                 Obx(() {
-                  if (controller.selectedSupport == 'All Supports' &&
-                      controller.selectedClient == 'All Clients') {
+                  if (_controller.selectedSupport == 'All Supports' &&
+                      _clientController.selectedClientFilter == 'All Clients') {
                     return generateSpaceCardsAllSupports();
-                  } else if (controller.selectedSupport != 'All Supports' &&
-                      controller.selectedClient == 'All Clients') {
+                  } else if (_controller.selectedSupport != 'All Supports' &&
+                      _clientController.selectedClientFilter == 'All Clients') {
                     return generateSpaceCardsFilter(
-                        '', controller.selectedSupport.toString());
-                  } else if (controller.selectedClient != 'All Clients' &&
-                      controller.selectedSupport == 'All Supports') {
+                        '', _controller.selectedSupport.toString());
+                  } else if (_clientController.selectedClientFilter !=
+                          'All Clients' &&
+                      _controller.selectedSupport == 'All Supports') {
                     return generateSpaceCardsFilter(
-                        controller.selectedClient.toString(), '');
+                        _clientController.selectedClientFilter.toString(), '');
                   } else {
                     return generateSpaceCardsFilter(
-                        controller.selectedClient.toString(),
-                        controller.selectedSupport.toString());
+                        _clientController.selectedClientFilter.toString(),
+                        _controller.selectedSupport.toString());
                     ;
                   }
                 }),
@@ -86,7 +86,7 @@ class _RatingReportUSState extends State<RatingReportUS> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     TextButton(
-                      onPressed: controller.selectClient,
+                      onPressed: _clientController.selectClient,
                       style: ButtonStyle(
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -97,10 +97,11 @@ class _RatingReportUSState extends State<RatingReportUS> {
                           ),
                         ),
                       ),
-                      child: Obx(() => Text(controller.selectedClient.value)),
+                      child: Obx(() =>
+                          Text(_clientController.selectedClientFilter.value)),
                     ),
                     TextButton(
-                      onPressed: controller.selectSupport,
+                      onPressed: _controller.selectSupport,
                       style: ButtonStyle(
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -111,7 +112,7 @@ class _RatingReportUSState extends State<RatingReportUS> {
                           ),
                         ),
                       ),
-                      child: Obx(() => Text(controller.selectedSupport.value)),
+                      child: Obx(() => Text(_controller.selectedSupport.value)),
                     ),
                   ],
                 ),
@@ -148,7 +149,8 @@ class _RatingReportUSState extends State<RatingReportUS> {
   }
 
   Widget generateSpaceCardsAllSupports() {
-    if (controller.shouldRefresh.value) {
+    if (_controller.shouldRefresh.value &&
+        _clientController.shouldRefresh.value) {
       return FutureBuilder(
           future: _reportController.getAllReports(),
           builder: (context, snapshot) {
@@ -182,7 +184,8 @@ class _RatingReportUSState extends State<RatingReportUS> {
   }
 
   Widget generateSpaceCardsFilter(String clientID, String supportID) {
-    if (controller.shouldRefresh.value) {
+    if (_controller.shouldRefresh.value &&
+        _clientController.shouldRefresh.value) {
       return FutureBuilder(
           future: _reportController.getReports(clientID, supportID),
           builder: (context, snapshot) {
