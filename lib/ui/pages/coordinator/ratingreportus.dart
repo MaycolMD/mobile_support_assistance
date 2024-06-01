@@ -10,6 +10,7 @@ class RatingReportUS extends StatelessWidget {
   final RatingReportUSController controller =
       Get.put(RatingReportUSController());
   final USController _controller = Get.put(USController());
+
   String? email = Get.arguments[0];
   RatingReportUS({Key? key}) : super(key: key);
 
@@ -155,6 +156,7 @@ class RatingReportUS extends StatelessWidget {
 
   Column generateReportsCards() {
     int size = controller.reports.length;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(
@@ -166,6 +168,7 @@ class RatingReportUS extends StatelessWidget {
               final index = rowIndex * 3 + colIndex;
               if (index < size) {
                 final report = controller.reports[index];
+
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: SizedBox(

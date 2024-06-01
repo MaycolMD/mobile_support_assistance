@@ -6,6 +6,7 @@ import 'package:project/domain/entities/report.dart';
 import 'package:project/domain/entities/user_support.dart';
 import 'package:project/ui/controllers/report/report_controller.dart';
 import 'package:project/ui/controllers/user_support/us_controller.dart';
+import '../../controllers/coordinator/ratingreportus.controller.dart';
 import './../../../widgets/text_field.dart';
 import './../../../widgets/back_button.dart';
 import './../../../widgets/submit_button.dart';
@@ -187,9 +188,9 @@ class _RatingReportState extends State<RatingReport> {
                     ],
                   ),
                   const SizedBox(height: 50),
-                  buildSubmitButton(onPressed: () {
+                  buildSubmitButton(onPressed: () async {
                     print("$id, ${report.id}");
-                    _controller.updateReport(
+                    await _controller.updateReport(
                         report.id,
                         report.date,
                         rating.toInt(),
@@ -199,6 +200,9 @@ class _RatingReportState extends State<RatingReport> {
                         report.clientID,
                         report.description,
                         report.supportID);
+                    Get.find<RatingReportUSController>().shouldRefresh.value =
+                        true; // Aquí refrescas la página
+
                     Get.back();
                   }),
                   const SizedBox(height: 20),

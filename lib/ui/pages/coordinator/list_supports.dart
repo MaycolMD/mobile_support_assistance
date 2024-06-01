@@ -3,7 +3,11 @@ import 'package:get/get.dart';
 import 'package:project/domain/entities/user_support.dart';
 import 'package:project/ui/controllers/coordinator/list_supports_controller.dart';
 import 'package:project/ui/pages/coordinator/main_uc.dart';
+import 'package:project/ui/pages/coordinator/ratingreportspecific.dart';
 import 'package:project/widgets/reportcardsupport.dart';
+
+import '../../../widgets/reportcard.dart';
+import '../../controllers/coordinator/ratingreportus.controller.dart';
 
 class ListSupporters extends StatefulWidget {
   const ListSupporters({super.key});
@@ -15,6 +19,9 @@ class ListSupporters extends StatefulWidget {
 class _ListSupportersState extends State<ListSupporters> {
   ListSupportsController controller = Get.put(ListSupportsController());
   String? email = Get.arguments[0];
+
+  final RatingReportUSController _controller =
+      Get.put(RatingReportUSController());
 
   @override
   Widget build(BuildContext context) {
@@ -56,26 +63,38 @@ class _ListSupportersState extends State<ListSupporters> {
                 ),
                 const SizedBox(height: 10),
                 Obx(() {
-                  return FutureBuilder(
-                      future: controller.getSupports(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const CircularProgressIndicator();
-                        } else if (snapshot.hasError) {
-                          return Text('Error: ${snapshot.error}');
-                        } else {
-                          return Center(
-                            child: SizedBox(
-                              height: 400,
-                              child: SingleChildScrollView(
-                                scrollDirection: Axis.vertical,
-                                child: generateSupportsCards(),
+                  if (controller.shouldRefresh.value) {
+                    return FutureBuilder(
+                        future: controller.getSupports(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const CircularProgressIndicator();
+                          } else if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          } else {
+                            return Center(
+                              child: SizedBox(
+                                height: 400,
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.vertical,
+                                  child: generateSupportsCards(),
+                                ),
                               ),
-                            ),
-                          );
-                        }
-                      });
+                            );
+                          }
+                        });
+                  } else {
+                    return Center(
+                      child: SizedBox(
+                        height: 400,
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.vertical,
+                          child: generateReportsCards(),
+                        ),
+                      ),
+                    );
+                  }
                 }),
                 const SizedBox(height: 20),
                 ElevatedButton(
@@ -131,6 +150,45 @@ class _ListSupportersState extends State<ListSupporters> {
                       username: support.name.toString(),
                       numReports: 6,
                       rating: 4,
+                    ),
+                  ),
+                );
+              } else {
+                return const SizedBox(); // Si no hay más elementos, devuelve un SizedBox
+              }
+            }),
+          );
+        },
+      ),
+    );
+  }
+
+  Column generateReportsCards() {
+    int size = _controller.reports.length;
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List.generate(
+        (size / 3).ceil(),
+        (rowIndex) {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(3, (colIndex) {
+              final index = rowIndex * 3 + colIndex;
+              if (index < size) {
+                final report = _controller.reports[index];
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: SizedBox(
+                    width: 400,
+                    child: ReportCard(
+                      reportId: report.id.toString(),
+                      username: report.supportID.toString(),
+                      date: report.date,
+                      status: report.status,
+                      onPressed: () {
+                        Get.to(() => RatingReport(),
+                            arguments: [email, report.id]);
+                      },
                     ),
                   ),
                 );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project/domain/entities/report.dart';
 import 'package:project/domain/use_case/report_usecase.dart';
+import 'package:project/ui/pages/coordinator/ratingreportus.dart';
 
 class RatingReportUSController extends GetxController {
   final RxList<Report> _reports = <Report>[].obs;
