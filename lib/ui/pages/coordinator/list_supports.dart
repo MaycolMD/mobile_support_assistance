@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:project/domain/entities/user_support.dart';
 import 'package:project/ui/controllers/coordinator/list_supports_controller.dart';
 import 'package:project/ui/pages/coordinator/main_uc.dart';
+import 'package:project/widgets/reportcardsupport.dart';
 
 class ListSupporters extends StatefulWidget {
   const ListSupporters({super.key});
@@ -54,129 +55,28 @@ class _ListSupportersState extends State<ListSupporters> {
                   color: Theme.of(context).dividerColor,
                 ),
                 const SizedBox(height: 10),
-                SizedBox(
-                  height: 400,
-                  child: Obx(() => ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: controller.supports.length,
-                        itemBuilder: (context, index) {
-                          UserSupport support = controller.supports[index];
-                          int countReports = controller.numberOfReports;
-                          double avgRating = controller.avgRating;
-                          double progress = (avgRating / 5).clamp(0, 1);
-                          return Container(
-                            width: 350,
-                            height: 300,
-                            padding: const EdgeInsets.all(16),
-                            margin: const EdgeInsets.symmetric(
-                                vertical: 8, horizontal: 16),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(16),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.3),
-                                  spreadRadius: 2,
-                                  blurRadius: 8,
-                                  offset: const Offset(0, 4),
-                                ),
-                              ],
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Center(
-                                  child: Text(
-                                    support.id.toString(),
-                                    style: const TextStyle(
-                                      fontFamily: 'Roboto',
-                                      fontSize: 28,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.deepPurple,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(height: 10),
-                                Center(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Icon(Icons.person,
-                                          size: 24, color: Colors.deepPurple),
-                                      const SizedBox(width: 5),
-                                      Flexible(
-                                        child: Text(
-                                          support.name,
-                                          style: const TextStyle(
-                                            fontFamily: 'Roboto',
-                                            fontSize: 22,
-                                            color: Colors.black,
-                                          ),
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(height: 20),
-                                Center(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Icon(Icons.description,
-                                          size: 24, color: Colors.deepPurple),
-                                      const SizedBox(width: 5),
-                                      Flexible(
-                                        child: Text(
-                                          'Number of Reports: $countReports',
-                                          style: const TextStyle(
-                                            fontFamily: 'Roboto',
-                                            fontSize: 22,
-                                            color: Colors.black,
-                                          ),
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(height: 40),
-                                Center(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Icon(Icons.grade,
-                                          size: 24, color: Colors.deepPurple),
-                                      const SizedBox(width: 5),
-                                      Text(
-                                        'Average Rating: $avgRating',
-                                        style: const TextStyle(
-                                          fontFamily: 'Roboto',
-                                          fontSize: 22,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(height: 40),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 20),
-                                  child: LinearProgressIndicator(
-                                    value: progress,
-                                    backgroundColor: Colors.grey[300],
-                                    valueColor:
-                                        const AlwaysStoppedAnimation<Color>(
-                                            Colors.deepPurple),
-                                  ),
-                                ),
-                              ],
+                Obx(() {
+                  return FutureBuilder(
+                      future: controller.getSupports(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const CircularProgressIndicator();
+                        } else if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        } else {
+                          return Center(
+                            child: SizedBox(
+                              height: 400,
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.vertical,
+                                child: generateSupportsCards(),
+                              ),
                             ),
                           );
-                        },
-                      )),
-                ),
+                        }
+                      });
+                }),
                 const SizedBox(height: 20),
                 ElevatedButton(
                   key: const Key('ButtonGoBack'),
@@ -205,6 +105,41 @@ class _ListSupportersState extends State<ListSupporters> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Column generateSupportsCards() {
+    int size = controller.supports.length;
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List.generate(
+        (size / 3).ceil(),
+        (rowIndex) {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(3, (colIndex) {
+              final index = rowIndex * 3 + colIndex;
+              if (index < size) {
+                final support = controller.supports[index];
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: SizedBox(
+                    width: 400,
+                    child: ReportCardSupport(
+                      supportId: support.id.toString(),
+                      username: support.name.toString(),
+                      numReports: 6,
+                      rating: 4,
+                    ),
+                  ),
+                );
+              } else {
+                return const SizedBox(); // Si no hay más elementos, devuelve un SizedBox
+              }
+            }),
+          );
+        },
       ),
     );
   }

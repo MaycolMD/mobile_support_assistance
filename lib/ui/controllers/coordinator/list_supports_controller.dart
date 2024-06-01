@@ -11,6 +11,8 @@ class ListSupportsController extends GetxController {
   final SupportUseCase supportUseCase = Get.find();
   final ReportUseCase reportUseCase = Get.find();
 
+  final RxBool shouldRefresh = true.obs;
+
   List<UserSupport> get supports => _supports;
 
   int numberOfReports = 0;

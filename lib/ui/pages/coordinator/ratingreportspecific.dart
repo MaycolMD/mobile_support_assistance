@@ -163,7 +163,7 @@ class _RatingReportState extends State<RatingReport> {
                     children: [
                       Text(
                         'Rate   ',
-                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                               fontFamily: 'Readex Pro',
                               fontSize: 18,
                             ),

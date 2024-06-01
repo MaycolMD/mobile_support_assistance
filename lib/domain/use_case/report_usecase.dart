@@ -24,6 +24,7 @@ class ReportUseCase {
   }
 
   Future<void> updateReport(Report report) async {
+    print('holaaa usecase');
     await _repository.updateReport(report);
   }
 }

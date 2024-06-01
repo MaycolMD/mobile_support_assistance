@@ -26,5 +26,5 @@ class ReportRepository implements IReportRepository {
 
   @override
   Future<bool> updateReport(Report report) async =>
-      await _reportDataSource.addReport(report);
+      await _reportDataSource.updateReport(report);
 }

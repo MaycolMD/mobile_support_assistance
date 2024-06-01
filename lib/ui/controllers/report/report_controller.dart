@@ -176,6 +176,8 @@ class ReportController extends GetxController {
       description: description,
       supportID: supportID,
     );
+    print(report.id);
+    print(report.status);
     await reportUseCase.updateReport(report);
   }
 
