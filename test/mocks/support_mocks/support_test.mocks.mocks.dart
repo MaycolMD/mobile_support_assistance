@@ -45,6 +45,15 @@ class MockISupportDataSource extends _i1.Mock
       ) as _i3.Future<List<_i4.UserSupport>>);
 
   @override
+  _i3.Future<_i4.UserSupport?> getSupportById(int? id) => (super.noSuchMethod(
+        Invocation.method(
+          #getSupportById,
+          [id],
+        ),
+        returnValue: _i3.Future<_i4.UserSupport?>.value(),
+      ) as _i3.Future<_i4.UserSupport?>);
+
+  @override
   _i3.Future<bool> isGetSupport(
     String? email,
     String? password,
@@ -69,6 +78,16 @@ class MockISupportDataSource extends _i1.Mock
         ),
         returnValue: _i3.Future<bool>.value(false),
       ) as _i3.Future<bool>);
+
+  @override
+  _i3.Future<_i4.UserSupport?> getSupportByName(String? name) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getSupportByName,
+          [name],
+        ),
+        returnValue: _i3.Future<_i4.UserSupport?>.value(),
+      ) as _i3.Future<_i4.UserSupport?>);
 
   @override
   _i3.Future<bool> checkEmailExists(String? email) => (super.noSuchMethod(
@@ -117,6 +136,25 @@ class MockISupportRepository extends _i1.Mock
         returnValue:
             _i3.Future<List<_i4.UserSupport>>.value(<_i4.UserSupport>[]),
       ) as _i3.Future<List<_i4.UserSupport>>);
+
+  @override
+  _i3.Future<_i4.UserSupport?> getSupportByName(String? name) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getSupportByName,
+          [name],
+        ),
+        returnValue: _i3.Future<_i4.UserSupport?>.value(),
+      ) as _i3.Future<_i4.UserSupport?>);
+
+  @override
+  _i3.Future<_i4.UserSupport?> getSupportById(int? id) => (super.noSuchMethod(
+        Invocation.method(
+          #getSupportById,
+          [id],
+        ),
+        returnValue: _i3.Future<_i4.UserSupport?>.value(),
+      ) as _i3.Future<_i4.UserSupport?>);
 
   @override
   _i3.Future<bool> isGetSupport(

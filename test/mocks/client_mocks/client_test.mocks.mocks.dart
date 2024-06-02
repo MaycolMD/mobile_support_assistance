@@ -68,6 +68,16 @@ class MockIClientDataSource extends _i1.Mock implements _i3.IClientDataSource {
       ) as _i4.Future<List<_i5.UserClient>>);
 
   @override
+  _i4.Future<_i5.UserClient?> getClientByName(String? name) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getClientByName,
+          [name],
+        ),
+        returnValue: _i4.Future<_i5.UserClient?>.value(),
+      ) as _i4.Future<_i5.UserClient?>);
+
+  @override
   _i4.Future<bool> addClient(_i5.UserClient? user) => (super.noSuchMethod(
         Invocation.method(
           #addClient,
@@ -111,6 +121,16 @@ class MockIClientRepository extends _i1.Mock implements _i6.IClientRepository {
         ),
         returnValue: _i4.Future<List<_i5.UserClient>>.value(<_i5.UserClient>[]),
       ) as _i4.Future<List<_i5.UserClient>>);
+
+  @override
+  _i4.Future<_i5.UserClient?> getClientByName(String? name) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getClientByName,
+          [name],
+        ),
+        returnValue: _i4.Future<_i5.UserClient?>.value(),
+      ) as _i4.Future<_i5.UserClient?>);
 
   @override
   _i4.Future<bool> addClient(_i5.UserClient? user) => (super.noSuchMethod(

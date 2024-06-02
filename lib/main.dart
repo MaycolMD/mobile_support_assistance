@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
-import 'package:hive_flutter/adapters.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:loggy/loggy.dart';
+import 'package:path_provider/path_provider.dart' as path_provider;
+
+import 'package:project/data/core/network_info.dart';
+import 'package:project/data/datasources/local/interfaces/I_report_local_datasource.dart';
+import 'package:project/data/datasources/local/report_local_datasource.dart';
 import 'package:project/data/datasources/remote/client_datasource.dart';
 import 'package:project/data/datasources/remote/interfaces/I_client_datasource.dart';
 import 'package:project/data/datasources/remote/interfaces/I_report_datasource.dart';
 import 'package:project/data/datasources/remote/interfaces/I_support_datasource.dart';
 import 'package:project/data/datasources/remote/report_datasource.dart';
 import 'package:project/data/datasources/remote/support_datasource.dart';
-import 'package:project/domain/entities/report.dart';
+import 'package:project/data/models/report_db.dart';
 import 'package:project/domain/repositories/client_repository.dart';
 import 'package:project/domain/repositories/interfaces/I_client_repository.dart';
 import 'package:project/domain/repositories/interfaces/I_report_repository.dart';
@@ -34,7 +40,34 @@ import 'ui/pages/coordinator/ratingreportus.dart';
 import 'ui/pages/coordinator/ratingreportspecific.dart';
 import 'package:project/ui/pages/coordinator/client_admin/client_admin_page.dart';
 
+Future<void> _openBox() async {
+  try {
+    var dir = await path_provider.getApplicationDocumentsDirectory();
+    await Hive.initFlutter(dir.path);
+
+    Hive.registerAdapter(ReportDBAdapter());
+
+    await Hive.openBox("reportsDB");
+    await Hive.openBox("reportsDBOffline");
+  } catch (e) {
+    logError('Error initializing Hive: $e');
+  }
+}
+
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  Loggy.initLoggy(
+    logPrinter: const PrettyPrinter(
+      showColors: true,
+    ),
+  );
+
+  await _openBox();
+
+  Get.put(NetworkInfo());
+  Get.put<IReportLocalDataSource>(ReportLocalDataSource());
+
   Get.put<IClientDataSource>(ClientDataSource());
   Get.put<IReportDataSource>(ReportDataSource());
   Get.put<ISupportDataSource>(SupportDataSource());
@@ -49,47 +82,39 @@ void main() async {
 
   Get.put(LoginController());
 
-  // WidgetsFlutterBinding.ensureInitialized();
-  // await Hive.initFlutter();
-  // Hive.registerAdapter(ReportAdapter()); // No olvides generar el adaptador
-  // await Hive.openBox<Report>('reports');
-
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-        title: 'Your Support Assistance',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        initialRoute: '/',
-        getPages: [
-          GetPage(name: '/', page: () => const Login()),
-          GetPage(name: '/CreateUS', page: () => const CreateUser()),
-          GetPage(name: '/MainPageUC', page: () => const MainPageUC()),
-          GetPage(name: '/CreateClient', page: () => const CreateClient()),
-          GetPage(name: '/Reports', page: () => RatingReportUS()),
-          GetPage(name: '/SpecificReport', page: () => const RatingReport()),
-          GetPage(name: '/MainUS', page: () => MainUS()),
-          GetPage(name: '/Login', page: () => const Login()),
-          GetPage(name: '/CreateReport', page: () => const CreateReport()),
-          GetPage(name: '/RecapReport', page: () => const RecapReport()),
-          GetPage(name: '/ListSupporters', page: () => const ListSupporters()),
-          GetPage(name: '/AdminPageUS', page: () => const AdminPageUS()),
-          GetPage(
-              name: '/AdminPageClient', page: () => const AdminPageClient()),
-          GetPage(name: '/deleteClient', page: () => const DeleteClient()),
-          GetPage(name: '/updateClient', page: () => const UpdateClient()),
-        ],
-        home: const Login(
-          key: Key('MainPage'),
-        ));
+      title: 'Your Support Assistance',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      initialRoute: '/',
+      getPages: [
+        GetPage(name: '/', page: () => const Login()),
+        GetPage(name: '/CreateUS', page: () => const CreateUser()),
+        GetPage(name: '/MainPageUC', page: () => const MainPageUC()),
+        GetPage(name: '/CreateClient', page: () => const CreateClient()),
+        GetPage(name: '/Reports', page: () => RatingReportUS()),
+        GetPage(name: '/SpecificReport', page: () => const RatingReport()),
+        GetPage(name: '/MainUS', page: () => MainUS()),
+        GetPage(name: '/Login', page: () => const Login()),
+        GetPage(name: '/CreateReport', page: () => const CreateReport()),
+        GetPage(name: '/RecapReport', page: () => const RecapReport()),
+        GetPage(name: '/ListSupporters', page: () => const ListSupporters()),
+        GetPage(name: '/AdminPageUS', page: () => const AdminPageUS()),
+        GetPage(name: '/AdminPageClient', page: () => const AdminPageClient()),
+        GetPage(name: '/deleteClient', page: () => const DeleteClient()),
+        GetPage(name: '/updateClient', page: () => const UpdateClient()),
+      ],
+      home: const Login(key: Key('MainPage')),
+    );
   }
 }

@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
+import 'package:project/data/models/report_db.dart';
 import 'package:project/domain/entities/report.dart';
 import 'package:project/domain/entities/user_support.dart';
 import 'package:project/domain/use_case/report_usecase.dart';
 import 'package:project/domain/use_case/us_usecase.dart';
+import 'package:project/ui/controllers/connectivity_controller.dart';
 
 class USController extends GetxController {
   final RxList<Report> _reports = <Report>[].obs;
+  final RxList<ReportDB> _reportsLocal = <ReportDB>[].obs;
+
   final RxList<String> _supportsName = <String>[].obs;
   final RxList<UserSupport> _supports = <UserSupport>[].obs;
 
