@@ -3,7 +3,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:project/domain/entities/report.dart';
 import 'package:project/domain/use_case/report_usecase.dart';
-
 import '../mocks/report_mocks/report_test.mocks.mocks.dart';
 
 // Mock de ClientRepository
