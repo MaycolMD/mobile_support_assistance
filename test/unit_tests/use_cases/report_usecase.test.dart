@@ -11,99 +11,81 @@ import '../mocks/report_mocks/report_test.mocks.mocks.dart';
 void main() {
   late MockIReportRepository mockReportRepository;
   late ReportUseCase reportUseCase;
+  late Report report;
 
   setUp(() {
     // Inicialización del mock y la instancia de ClientUseCase
     mockReportRepository = MockIReportRepository();
     reportUseCase = ReportUseCase(mockReportRepository);
+    report = Report(
+        id: 12345678,
+        date: "2024-10-10",
+        rating: 2,
+        status: "Approved",
+        endTime: "10:00 pm",
+        startTime: "08:00 am",
+        clientID: 99999,
+        description: "loremp impsu",
+        supportID: 111111111);
   });
 
-  group('ReportUseCase', () {
-    test('getAllReports should call getAllReports on the repository', () async {
-      when(mockReportRepository.getAllReports())
-          .thenAnswer((_) async => <Report>[]);
+  test('getAllReports should call getAllReports on the repository', () async {
+    when(mockReportRepository.getAllReports())
+        .thenAnswer((_) async => <Report>[]);
 
-      // Act
-      await reportUseCase.getAllReports();
+    // Act
+    await reportUseCase.getAllReports();
 
-      // Assert
-      verify(mockReportRepository.getAllReports()).called(1);
-    });
+    // Assert
+    verify(mockReportRepository.getAllReports()).called(1);
+  });
 
-    test('addReport should call addReport method of repository', () async {
-      // Arrange
-      final Report report = Report(
-          id: 100,
-          date: DateTime.now().toString(),
-          rating: 0,
-          status: "Pendiente",
-          endTime: TimeOfDay.now().toString(),
-          startTime: TimeOfDay.now().toString(),
-          clientID: 0,
-          supportID: 0,
-          description: "lorem ipsu");
+  test('getReports should call getReports on the repository', () async {
+    when(mockReportRepository.getReports(
+            report.clientID.toString(), report.supportID.toString()))
+        .thenAnswer((_) async => <Report>[]);
 
-      when(mockReportRepository.addReport(report)).thenAnswer((_) async =>
-          true); // Asegura que el método mockeado devuelva un Future<bool>
+    await reportUseCase.getReports(
+        report.clientID.toString(), report.supportID.toString());
 
-      // Act
-      await reportUseCase.addReport(report);
+    verify(mockReportRepository.getReports(
+            report.clientID.toString(), report.supportID.toString()))
+        .called(1);
+  });
 
-      // Assert
-      verify(mockReportRepository.addReport(report)).called(1);
-    });
+  test('addReport should call addReport method of repository', () async {
+    // Arrange
 
-    test('getReports should call getReports method of repository', () async {
-      final String clientID = '0';
-      final String supportID = '0';
-      when(mockReportRepository.getReports(clientID, supportID))
-          .thenAnswer((_) async => <Report>[]);
+    when(mockReportRepository.addReport(report)).thenAnswer((_) async =>
+        true); // Asegura que el método mockeado devuelva un Future<bool>
 
-      // Act
-      await reportUseCase.getReports(clientID, supportID);
+    // Act
+    await reportUseCase.addReport(report);
 
-      // Assert
-      verify(mockReportRepository.getReports(clientID, supportID));
-    });
+    // Assert
+    verify(mockReportRepository.addReport(report)).called(1);
+  });
 
-    test('updateReport should call updateReport method of repository',
-        () async {
-      // Arrange
-      final Report report = Report(
-          id: 100,
-          date: DateTime.now().toString(),
-          rating: 0,
-          status: "Pendiente",
-          endTime: TimeOfDay.now().toString(),
-          startTime: TimeOfDay.now().toString(),
-          clientID: 0,
-          supportID: 0,
-          description: "lorem ipsu");
+  test('updateReport should call updateReport method of repository', () async {
+    when(mockReportRepository.updateReport(report)).thenAnswer((_) async =>
+        true); // Asegura que el método mockeado devuelva un Future<bool>
 
-      when(mockReportRepository.updateReport(report)).thenAnswer((_) async =>
-          true); // Asegura que el método mockeado devuelva un Future<bool>
+    // Act
+    await reportUseCase.updateReport(report);
 
-      // Act
-      await reportUseCase.updateReport(report);
+    // Assert
+    verify(mockReportRepository.updateReport(report)).called(1);
+  });
 
-      // Assert
-      verify(mockReportRepository.updateReport(report)).called(1);
-    });
+  test('deleteReport should call deleteReport method of repository', () async {
+    when(mockReportRepository.deleteReport(report.id.toString())).thenAnswer(
+        (_) async =>
+            true); // Asegura que el método mockeado devuelva un Future<bool>
 
-    test('deleteReport should call deleteReport method of repository',
-        () async {
-      // Arrange
-      final String idToDelete = '100';
+    // Act
+    await reportUseCase.deleteReport(report.id.toString());
 
-      when(mockReportRepository.deleteReport(idToDelete)).thenAnswer(
-          (_) async =>
-              true); // Asegura que el método mockeado devuelva un Future<bool>
-
-      // Act
-      await reportUseCase.deleteReport(idToDelete);
-
-      // Assert
-      verify(mockReportRepository.deleteReport(idToDelete)).called(1);
-    });
+    // Assert
+    verify(mockReportRepository.deleteReport(report.id.toString())).called(1);
   });
 }

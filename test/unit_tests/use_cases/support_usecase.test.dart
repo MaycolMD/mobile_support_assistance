@@ -10,114 +10,115 @@ import '../mocks/support_mocks/support_test.mocks.mocks.dart';
 void main() {
   late MockISupportRepository mockSupportRepository;
   late SupportUseCase supportUseCase;
+  late UserSupport support;
 
   setUp(() {
     // Inicialización del mock y la instancia de ClientUseCase
     mockSupportRepository = MockISupportRepository();
     supportUseCase = SupportUseCase(mockSupportRepository);
+    support = UserSupport(
+        id: 999999999,
+        name: 'Supporter',
+        email: 'support@a.com',
+        password: '1234567890',
+        role: 'support');
   });
 
-  group('supportUseCase', () {
-    test('getSupports should call getSupports on the repository', () async {
-      when(mockSupportRepository.getSupports())
-          .thenAnswer((_) async => <UserSupport>[]);
+  test('addSupport should call addSupport method on the repository', () async {
+    when(mockSupportRepository.addSupport(support)).thenAnswer((_) async =>
+        true); // Asegura que el método mockeado devuelva un Future<bool>
 
-      // Act
-      await supportUseCase.getSupports();
+    // Act
+    bool result = await supportUseCase.addSupport(support);
 
-      // Assert
-      verify(mockSupportRepository.getSupports()).called(1);
-    });
+    // Assert
+    verify(mockSupportRepository.addSupport(support)).called(1);
+    expect(result, isTrue);
+  });
 
-    test('addSupportUser should call addSupportUser method of repository',
-        () async {
-      // Arrange
-      UserSupport userSupport = UserSupport(
-        id: 100,
-        name: 'Rolando Mckolled',
-        email: 'email@gmail.com',
-        password: 'unacontrasena',
-        role: 'support',
-      );
+  test('getSupports should call getSupports on the repository', () async {
+    when(mockSupportRepository.getSupports())
+        .thenAnswer((_) async => <UserSupport>[]);
 
-      when(mockSupportRepository.addSupport(userSupport)).thenAnswer(
-          (_) async =>
-              true); // Asegura que el método mockeado devuelva un Future<bool>
+    // Act
+    await supportUseCase.getSupports();
 
-      // Act
-      bool result = await supportUseCase.addSupport(userSupport);
+    // Assert
+    verify(mockSupportRepository.getSupports()).called(1);
+  });
 
-      // Assert
-      verify(mockSupportRepository.addSupport(userSupport)).called(1);
-      expect(result, isTrue);
-    });
+  test('getSupportByName should call getSupportByName on the repository',
+      () async {
+    when(mockSupportRepository.getSupportByName(support.name))
+        .thenAnswer((_) async => support);
 
-    test('isGetSupport should call to isGetSupport method of repository',
-        () async {
-      final String email = 'email@gmail.com';
-      final String password = 'unacontrasena';
-      when(mockSupportRepository.isGetSupport(email, password))
-          .thenAnswer((_) async => true);
+    // Act
+    await supportUseCase.getSupportByName(support.name);
 
-      // Act
-      bool result = await supportUseCase.isGetSupport(email, password);
+    // Assert
+    verify(mockSupportRepository.getSupportByName(support.name)).called(1);
+  });
 
-      // Assert
-      verify(mockSupportRepository.isGetSupport(email, password));
-      expect(result, isTrue);
-    });
+  test('getSupportById should call getSupportById on the repository', () async {
+    when(mockSupportRepository.getSupportById(support.id))
+        .thenAnswer((_) async => support);
 
-    test(
-        'checkEmailExists should call to checkEmailExists method of repository',
-        () async {
-      final String email = 'email@gmail.com';
-      when(mockSupportRepository.checkEmailExists(email))
-          .thenAnswer((_) async => true);
+    // Act
+    await supportUseCase.getSupportById(support.id!);
 
-      bool result = await supportUseCase.checkEmailExists(email);
+    // Assert
+    verify(mockSupportRepository.getSupportById(support.id)).called(1);
+  });
 
-      verify(mockSupportRepository.checkEmailExists(email)).called(1);
-      expect(result, isTrue);
-    });
+  test('isGetSupport should call isGetSupport on the repository', () async {
+    when(mockSupportRepository.isGetSupport(support.email, support.password))
+        .thenAnswer((_) async => true);
 
-    test('updateSupport should call updateSupport method of repository',
-        () async {
-      // Arrange
-      UserSupport userSupport = UserSupport(
-        id: 100,
-        name: 'Rolando Mckolled',
-        email: 'email@gmail.com',
-        password: 'unacontrasena',
-        role: 'support',
-      );
+    // Act
+    bool result =
+        await supportUseCase.isGetSupport(support.email, support.password);
 
-      when(mockSupportRepository.updateSupport(userSupport)).thenAnswer(
-          (_) async =>
-              true); // Asegura que el método mockeado devuelva un Future<bool>
+    // Assert
+    verify(mockSupportRepository.isGetSupport(support.email, support.password))
+        .called(1);
+    expect(result, isTrue);
+  });
 
-      // Act
-      bool result = await supportUseCase.updateSupport(userSupport);
+  test('checkEmailExists should call to checkEmailExists method of repository',
+      () async {
+    when(mockSupportRepository.checkEmailExists(support.email))
+        .thenAnswer((_) async => true);
 
-      // Assert
-      verify(mockSupportRepository.updateSupport(userSupport)).called(1);
-      expect(result, isTrue);
-    });
+    bool result = await supportUseCase.checkEmailExists(support.email);
 
-    test('deleteSupport should call deleteSupport method of repository',
-        () async {
-      // Arrange
-      final int idToDelete = 100;
+    verify(mockSupportRepository.checkEmailExists(support.email)).called(1);
+    expect(result, isTrue);
+  });
 
-      when(mockSupportRepository.deleteSupport(idToDelete)).thenAnswer(
-          (_) async =>
-              true); // Asegura que el método mockeado devuelva un Future<bool>
+  test('updateSupport should call updateSupport method of repository',
+      () async {
+    when(mockSupportRepository.updateSupport(support)).thenAnswer((_) async =>
+        true); // Asegura que el método mockeado devuelva un Future<bool>
 
-      // Act
-      bool result = await supportUseCase.deleteSupport(idToDelete);
+    // Act
+    bool result = await supportUseCase.updateSupport(support);
 
-      // Assert
-      verify(mockSupportRepository.deleteSupport(idToDelete)).called(1);
-      expect(result, isTrue);
-    });
+    // Assert
+    verify(mockSupportRepository.updateSupport(support)).called(1);
+    expect(result, isTrue);
+  });
+
+  test('deleteSupport should call deleteSupport method of repository',
+      () async {
+    when(mockSupportRepository.deleteSupport(support.id)).thenAnswer(
+        (_) async =>
+            true); // Asegura que el método mockeado devuelva un Future<bool>
+
+    // Act
+    bool result = await supportUseCase.deleteSupport(support.id!);
+
+    // Assert
+    verify(mockSupportRepository.deleteSupport(support.id)).called(1);
+    expect(result, isTrue);
   });
 }
