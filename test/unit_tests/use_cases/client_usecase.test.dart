@@ -38,7 +38,7 @@ void main() {
     verify(mockClientRepository.getClientByName(newUser.name)).called(1);
   });
 
-  test('addClient should call addClient method of repository', () async {
+  test('addClient should call addClient method on the repository', () async {
     when(mockClientRepository.addClient(newUser)).thenAnswer((_) async =>
         true); // Asegura que el método mockeado devuelva un Future<bool>
 
@@ -48,7 +48,8 @@ void main() {
     verify(mockClientRepository.addClient(newUser)).called(1);
   });
 
-  test('updateClient should call updateClient method of repository', () async {
+  test('updateClient should call updateClient method on the repository',
+      () async {
     when(mockClientRepository.updateClient(newUser)).thenAnswer((_) async =>
         true); // Asegura que el método mockeado devuelva un Future<bool>
 
@@ -59,7 +60,8 @@ void main() {
     verify(mockClientRepository.updateClient(newUser)).called(1);
   });
 
-  test('deleteClient should call deleteClient method of repository', () async {
+  test('deleteClient should call deleteClient method on the repository',
+      () async {
     when(mockClientRepository.deleteClient(newUser.id)).thenAnswer((_) async =>
         true); // Asegura que el método mockeado devuelva un Future<bool>
 

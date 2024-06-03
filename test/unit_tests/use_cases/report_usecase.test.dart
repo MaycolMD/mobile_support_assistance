@@ -53,7 +53,7 @@ void main() {
         .called(1);
   });
 
-  test('addReport should call addReport method of repository', () async {
+  test('addReport should call addReport method on the repository', () async {
     // Arrange
 
     when(mockReportRepository.addReport(report)).thenAnswer((_) async =>
@@ -66,7 +66,8 @@ void main() {
     verify(mockReportRepository.addReport(report)).called(1);
   });
 
-  test('updateReport should call updateReport method of repository', () async {
+  test('updateReport should call updateReport method on the repository',
+      () async {
     when(mockReportRepository.updateReport(report)).thenAnswer((_) async =>
         true); // Asegura que el método mockeado devuelva un Future<bool>
 
@@ -77,7 +78,8 @@ void main() {
     verify(mockReportRepository.updateReport(report)).called(1);
   });
 
-  test('deleteReport should call deleteReport method of repository', () async {
+  test('deleteReport should call deleteReport method on the repository',
+      () async {
     when(mockReportRepository.deleteReport(report.id.toString())).thenAnswer(
         (_) async =>
             true); // Asegura que el método mockeado devuelva un Future<bool>

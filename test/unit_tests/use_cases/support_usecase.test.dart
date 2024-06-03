@@ -84,7 +84,8 @@ void main() {
     expect(result, isTrue);
   });
 
-  test('checkEmailExists should call to checkEmailExists method of repository',
+  test(
+      'checkEmailExists should call to checkEmailExists method on the repository',
       () async {
     when(mockSupportRepository.checkEmailExists(support.email))
         .thenAnswer((_) async => true);
@@ -95,7 +96,7 @@ void main() {
     expect(result, isTrue);
   });
 
-  test('updateSupport should call updateSupport method of repository',
+  test('updateSupport should call updateSupport method on the repository',
       () async {
     when(mockSupportRepository.updateSupport(support)).thenAnswer((_) async =>
         true); // Asegura que el método mockeado devuelva un Future<bool>
@@ -108,7 +109,7 @@ void main() {
     expect(result, isTrue);
   });
 
-  test('deleteSupport should call deleteSupport method of repository',
+  test('deleteSupport should call deleteSupport method on the repository',
       () async {
     when(mockSupportRepository.deleteSupport(support.id)).thenAnswer(
         (_) async =>
