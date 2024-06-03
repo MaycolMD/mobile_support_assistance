@@ -56,7 +56,5 @@ void main() {
     // Pulsar el botón de inicio de sesión
     await tester.tap(find.byKey(Key('ButtonLogin')));
     await tester.pumpAndSettle();
-
-    // verify(mockController.validateLogin()).called(1);
   });
 }

@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:project/domain/use_case/us_usecase.dart';
 import 'package:project/ui/controllers/user_support/us_controller.dart';
 import 'package:project/ui/pages/coordinator/us_admin/us_admin_page.dart';
-import '../../../../domain/entities/user_support.dart';
 import '../../../../widgets/text_field.dart';
-import '../../../../widgets/back_button.dart';
 import '../../../../widgets/submit_button.dart';
 
 class CreateUser extends StatefulWidget {
-  const CreateUser({super.key});
+  const CreateUser({super.key, required this.email});
+  final String email;
 
   @override
   _CreateUserState createState() => _CreateUserState();
@@ -17,11 +15,8 @@ class CreateUser extends StatefulWidget {
 
 class _CreateUserState extends State<CreateUser> {
   final _formKey = GlobalKey<FormState>();
-  String? email = Get.arguments[0];
-  final USController controller = Get.put(USController());
 
-  final RxList<UserSupport> _supports = <UserSupport>[].obs;
-  final SupportUseCase _supportUseCase = Get.find();
+  final USController controller = Get.put(USController());
 
   var userIdController = TextEditingController();
   var nameController = TextEditingController();
@@ -115,7 +110,7 @@ class _CreateUserState extends State<CreateUser> {
     return OutlinedButton(
       key: const Key('ButtonGoBack'),
       onPressed: () async {
-        Get.to(() => AdminPageUS(), arguments: [email]);
+        Get.to(() => AdminPageUS(email: widget.email));
       },
       style: ButtonStyle(
         padding: MaterialStateProperty.all<EdgeInsetsGeometry>(

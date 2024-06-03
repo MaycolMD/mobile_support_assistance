@@ -1,24 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:loggy/loggy.dart';
 import 'package:project/domain/entities/user_support.dart';
 import 'package:project/ui/controllers/user_support/us_controller.dart';
-import 'package:project/ui/pages/coordinator/us_admin/createus.dart';
-import 'package:project/ui/pages/coordinator/us_admin/updateUS.dart';
 import 'package:project/ui/pages/coordinator/us_admin/us_admin_page.dart';
 
 import '../../../../widgets/submit_button.dart';
 import '../../../../widgets/text_field.dart';
 
 class deleteUS extends StatefulWidget {
-  const deleteUS({super.key});
-
+  const deleteUS({super.key, required this.email});
+  final String email;
   @override
   State<deleteUS> createState() => _deleteUSState();
 }
 
 class _deleteUSState extends State<deleteUS> {
-  String email = Get.arguments[0];
   final USController controller = Get.put(USController());
   Future<void>? supportNamesFuture;
   String selectedSupport = '';
@@ -207,7 +203,9 @@ class _deleteUSState extends State<deleteUS> {
       onPressed: () {
         // Limpiar el controlador asociado a UpdateUS antes de navegar de regreso
         Get.delete<USController>();
-        Get.to(() => AdminPageUS(), arguments: [email]);
+        Get.to(
+          () => AdminPageUS(email: widget.email),
+        );
       },
       style: ButtonStyle(
         padding: MaterialStateProperty.all<EdgeInsetsGeometry>(

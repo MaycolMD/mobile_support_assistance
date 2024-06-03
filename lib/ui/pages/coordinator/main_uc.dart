@@ -74,7 +74,7 @@ class _MainPageUCState extends State<MainPageUC> {
                         child: _buildCustomCard(
                       'US Admin',
                       onTap: () {
-                        Get.to(() => AdminPageUS(), arguments: [widget.email]);
+                        Get.to(() => AdminPageUS(email: widget.email));
                       },
                       icon: Icons.person_add,
                     )),
@@ -83,8 +83,7 @@ class _MainPageUCState extends State<MainPageUC> {
                         child: _buildCustomCard(
                       'Client Admin',
                       onTap: () {
-                        Get.to(() => AdminPageClient(),
-                            arguments: [widget.email]);
+                        Get.to(() => AdminPageClient(email: widget.email));
                       },
                       icon: Icons.group_add,
                     )),

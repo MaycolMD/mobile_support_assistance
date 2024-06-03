@@ -7,7 +7,8 @@ import '../../../../widgets/back_button.dart';
 import '../../../../widgets/submit_button.dart';
 
 class CreateClient extends StatefulWidget {
-  const CreateClient({super.key});
+  const CreateClient({super.key, required this.email});
+  final String email;
 
   @override
   _CreateClientState createState() => _CreateClientState();
@@ -15,7 +16,7 @@ class CreateClient extends StatefulWidget {
 
 class _CreateClientState extends State<CreateClient> {
   final _formKey = GlobalKey<FormState>();
-  String? email = Get.arguments[0];
+
   var userIdController = TextEditingController();
   var nameController = TextEditingController();
   final ClientController _controller = Get.put(ClientController());
