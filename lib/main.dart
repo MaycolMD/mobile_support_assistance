@@ -4,7 +4,6 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:loggy/loggy.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
-
 import 'package:project/data/core/network_info.dart';
 import 'package:project/data/datasources/local/interfaces/I_report_local_datasource.dart';
 import 'package:project/data/datasources/local/report_local_datasource.dart';
@@ -113,13 +112,15 @@ class MyApp extends StatelessWidget {
                   email: '',
                 )),
         GetPage(name: '/CreateClient', page: () => CreateClient(email: '')),
-        GetPage(name: '/Reports', page: () => RatingReportUS()),
-        GetPage(name: '/SpecificReport', page: () => const RatingReport()),
+        GetPage(name: '/Reports', page: () => RatingReportUS(email: '')),
+        GetPage(
+            name: '/SpecificReport',
+            page: () => RatingReport(email: '', id: 0)),
         GetPage(name: '/MainUS', page: () => MainUS()),
         GetPage(name: '/Login', page: () => const Login()),
         GetPage(name: '/CreateReport', page: () => const CreateReport()),
         GetPage(name: '/RecapReport', page: () => const RecapReport()),
-        GetPage(name: '/ListSupporters', page: () => const ListSupporters()),
+        GetPage(name: '/ListSupporters', page: () => ListSupporters(email: '')),
         GetPage(name: '/AdminPageUS', page: () => AdminPageUS(email: '')),
         GetPage(
             name: '/AdminPageClient', page: () => AdminPageClient(email: '')),

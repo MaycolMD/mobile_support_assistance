@@ -92,7 +92,10 @@ class _MainPageUCState extends State<MainPageUC> {
                         child: _buildCustomCard(
                       'Reports',
                       onTap: () {
-                        Get.to(() => RatingReportUS(),
+                        Get.to(
+                            () => RatingReportUS(
+                                  email: widget.email,
+                                ),
                             arguments: [widget.email]);
                       },
                       icon: Icons.description,
@@ -102,8 +105,7 @@ class _MainPageUCState extends State<MainPageUC> {
                         child: _buildCustomCard(
                       'Supports',
                       onTap: () {
-                        Get.to(() => ListSupporters(),
-                            arguments: [widget.email]);
+                        Get.to(() => ListSupporters(email:widget.email));
                       },
                       icon: Icons.people_alt,
                     )),

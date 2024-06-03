@@ -12,17 +12,16 @@ import './../../../widgets/back_button.dart';
 import './../../../widgets/submit_button.dart';
 
 class RatingReport extends StatefulWidget {
-  const RatingReport({Key? key}) : super(key: key);
-
+  const RatingReport({Key? key, required this.email, required this.id})
+      : super(key: key);
+  final String email;
+  final int? id;
   @override
   _RatingReportState createState() => _RatingReportState();
 }
 
 class _RatingReportState extends State<RatingReport> {
   final _formKey = GlobalKey<FormState>();
-
-  String? email = Get.arguments[0];
-  int? id = Get.arguments[1];
 
   final ReportController _controller = Get.put(ReportController());
   final USController _controllerSupport = Get.put(USController());
@@ -34,15 +33,13 @@ class _RatingReportState extends State<RatingReport> {
   var userStartTimeController = TextEditingController();
   var userEndTimeController = TextEditingController();
 
-  late Report report;
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: _controller.getReportById(id!),
+      future: _controller.getReportById(widget.id!),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
-          report = _controller.report;
+          Report report = _controller.report;
           return build2(context, report);
         } else {
           return const Scaffold(
@@ -94,7 +91,7 @@ class _RatingReportState extends State<RatingReport> {
                   ),
                   const SizedBox(height: 20),
                   Text(
-                    'REPORT #${id.toString()} FROM ${usName}',
+                    'REPORT #${widget.id.toString()} FROM ${usName}',
                     style: TextStyle(fontSize: 40),
                   ),
                   const SizedBox(height: 20),
@@ -191,7 +188,7 @@ class _RatingReportState extends State<RatingReport> {
                   ),
                   const SizedBox(height: 50),
                   buildSubmitButton(onPressed: () async {
-                    print("$id, ${report.id}");
+                    print("${widget.id}, ${report.id}");
                     await _controller.updateReport(
                         report.id,
                         report.date,

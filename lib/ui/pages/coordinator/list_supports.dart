@@ -10,14 +10,14 @@ import 'package:project/widgets/reportcardsupport.dart';
 import '../../../widgets/reportcard.dart';
 
 class ListSupporters extends StatefulWidget {
-  const ListSupporters({super.key});
+  ListSupporters({super.key, required this.email});
+  late String email;
 
   @override
   _ListSupportersState createState() => _ListSupportersState();
 }
 
 class _ListSupportersState extends State<ListSupporters> {
-  String? email = Get.arguments[0];
 
   var clientController = TextEditingController();
   var supportController = TextEditingController();
@@ -103,7 +103,7 @@ class _ListSupportersState extends State<ListSupporters> {
                 ElevatedButton(
                   key: const Key('ButtonGoBack'),
                   onPressed: () {
-                    Get.to(() => MainPageUC(email: email!));
+                    Get.to(() => MainPageUC(email: widget.email));
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(

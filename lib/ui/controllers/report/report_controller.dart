@@ -30,7 +30,6 @@ class ReportController extends GetxController {
 
   @override
   void onInit() {
-    getAllReports();
     super.onInit();
   }
 

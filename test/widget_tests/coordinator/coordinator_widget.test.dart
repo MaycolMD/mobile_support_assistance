@@ -17,14 +17,20 @@ import 'package:project/domain/use_case/client_usecase.dart';
 import 'package:project/domain/use_case/report_usecase.dart';
 import 'package:project/domain/use_case/us_usecase.dart';
 import 'package:project/ui/controllers/client/client_controller.dart';
+import 'package:project/ui/controllers/report/report_controller.dart';
 import 'package:project/ui/controllers/user_support/us_controller.dart';
 import 'package:project/ui/pages/coordinator/client_admin/client_admin_page.dart';
 import 'package:project/ui/pages/coordinator/client_admin/createclient.dart';
 import 'package:project/ui/pages/coordinator/client_admin/deleteClient.dart';
+import 'package:project/ui/pages/coordinator/list_supports.dart';
 import 'package:project/ui/pages/coordinator/main_uc.dart';
+import 'package:project/ui/pages/coordinator/ratingreportspecific.dart';
+import 'package:project/ui/pages/coordinator/ratingreportus.dart';
 import 'package:project/ui/pages/coordinator/us_admin/createUS.dart';
 import 'package:project/ui/pages/coordinator/us_admin/updateUS.dart';
 import 'package:project/ui/pages/coordinator/us_admin/us_admin_page.dart';
+
+import '../support/support_widget.test.dart';
 
 class FakeUSRepository extends Fake implements SupportRepository {}
 
@@ -34,11 +40,17 @@ class FakeClientRepository extends Fake implements ClientRepository {}
 
 class MockUSController extends GetxService with Mock implements USController {
   final RxList<String> _supportsName = <String>[].obs;
+  final RxList<UserSupport> _supports = <UserSupport>[].obs;
   @override
   List<String> get supportsNameList => _supportsName;
+  @override
+  List<UserSupport> get supports => _supports;
 
   @override
-  late RxString selectedSupport;
+  final RxBool shouldRefresh = true.obs;
+
+  @override
+  RxString selectedSupport = 'All Supports'.obs;
 
   @override
   late UserSupport support;
@@ -85,15 +97,24 @@ class MockUSController extends GetxService with Mock implements USController {
   }
 
   @override
-  Future<void> getSupportActive() {
-    // TODO: implement getSupportActive
-    throw UnimplementedError();
+  Future<void> getSupportActive() async {
+    UserSupport temp = UserSupport(
+        id: 999999999,
+        name: 'name',
+        role: 'role',
+        email: 'email',
+        password: 'password');
+    _supports.addAll([temp]);
   }
 
   @override
-  Future<void> getSupportById(int id) {
-    // TODO: implement getSupportById
-    throw UnimplementedError();
+  Future<void> getSupportById(int id) async {
+    support = UserSupport(
+        id: id,
+        name: 'name',
+        role: 'role',
+        email: 'email',
+        password: 'password');
   }
 
   @override
@@ -156,13 +177,7 @@ class MockUSController extends GetxService with Mock implements USController {
   }
 
   @override
-  RxBool get shouldRefresh => throw UnimplementedError();
-
-  @override
   TextEditingController get supportController => throw UnimplementedError();
-
-  @override
-  List<UserSupport> get supports => throw UnimplementedError();
 
   @override
   void update([List<Object>? ids, bool condition = true]) {}
@@ -207,7 +222,10 @@ class MockClientController extends GetxService
   List<String> get clientsNameList => clientsName;
 
   @override
-  late RxString selectedClientFilter;
+  RxString selectedClientFilter = 'All Clients'.obs;
+
+  @override
+  final RxBool shouldRefresh = true.obs;
 
   late UserClient client;
 
@@ -224,6 +242,66 @@ class MockClientController extends GetxService
 
   void clear() {
     clientsName.clear();
+  }
+}
+
+class MockReportController extends GetxService
+    with Mock
+    implements ReportController {
+  final RxList<Report> _reports = <Report>[].obs;
+  @override
+  List<Report> get reports => _reports;
+
+  @override
+  Report report = Report(
+      id: 0,
+      date: "date",
+      rating: 0,
+      status: "status",
+      endTime: "endTime",
+      startTime: "startTime",
+      clientID: 0,
+      description: "description",
+      supportID: 0);
+
+  @override
+  Future<void> getAllReports() async {
+    Report report = Report(
+        id: 0,
+        date: 'date',
+        rating: 0,
+        status: 'status',
+        endTime: 'endTime',
+        startTime: 'startTime',
+        clientID: 0,
+        description: 'description',
+        supportID: 0);
+    _reports.addAll([report]);
+  }
+
+  @override
+  Future<void> getReportById(int id) async {
+    Report reportTemp = Report(
+        id: id,
+        date: "date",
+        rating: 0,
+        status: "status",
+        endTime: "endTime",
+        startTime: "startTime",
+        clientID: 0,
+        description: "description",
+        supportID: 0);
+    report = reportTemp;
+  }
+
+  @override
+  Future<int> getNumberOfReportsBySupportID(int supportID) async {
+    return 1;
+  }
+
+  @override
+  Future<int> getAvgRating(int supportID) async {
+    return 0;
   }
 }
 
@@ -450,5 +528,61 @@ void main() {
       controller.clear();
       Get.delete<USController>();
     });
+  });
+
+  group('reports widget test', () {
+    testWidgets('ratingreportus widget test', (WidgetTester tester) async {
+      final controllerUS = MockUSController();
+      final controllerClient = MockClientController();
+      final controllerReport = MockReportController();
+
+      Get.replace<MockClientController>(controllerClient);
+      Get.replace<MockReportController>(controllerReport);
+      Get.replace<MockUSController>(controllerUS);
+
+      final completer = Completer<void>();
+
+      await tester.pumpWidget(const GetMaterialApp(
+        home: RatingReportUS(
+          email: 'tesster@gmail.com',
+        ),
+      ));
+
+      await tester.pumpAndSettle(Duration(seconds: 5));
+
+      expect(find.text('REPORTS'), findsOneWidget);
+
+      await controllerReport.getAllReports();
+      completer.complete();
+
+      expect(find.byType(Container), findsNWidgets(2));
+
+      expect(find.text('All Clients'), findsOneWidget);
+      expect(find.text('All Supports'), findsOneWidget);
+    });
+  });
+
+  testWidgets('list_supports widget test', (WidgetTester tester) async {
+    final controllerUS = MockUSController();
+    final controllerReport = MockReportController();
+
+    Get.replace<MockReportController>(controllerReport);
+    Get.replace<MockUSController>(controllerUS);
+
+    final completer = Completer<void>();
+    await tester.pumpWidget(GetMaterialApp(
+      home: ListSupporters(email: 'tesster@gmail.com'),
+    ));
+    await tester.pumpAndSettle(Duration(seconds: 5));
+
+    await controllerUS.getSupportActive();
+    await controllerReport.getNumberOfReportsBySupportID(0);
+    await controllerReport.getAvgRating(0);
+    completer.complete();
+    await tester.pumpAndSettle(Duration(seconds: 5));
+
+    expect(find.text('OUR PARTNERS'), findsOneWidget);
+    expect(find.byType(Container), findsNWidgets(2));
+    expect(find.byKey(Key('ButtonGoBack')), findsOneWidget);
   });
 }

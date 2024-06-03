@@ -8,18 +8,17 @@ import 'package:project/ui/pages/coordinator/ratingreportspecific.dart';
 import './../../../widgets/reportcard.dart';
 
 class RatingReportUS extends StatefulWidget {
-  const RatingReportUS({Key? key}) : super(key: key);
+  const RatingReportUS({Key? key, required this.email}) : super(key: key);
+  final String email;
 
   @override
   _RatingReportUSState createState() => _RatingReportUSState();
 }
 
 class _RatingReportUSState extends State<RatingReportUS> {
-  final USController _controller = Get.put(USController());
+  final USController _supportController = Get.put(USController());
   final ReportController _reportController = Get.put(ReportController());
   final ClientController _clientController = Get.put(ClientController());
-
-  String? email = Get.arguments[0];
 
   @override
   Widget build(BuildContext context) {
@@ -62,22 +61,23 @@ class _RatingReportUSState extends State<RatingReportUS> {
                   color: Theme.of(context).dividerColor,
                 ),
                 Obx(() {
-                  if (_controller.selectedSupport == 'All Supports' &&
+                  if (_supportController.selectedSupport == 'All Supports' &&
                       _clientController.selectedClientFilter == 'All Clients') {
                     return generateSpaceCardsAllSupports();
-                  } else if (_controller.selectedSupport != 'All Supports' &&
+                  } else if (_supportController.selectedSupport !=
+                          'All Supports' &&
                       _clientController.selectedClientFilter == 'All Clients') {
                     return generateSpaceCardsFilter(
-                        '', _controller.selectedSupport.toString());
+                        '', _supportController.selectedSupport.toString());
                   } else if (_clientController.selectedClientFilter !=
                           'All Clients' &&
-                      _controller.selectedSupport == 'All Supports') {
+                      _supportController.selectedSupport == 'All Supports') {
                     return generateSpaceCardsFilter(
                         _clientController.selectedClientFilter.toString(), '');
                   } else {
                     return generateSpaceCardsFilter(
                         _clientController.selectedClientFilter.toString(),
-                        _controller.selectedSupport.toString());
+                        _supportController.selectedSupport.toString());
                     ;
                   }
                 }),
@@ -101,7 +101,7 @@ class _RatingReportUSState extends State<RatingReportUS> {
                           Text(_clientController.selectedClientFilter.value)),
                     ),
                     TextButton(
-                      onPressed: _controller.selectSupport,
+                      onPressed: _supportController.selectSupport,
                       style: ButtonStyle(
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -112,7 +112,8 @@ class _RatingReportUSState extends State<RatingReportUS> {
                           ),
                         ),
                       ),
-                      child: Obx(() => Text(_controller.selectedSupport.value)),
+                      child: Obx(
+                          () => Text(_supportController.selectedSupport.value)),
                     ),
                   ],
                 ),
@@ -120,7 +121,7 @@ class _RatingReportUSState extends State<RatingReportUS> {
                 ElevatedButton(
                   key: const Key('ButtonGoBack'),
                   onPressed: () {
-                    Get.to(() => MainPageUC(email: email!));
+                    Get.to(() => MainPageUC(email: widget.email));
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
@@ -149,7 +150,7 @@ class _RatingReportUSState extends State<RatingReportUS> {
   }
 
   Widget generateSpaceCardsAllSupports() {
-    if (_controller.shouldRefresh.value &&
+    if (_supportController.shouldRefresh.value &&
         _clientController.shouldRefresh.value) {
       return FutureBuilder(
           future: _reportController.getAllReports(),
@@ -184,7 +185,7 @@ class _RatingReportUSState extends State<RatingReportUS> {
   }
 
   Widget generateSpaceCardsFilter(String clientID, String supportID) {
-    if (_controller.shouldRefresh.value &&
+    if (_supportController.shouldRefresh.value &&
         _clientController.shouldRefresh.value) {
       return FutureBuilder(
           future: _reportController.getReports(clientID, supportID),
@@ -243,8 +244,8 @@ class _RatingReportUSState extends State<RatingReportUS> {
                       date: report.date,
                       status: report.status,
                       onPressed: () {
-                        Get.to(() => RatingReport(),
-                            arguments: [email, report.id]);
+                        Get.to(() =>
+                            RatingReport(email: widget.email, id: report.id));
                       },
                     ),
                   ),
