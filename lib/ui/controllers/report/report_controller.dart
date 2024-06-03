@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:loggy/loggy.dart';
+import 'package:project/data/core/network_info.dart';
 import 'package:project/domain/entities/report.dart';
 import 'package:project/domain/entities/user_client.dart';
 import 'package:project/domain/entities/user_support.dart';
@@ -8,12 +10,18 @@ import 'package:project/domain/use_case/client_usecase.dart';
 import 'package:project/domain/use_case/report_usecase.dart';
 import 'package:project/domain/use_case/us_usecase.dart';
 
+import '../../../data/models/report_db.dart';
+
 class ReportController extends GetxController {
   final RxList<Report> _reports = <Report>[].obs;
 
   final ClientUseCase clientUseCase = Get.find();
   final SupportUseCase supportUseCase = Get.find();
   final ReportUseCase reportUseCase = Get.find();
+
+  final NetworkInfo networkInfo = Get.find();
+
+  final _reportBox = Hive.box<ReportDB>('reports');
 
   List<Report> get reports => _reports;
 
@@ -32,6 +40,37 @@ class ReportController extends GetxController {
   void onInit() {
     getAllReports();
     super.onInit();
+    _syncReports();
+  }
+
+  void _syncReports() async {
+    if (await networkInfo.isConnected()) {
+      // Obtener los reportes locales guardados en Hive
+      final reports = _reportBox.values.toList();
+      print('reports offline');
+      print(reports);
+      // Sincronizar con el servidor
+      await _syncWithServer(reports);
+      // Eliminar los reportes locales después de sincronizar con éxito
+      _reportBox.deleteAll(_reportBox.keys);
+      _reportBox.clear();
+    }
+  }
+
+  Future<void> _syncWithServer(List<ReportDB> reports) async {
+    // Lógica para sincronizar con el servidor
+    for (var element in reports) {
+      print(element);
+      await addReportHive(
+          element.date,
+          element.rating,
+          element.status,
+          element.endTime,
+          element.startTime,
+          element.clientID,
+          element.description,
+          element.supportID);
+    }
   }
 
   Future<DateTime?> selectDate(BuildContext context) async {
@@ -67,6 +106,30 @@ class ReportController extends GetxController {
       update(); // Actualiza la interfaz de usuario
     }
     return pickedTime;
+  }
+
+  addReportHive(
+    String date,
+    int rating,
+    String status,
+    String endTime,
+    String startTime,
+    int clientID,
+    String description,
+    int supportID,
+  ) async {
+    Report report = Report(
+      date: date,
+      rating: rating,
+      status: status,
+      endTime: endTime,
+      startTime: startTime,
+      clientID: clientID,
+      description: description,
+      supportID: supportID,
+    );
+
+    await reportUseCase.addReport(report);
   }
 
   addReport(

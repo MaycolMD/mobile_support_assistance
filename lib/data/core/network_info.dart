@@ -10,6 +10,7 @@ class NetworkInfo with UiLoggy {
 
   NetworkInfo() {
     _controller = StreamController<bool>.broadcast();
+    openStream();
   }
 
   void openStream() {
@@ -31,7 +32,12 @@ class NetworkInfo with UiLoggy {
   }
 
   Future<bool> isConnected() async {
-    return await InternetConnection().hasInternetAccess;
+    try {
+      return await InternetConnection().hasInternetAccess;
+    } catch (e) {
+      loggy.error("Error checking internet connection: $e");
+      return false;
+    }
   }
 
   void _internetStatusSubscriptionListener(InternetStatus status) {
