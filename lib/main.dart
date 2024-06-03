@@ -5,6 +5,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:loggy/loggy.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:project/data/core/network_info.dart';
+import 'package:project/data/core/sync_service.dart';
 import 'package:project/data/datasources/local/interfaces/I_report_local_datasource.dart';
 import 'package:project/data/datasources/local/report_local_datasource.dart';
 import 'package:project/data/datasources/remote/client_datasource.dart';
@@ -26,13 +27,13 @@ import 'package:project/domain/use_case/us_usecase.dart';
 import 'package:project/ui/controllers/client/client_controller.dart';
 import 'package:project/ui/controllers/login_controller.dart';
 import 'package:project/ui/controllers/report/report_controller.dart';
-import 'package:project/ui/controllers/user_support/us_controller.dart';
 import 'package:project/ui/pages/coordinator/client_admin/deleteClient.dart';
 import 'package:project/ui/pages/coordinator/client_admin/updateClient.dart';
 import 'package:project/ui/pages/coordinator/list_supports.dart';
 import 'package:project/ui/pages/coordinator/us_admin/us_admin_page.dart';
 import 'package:project/ui/pages/login/login.dart';
 import 'package:project/ui/pages/support/create_report.dart';
+import 'package:project/ui/pages/support/create_report_offline.dart';
 import 'package:project/ui/pages/support/main_us.dart';
 import 'package:project/ui/pages/support/recap_report.dart';
 import 'ui/pages/coordinator/main_uc.dart';
@@ -41,6 +42,8 @@ import 'ui/pages/coordinator/client_admin/createclient.dart';
 import 'ui/pages/coordinator/ratingreportus.dart';
 import 'ui/pages/coordinator/ratingreportspecific.dart';
 import 'package:project/ui/pages/coordinator/client_admin/client_admin_page.dart';
+
+import 'ui/pages/support/main_us_offline.dart';
 
 Future<void> _openBox() async {
   try {
@@ -84,6 +87,26 @@ void main() async {
 
   Get.put(LoginController());
 
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize Hive
+  await Hive.initFlutter();
+
+  // Register the ReportDB adapter
+  Hive.registerAdapter(ReportDBAdapter());
+
+  // Open the Hive box
+  await Hive.openBox<ReportDB>('reports');
+
+  // Initialize NetworkInfo
+  Get.put(NetworkInfo());
+
+  // Initialize SyncService
+  Get.put(SyncService());
+
+  // Initialize ReportController
+  Get.put(ReportController());
+
   runApp(const MyApp());
 }
 
@@ -117,8 +140,12 @@ class MyApp extends StatelessWidget {
             name: '/SpecificReport',
             page: () => RatingReport(email: '', id: 0)),
         GetPage(name: '/MainUS', page: () => MainUS()),
+        GetPage(name: '/MainUSOffline', page: () => MainReportsOffline()),
         GetPage(name: '/Login', page: () => const Login()),
         GetPage(name: '/CreateReport', page: () => const CreateReport()),
+        GetPage(
+            name: '/CreateReportOffline',
+            page: () => const CreateReportOffline()),
         GetPage(name: '/RecapReport', page: () => const RecapReport()),
         GetPage(name: '/ListSupporters', page: () => ListSupporters(email: '')),
         GetPage(name: '/AdminPageUS', page: () => AdminPageUS(email: '')),

@@ -20,6 +20,7 @@ Widget buildTextField(
             label,
             style: const TextStyle(
               fontFamily: 'Readex Pro',
+              fontWeight: FontWeight.bold,
               letterSpacing: 0,
               fontSize: 20,
             ),

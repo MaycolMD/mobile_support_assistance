@@ -5,7 +5,7 @@ part 'report_db.g.dart';
 @HiveType(typeId: 0)
 class ReportDB {
   @HiveField(0)
-  int id;
+  int? id;
   @HiveField(1)
   String date;
   @HiveField(2)
@@ -24,7 +24,7 @@ class ReportDB {
   int supportID;
 
   ReportDB(
-      {required this.id,
+      {this.id,
       required this.date,
       required this.rating,
       required this.status,
