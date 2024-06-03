@@ -110,7 +110,7 @@ class ClientDataSource implements IClientDataSource {
       body: jsonEncode(client.toJson()),
     );
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       return Future.value(true);
     } else if (response.statusCode == 404) {
       logError("Client with id ${client.id} not found");

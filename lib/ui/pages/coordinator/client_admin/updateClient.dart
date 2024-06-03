@@ -8,14 +8,13 @@ import '../../../../widgets/text_field.dart';
 import '../../../controllers/client/client_controller.dart';
 
 class UpdateClient extends StatefulWidget {
-  const UpdateClient({super.key});
-
+  const UpdateClient({super.key, required this.email});
+  final String email;
   @override
   _UpdateClientState createState() => _UpdateClientState();
 }
 
 class _UpdateClientState extends State<UpdateClient> {
-  String name = Get.arguments[0];
   final ClientController controller = Get.put(ClientController());
   Future<void>? clientNamesFuture;
   String selectedclient = '';
@@ -81,7 +80,7 @@ class _UpdateClientState extends State<UpdateClient> {
                         ),
                         const SizedBox(height: 20),
                         const Text(
-                          'UPDATE A Client User',
+                          'UPDATE A CLIENT USER',
                           style: TextStyle(
                             fontSize: 40,
                           ),
@@ -202,7 +201,7 @@ class _UpdateClientState extends State<UpdateClient> {
       onPressed: () {
         // Limpiar el controlador asociado a UpdateUS antes de navegar de regreso
         Get.delete<ClientController>();
-        Get.to(() => AdminPageClient(), arguments: [name]);
+        Get.to(() => AdminPageClient(email: widget.email));
       },
       style: ButtonStyle(
         padding: MaterialStateProperty.all<EdgeInsetsGeometry>(

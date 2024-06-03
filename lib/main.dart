@@ -25,6 +25,7 @@ import 'package:project/domain/repositories/support_repository.dart';
 import 'package:project/domain/use_case/client_usecase.dart';
 import 'package:project/domain/use_case/report_usecase.dart';
 import 'package:project/domain/use_case/us_usecase.dart';
+import 'package:project/ui/controllers/client/client_controller.dart';
 import 'package:project/ui/controllers/login_controller.dart';
 import 'package:project/ui/controllers/report/report_controller.dart';
 import 'package:project/ui/pages/coordinator/client_admin/deleteClient.dart';
@@ -124,9 +125,17 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       getPages: [
         GetPage(name: '/', page: () => const Login()),
-        GetPage(name: '/CreateUS', page: () => const CreateUser()),
-        GetPage(name: '/MainPageUC', page: () => const MainPageUC()),
-        GetPage(name: '/CreateClient', page: () => const CreateClient()),
+        GetPage(
+            name: '/CreateUS',
+            page: () => CreateUser(
+                  email: '',
+                )),
+        GetPage(
+            name: '/MainPageUC',
+            page: () => MainPageUC(
+                  email: '',
+                )),
+        GetPage(name: '/CreateClient', page: () => CreateClient(email: '')),
         GetPage(name: '/Reports', page: () => RatingReportUS()),
         GetPage(name: '/SpecificReport', page: () => const RatingReport()),
         GetPage(name: '/MainUS', page: () => MainUS()),
@@ -138,10 +147,11 @@ class MyApp extends StatelessWidget {
             page: () => const CreateReportOffline()),
         GetPage(name: '/RecapReport', page: () => const RecapReport()),
         GetPage(name: '/ListSupporters', page: () => const ListSupporters()),
-        GetPage(name: '/AdminPageUS', page: () => const AdminPageUS()),
-        GetPage(name: '/AdminPageClient', page: () => const AdminPageClient()),
-        GetPage(name: '/deleteClient', page: () => const DeleteClient()),
-        GetPage(name: '/updateClient', page: () => const UpdateClient()),
+        GetPage(name: '/AdminPageUS', page: () => AdminPageUS(email: '')),
+        GetPage(
+            name: '/AdminPageClient', page: () => AdminPageClient(email: '')),
+        GetPage(name: '/deleteClient', page: () => DeleteClient(email: '')),
+        GetPage(name: '/updateClient', page: () => UpdateClient(email: '')),
       ],
       home: const Login(key: Key('MainPage')),
     );

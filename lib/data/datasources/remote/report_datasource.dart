@@ -20,7 +20,7 @@ class ReportDataSource implements IReportDataSource {
     }));
     var response = await httpClient.get(request);
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       final data = jsonDecode(response.body);
 
       reports = List<Report>.from(data.map((x) {
@@ -55,7 +55,7 @@ class ReportDataSource implements IReportDataSource {
 
     var response = await httpClient.get(request);
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       final data = jsonDecode(response.body);
 
       reports = List<Report>.from(data.map((x) {
@@ -79,7 +79,7 @@ class ReportDataSource implements IReportDataSource {
       body: jsonEncode(report.toJson()),
     );
 
-    if (response.statusCode == 201) {
+    if (response.statusCode == 201 || response.statusCode == 200) {
       //logInfo(response.body);
       return Future.value(true);
     } else {
@@ -97,7 +97,7 @@ class ReportDataSource implements IReportDataSource {
       },
     );
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       // El reporte fue eliminado correctamente
       return Future.value(true);
     } else if (response.statusCode == 404) {
@@ -121,7 +121,7 @@ class ReportDataSource implements IReportDataSource {
       body: jsonEncode(report.toJson()),
     );
 
-    if (response.statusCode == 201) {
+    if (response.statusCode == 201 || response.statusCode == 200) {
       // El reporte fue actualizado correctamente
       return Future.value(true);
     } else if (response.statusCode == 404) {

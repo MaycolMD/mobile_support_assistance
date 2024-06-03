@@ -11,14 +11,14 @@ import '../../../../widgets/submit_button.dart';
 import '../../../../widgets/text_field.dart';
 
 class DeleteClient extends StatefulWidget {
-  const DeleteClient({super.key});
+  const DeleteClient({super.key, required this.email});
+  final String email;
 
   @override
   State<DeleteClient> createState() => _deleteClientState();
 }
 
 class _deleteClientState extends State<DeleteClient> {
-  String name = Get.arguments[0];
   final ClientController controller = Get.put(ClientController());
   Future<void>? clientNamesFuture;
   String selectedclient = '';
@@ -205,7 +205,7 @@ class _deleteClientState extends State<DeleteClient> {
       onPressed: () {
         // Limpiar el controlador asociado a UpdateUS antes de navegar de regreso
         Get.delete<ClientController>();
-        Get.to(() => AdminPageClient(), arguments: [name]);
+        Get.to(() => AdminPageClient(email: widget.email));
       },
       style: ButtonStyle(
         padding: MaterialStateProperty.all<EdgeInsetsGeometry>(

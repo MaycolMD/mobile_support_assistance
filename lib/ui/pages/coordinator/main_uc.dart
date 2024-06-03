@@ -7,15 +7,14 @@ import 'package:project/ui/pages/coordinator/ratingreportus.dart';
 import 'package:project/ui/pages/coordinator/us_admin/us_admin_page.dart';
 
 class MainPageUC extends StatefulWidget {
-  const MainPageUC({super.key});
+  MainPageUC({super.key, required this.email});
 
+  final String email;
   @override
   _MainPageUCState createState() => _MainPageUCState();
 }
 
 class _MainPageUCState extends State<MainPageUC> {
-  String? email = Get.arguments[0];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +47,7 @@ class _MainPageUCState extends State<MainPageUC> {
                 ),
                 const SizedBox(height: 20),
                 Text(
-                  email.toString(),
+                  widget.email.toString(),
                   style: const TextStyle(
                     fontSize: 25,
                     decoration: TextDecoration.underline,
@@ -71,37 +70,43 @@ class _MainPageUCState extends State<MainPageUC> {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    _buildCustomCard(
+                    Expanded(
+                        child: _buildCustomCard(
                       'US Admin',
                       onTap: () {
-                        Get.to(() => AdminPageUS(), arguments: [email]);
+                        Get.to(() => AdminPageUS(email: widget.email));
                       },
                       icon: Icons.person_add,
-                    ),
-                    const SizedBox(width: 250),
-                    _buildCustomCard(
+                    )),
+                    const SizedBox(width: 25),
+                    Expanded(
+                        child: _buildCustomCard(
                       'Client Admin',
                       onTap: () {
-                        Get.to(() => AdminPageClient(), arguments: [email]);
+                        Get.to(() => AdminPageClient(email: widget.email));
                       },
                       icon: Icons.group_add,
-                    ),
-                    const SizedBox(width: 250),
-                    _buildCustomCard(
+                    )),
+                    const SizedBox(width: 25),
+                    Expanded(
+                        child: _buildCustomCard(
                       'Reports',
                       onTap: () {
-                        Get.to(() => RatingReportUS(), arguments: [email]);
+                        Get.to(() => RatingReportUS(),
+                            arguments: [widget.email]);
                       },
                       icon: Icons.description,
-                    ),
-                    const SizedBox(width: 250),
-                    _buildCustomCard(
+                    )),
+                    const SizedBox(width: 25),
+                    Expanded(
+                        child: _buildCustomCard(
                       'Supports',
                       onTap: () {
-                        Get.to(() => ListSupporters(), arguments: [email]);
+                        Get.to(() => ListSupporters(),
+                            arguments: [widget.email]);
                       },
                       icon: Icons.people_alt,
-                    ),
+                    )),
                   ],
                 ),
                 const SizedBox(

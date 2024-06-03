@@ -7,14 +7,14 @@ import '../../../../widgets/submit_button.dart';
 import '../../../../widgets/text_field.dart';
 
 class UpdateUS extends StatefulWidget {
-  const UpdateUS({super.key});
+  const UpdateUS({super.key, required this.email});
+  final String email;
 
   @override
   _UpdateUSState createState() => _UpdateUSState();
 }
 
 class _UpdateUSState extends State<UpdateUS> {
-  String email = Get.arguments[0];
   final USController controller = Get.put(USController());
   Future<void>? supportNamesFuture;
   String selectedSupport = '';
@@ -203,7 +203,7 @@ class _UpdateUSState extends State<UpdateUS> {
       onPressed: () {
         // Limpiar el controlador asociado a UpdateUS antes de navegar de regreso
         Get.delete<USController>();
-        Get.to(() => AdminPageUS(), arguments: [email]);
+        Get.to(() => AdminPageUS(email: widget.email));
       },
       style: ButtonStyle(
         padding: MaterialStateProperty.all<EdgeInsetsGeometry>(

@@ -19,7 +19,7 @@ class SupportDataSource implements ISupportDataSource {
     }));
 
     var response = await httpClient.get(request);
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       //logInfo(response.body);
       final data = jsonDecode(response.body);
 
@@ -45,7 +45,7 @@ class SupportDataSource implements ISupportDataSource {
         },
       );
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         final r = jsonDecode(response.body);
         if (r is List && r.isEmpty) {
           return Future.value(false);
@@ -120,8 +120,7 @@ class SupportDataSource implements ISupportDataSource {
       },
       body: jsonEncode(userSupport.toJson()),
     );
-    if (response.statusCode == 201) {
-      logInfo(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
       return Future.value(true);
     } else {
       logError("Got error code ${response.statusCode}");
@@ -139,7 +138,7 @@ class SupportDataSource implements ISupportDataSource {
         },
       );
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         return jsonDecode(response.body).isNotEmpty;
       } else {
         return Future.value(false);
@@ -159,7 +158,7 @@ class SupportDataSource implements ISupportDataSource {
       },
     );
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       // El usuario de soporte fue eliminado correctamente
       return Future.value(true);
     } else if (response.statusCode == 404) {
@@ -183,7 +182,7 @@ class SupportDataSource implements ISupportDataSource {
       body: jsonEncode(userSupport.toJson()),
     );
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       // El usuario de soporte fue actualizado correctamente
       return Future.value(true);
     } else if (response.statusCode == 404) {

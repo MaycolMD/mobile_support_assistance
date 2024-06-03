@@ -11,15 +11,14 @@ import 'package:project/ui/pages/coordinator/us_admin/deleteUS.dart';
 import 'package:project/ui/pages/coordinator/us_admin/updateUS.dart';
 
 class AdminPageClient extends StatefulWidget {
-  const AdminPageClient({super.key});
+  const AdminPageClient({super.key, required this.email});
+  final String email;
 
   @override
-  _AdminPageUSState createState() => _AdminPageUSState();
+  _AdminPageClientState createState() => _AdminPageClientState();
 }
 
-class _AdminPageUSState extends State<AdminPageClient> {
-  String? email = Get.arguments[0];
-  final USController _controller = Get.put(USController());
+class _AdminPageClientState extends State<AdminPageClient> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,29 +67,32 @@ class _AdminPageUSState extends State<AdminPageClient> {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    _buildCustomCard(
+                    Expanded(
+                        child: _buildCustomCard(
                       'Add a Client',
                       onTap: () {
-                        Get.to(() => CreateClient(), arguments: [email]);
+                        Get.to(() => CreateClient(email: widget.email));
                       },
                       icon: Icons.person_add,
-                    ),
-                    const SizedBox(width: 250),
-                    _buildCustomCard(
+                    )),
+                    const SizedBox(width: 25),
+                    Expanded(
+                        child: _buildCustomCard(
                       'Update a Client',
                       onTap: () {
-                        Get.to(() => UpdateClient(), arguments: [email]);
+                        Get.to(() => UpdateClient(email: widget.email));
                       },
                       icon: Icons.create_rounded,
-                    ),
-                    const SizedBox(width: 250),
-                    _buildCustomCard(
+                    )),
+                    const SizedBox(width: 25),
+                    Expanded(
+                        child: _buildCustomCard(
                       'Remove a Client',
                       onTap: () {
-                        Get.to(() => DeleteClient(), arguments: [email]);
+                        Get.to(() => DeleteClient(email: widget.email));
                       },
                       icon: Icons.group_remove,
-                    ),
+                    )),
                   ],
                 ),
                 const SizedBox(
@@ -99,7 +101,7 @@ class _AdminPageUSState extends State<AdminPageClient> {
                 ElevatedButton(
                   key: const Key('ButtonGoBack'),
                   onPressed: () {
-                    Get.to(() => MainPageUC(), arguments: [email]);
+                    Get.to(() => MainPageUC(email: widget.email));
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
@@ -178,43 +180,6 @@ class _AdminPageUSState extends State<AdminPageClient> {
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _getXlistView() {
-    return Obx(
-      () => ListView.builder(
-        itemCount: _controller.supports.length,
-        itemBuilder: (context, index) {
-          UserSupport support = _controller.supports[index];
-          return Dismissible(
-            key: UniqueKey(),
-            background: Container(
-                color: Colors.red,
-                alignment: Alignment.centerLeft,
-                child: const Padding(
-                  padding: EdgeInsets.only(left: 20),
-                  child: Text(
-                    "Deleting",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                )),
-            onDismissed: (direction) {
-              _controller.deleteSupport(support.id!);
-            },
-            child: Card(
-              child: ListTile(
-                leading: Text(support.id.toString()),
-                title: Text(support.name),
-                subtitle: Text(support.email),
-                onTap: () {
-                  Get.to(() => const UpdateUS(), arguments: [email]);
-                },
-              ),
-            ),
-          );
-        },
       ),
     );
   }

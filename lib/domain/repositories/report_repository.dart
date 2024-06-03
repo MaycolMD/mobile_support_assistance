@@ -1,11 +1,9 @@
 import 'package:project/data/datasources/remote/interfaces/I_report_datasource.dart';
-import 'package:project/data/datasources/remote/report_datasource.dart';
 import 'package:project/domain/entities/report.dart';
 import 'package:project/domain/repositories/interfaces/I_report_repository.dart';
 
 class ReportRepository implements IReportRepository {
   final IReportDataSource _reportDataSource;
-  String token = "";
 
   ReportRepository(this._reportDataSource);
   @override

@@ -120,7 +120,7 @@ class _RatingReportUSState extends State<RatingReportUS> {
                 ElevatedButton(
                   key: const Key('ButtonGoBack'),
                   onPressed: () {
-                    Get.to(() => MainPageUC(), arguments: [email]);
+                    Get.to(() => MainPageUC(email: email!));
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
