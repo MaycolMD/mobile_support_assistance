@@ -99,7 +99,7 @@ class _AdminPageUSState extends State<AdminPageClient> {
                 ElevatedButton(
                   key: const Key('ButtonGoBack'),
                   onPressed: () {
-                    Get.to(() => MainPageUC(), arguments: [email]);
+                    Get.to(() => MainPageUC(email: email!));
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(

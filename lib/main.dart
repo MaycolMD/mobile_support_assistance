@@ -24,7 +24,10 @@ import 'package:project/domain/repositories/support_repository.dart';
 import 'package:project/domain/use_case/client_usecase.dart';
 import 'package:project/domain/use_case/report_usecase.dart';
 import 'package:project/domain/use_case/us_usecase.dart';
+import 'package:project/ui/controllers/client/client_controller.dart';
 import 'package:project/ui/controllers/login_controller.dart';
+import 'package:project/ui/controllers/report/report_controller.dart';
+import 'package:project/ui/controllers/user_support/us_controller.dart';
 import 'package:project/ui/pages/coordinator/client_admin/deleteClient.dart';
 import 'package:project/ui/pages/coordinator/client_admin/updateClient.dart';
 import 'package:project/ui/pages/coordinator/list_supports.dart';
@@ -100,7 +103,11 @@ class MyApp extends StatelessWidget {
       getPages: [
         GetPage(name: '/', page: () => const Login()),
         GetPage(name: '/CreateUS', page: () => const CreateUser()),
-        GetPage(name: '/MainPageUC', page: () => const MainPageUC()),
+        GetPage(
+            name: '/MainPageUC',
+            page: () => MainPageUC(
+                  email: '',
+                )),
         GetPage(name: '/CreateClient', page: () => const CreateClient()),
         GetPage(name: '/Reports', page: () => RatingReportUS()),
         GetPage(name: '/SpecificReport', page: () => const RatingReport()),

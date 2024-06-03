@@ -69,6 +69,7 @@ class _LoginState extends State<Login> {
                     width: double.infinity,
                     child: Material(
                       child: TextField(
+                        key: Key('email'),
                         controller: controller.emailController,
                         autofocus: true,
                         decoration: const InputDecoration(
@@ -98,6 +99,7 @@ class _LoginState extends State<Login> {
                     width: double.infinity,
                     child: Material(
                       child: TextField(
+                        key: Key('password'),
                         controller: controller.passwordController,
                         obscureText:
                             true, // Muestra asteriscos en lugar de caracteres reales

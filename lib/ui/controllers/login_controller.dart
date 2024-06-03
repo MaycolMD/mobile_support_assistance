@@ -19,7 +19,7 @@ class LoginController extends GetxController {
       String password = passwordController.text;
       if ((email == "a@a.com" || email == "b@b.com") && password == "123456") {
         clearControllers();
-        Get.to(() => MainPageUC(), arguments: [email]);
+        Get.to(() => MainPageUC(email: email));
         //Get.offNamed('/MainPageUC');
       } else if (await _supportcase.isGetSupport(email, password)) {
         clearControllers();

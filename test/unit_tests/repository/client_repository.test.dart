@@ -1,7 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:http/http.dart';
 import 'package:mockito/mockito.dart';
-import 'package:project/data/datasources/remote/client_datasource.dart';
 import 'package:project/domain/entities/user_client.dart';
 import 'package:project/domain/repositories/client_repository.dart';
 

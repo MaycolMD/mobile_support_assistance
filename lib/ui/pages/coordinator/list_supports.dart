@@ -103,7 +103,7 @@ class _ListSupportersState extends State<ListSupporters> {
                 ElevatedButton(
                   key: const Key('ButtonGoBack'),
                   onPressed: () {
-                    Get.to(() => MainPageUC(), arguments: [email]);
+                    Get.to(() => MainPageUC(email: email!));
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
