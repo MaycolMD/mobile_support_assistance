@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 Widget buildSubmitButton({
   required VoidCallback onPressed,
@@ -9,13 +8,13 @@ Widget buildSubmitButton({
     onPressed: onPressed,
     style: ButtonStyle(
       backgroundColor:
-          MaterialStateProperty.all<Color>(Colors.deepPurple), // Color morado
-      padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+          WidgetStateProperty.all<Color>(Colors.deepPurple), // Color morado
+      padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
         const EdgeInsets.symmetric(
             horizontal: 20,
             vertical: 12), // Ajusta el padding según sea necesario
       ),
-      shape: MaterialStateProperty.all<OutlinedBorder>(
+      shape: WidgetStateProperty.all<OutlinedBorder>(
         RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8), // Borde suavizado
         ),

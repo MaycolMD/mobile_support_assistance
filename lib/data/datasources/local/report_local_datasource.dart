@@ -45,7 +45,7 @@ class ReportLocalDataSource implements IReportLocalDataSource {
 
   @override
   Future<void> clearOfflineReports() async {
-    await Hive.box('reportsDBOffline');
+    Hive.box('reportsDBOffline');
   }
 
   @override

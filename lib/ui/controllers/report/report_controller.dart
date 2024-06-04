@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
-import 'package:loggy/loggy.dart';
 import 'package:project/data/core/network_info.dart';
 import 'package:project/domain/entities/report.dart';
 import 'package:project/domain/entities/user_client.dart';

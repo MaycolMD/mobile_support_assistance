@@ -60,7 +60,7 @@ void main() {
     // Step 4: Delete the entry
     bool deleteResult = await clientDataSource
         .deleteClient(createdUser.id!); // Assert non-null ID with '!'
-    print('deleteResult value is: ${deleteResult}');
+    print('deleteResult value is: $deleteResult');
     expect(deleteResult, isTrue);
   });
 }

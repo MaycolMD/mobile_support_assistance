@@ -19,19 +19,21 @@ class _RecapReportState extends State<RecapReport> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: _controller.getReportById(_number),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          report = _controller.report;
-          return build2(context, report);
-        } else {
-          return const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
-          );
-        }
-      },
-    );
+    return Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: FutureBuilder(
+          future: _controller.getReportById(_number),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              report = _controller.report;
+              return build2(context, report);
+            } else {
+              return const Scaffold(
+                body: Center(child: CircularProgressIndicator()),
+              );
+            }
+          },
+        ));
   }
 
   @override
@@ -68,10 +70,11 @@ class _RecapReportState extends State<RecapReport> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 50, 0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 0, 50, 0),
                         child: Text(
                           'REPORT #$_number',
-                          style: TextStyle(
+                          style: const TextStyle(
                               color: Colors.black,
                               fontSize: 24.0,
                               fontFamily: 'Roboto',
@@ -97,19 +100,19 @@ class _RecapReportState extends State<RecapReport> {
                             buildTextField(
                                 context: context,
                                 label: 'Status',
-                                hintText: '${report.status}'),
+                                hintText: report.status),
                             const SizedBox(
                               height: 10,
                             ),
                             buildTextField(
                                 context: context,
                                 label: 'Client ',
-                                hintText: '${clientName}'),
+                                hintText: clientName),
                             const SizedBox(height: 10),
                             buildTextField(
                                 context: context,
                                 label: 'Date   ',
-                                hintText: '${report.date}'),
+                                hintText: report.date),
                             const SizedBox(
                               height: 10,
                             ),
@@ -130,8 +133,8 @@ class _RecapReportState extends State<RecapReport> {
                               child: SingleChildScrollView(
                                 // Para que la información sea scrollable si es muy larga
                                 child: Text(
-                                  '${report.description}', // Texto a mostrar
-                                  style: TextStyle(
+                                  report.description, // Texto a mostrar
+                                  style: const TextStyle(
                                     fontFamily: 'Readex Pro',
                                     letterSpacing: 0,
                                   ),
@@ -144,14 +147,14 @@ class _RecapReportState extends State<RecapReport> {
                             buildTextField(
                                 context: context,
                                 label: 'Start Time',
-                                hintText: '${report.startTime}'),
+                                hintText: report.startTime),
                             const SizedBox(
                               height: 10,
                             ),
                             buildTextField(
                                 context: context,
                                 label: 'End Time  ',
-                                hintText: '${report.endTime}'),
+                                hintText: report.endTime),
                             const SizedBox(
                               height: 10,
                             ),

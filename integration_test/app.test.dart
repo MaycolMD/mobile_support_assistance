@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:integration_test/integration_test.dart';
-import 'package:loggy/loggy.dart';
 import 'package:project/data/core/network_info.dart';
 import 'package:project/data/datasources/local/interfaces/I_report_local_datasource.dart';
 import 'package:project/data/datasources/local/report_local_datasource.dart';
@@ -24,8 +23,6 @@ import 'package:project/domain/use_case/us_usecase.dart';
 import 'package:project/main.dart';
 import 'package:project/ui/controllers/client/client_controller.dart';
 import 'package:project/ui/controllers/login_controller.dart';
-import 'package:project/ui/controllers/report/report_controller.dart';
-import 'package:project/ui/controllers/user_support/us_controller.dart';
 
 void main() {
   Get.put(NetworkInfo());

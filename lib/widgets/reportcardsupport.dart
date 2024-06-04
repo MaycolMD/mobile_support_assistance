@@ -7,12 +7,11 @@ class ReportCardSupport extends StatelessWidget {
   final int rating;
 
   const ReportCardSupport(
-      {Key? key,
+      {super.key,
       required this.supportId,
       required this.username,
       required this.numReports,
-      required this.rating})
-      : super(key: key);
+      required this.rating});
 
   @override
   Widget build(BuildContext context) {

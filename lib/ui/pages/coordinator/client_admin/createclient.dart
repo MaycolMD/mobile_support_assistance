@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:project/domain/entities/user_client.dart';
 import 'package:project/ui/controllers/client/client_controller.dart';
 import '../../../../widgets/text_field.dart';
 import '../../../../widgets/back_button.dart';
@@ -43,7 +42,7 @@ class _CreateClientState extends State<CreateClient> {
                       padding: const EdgeInsets.all(12),
                       child: Icon(
                         Icons.tag_faces_sharp,
-                        color: Theme.of(context).colorScheme.background,
+                        color: Theme.of(context).colorScheme.surface,
                         size: 80,
                       ),
                     ),

@@ -26,7 +26,7 @@ void main() {
   test('Create, Get supports, Update, and Delete an entry', () async {
     // Step 1: Create an entry
     bool createResult = await datasource.addSupport(newUser);
-    print('createResult value is: ${createResult}');
+    print('createResult value is: $createResult');
     expect(createResult, isTrue);
 
     // Step 2: Retrieve the user to get the ID
@@ -67,7 +67,7 @@ void main() {
     expect(checkEmail, isFalse);
 
     bool createResult = await datasource.addSupport(newUser);
-    print('createResult value is: ${createResult}');
+    print('createResult value is: $createResult');
     expect(createResult, isTrue);
 
     UserSupport? userSupport = await datasource.getSupportByName(newUser.name);
@@ -80,7 +80,7 @@ void main() {
 
     UserSupport? userSupport2 =
         await datasource.getSupportById(userSupport.id!);
-    print('userSupport2 value is ${userSupport2}');
+    print('userSupport2 value is $userSupport2');
     expect(userSupport2, isNull);
   });
 }

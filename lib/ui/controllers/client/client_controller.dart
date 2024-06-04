@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:loggy/loggy.dart';
 import 'package:project/domain/entities/user_client.dart';
 import 'package:project/domain/use_case/client_usecase.dart';
 
@@ -16,10 +15,6 @@ class ClientController extends GetxController {
   RxString selectedClientFilter = 'All Clients'.obs;
   final RxBool shouldRefresh = true.obs;
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
 
   Future<void> getClientsName() async {
     RxList<UserClient> clients = <UserClient>[].obs;

@@ -8,18 +8,18 @@ Widget buildGoBackButton() {
       Get.back();
     },
     style: ButtonStyle(
-      padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+      padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
         const EdgeInsets.symmetric(
           horizontal: 20,
           vertical: 12,
         ),
       ),
-      shape: MaterialStateProperty.all<OutlinedBorder>(
+      shape: WidgetStateProperty.all<OutlinedBorder>(
         RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),
       ),
-      side: MaterialStateProperty.all<BorderSide>(
+      side: WidgetStateProperty.all<BorderSide>(
         const BorderSide(
           color: Colors.deepPurple, // Borde morado
           width: 2, // Ancho del borde

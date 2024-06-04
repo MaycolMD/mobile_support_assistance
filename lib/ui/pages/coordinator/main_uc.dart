@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project/ui/pages/coordinator/client_admin/client_admin_page.dart';
-import 'package:project/ui/pages/coordinator/client_admin/createclient.dart';
 import 'package:project/ui/pages/coordinator/list_supports.dart';
 import 'package:project/ui/pages/coordinator/ratingreportus.dart';
 import 'package:project/ui/pages/coordinator/us_admin/us_admin_page.dart';
 
 class MainPageUC extends StatefulWidget {
-  MainPageUC({super.key, required this.email});
+  const MainPageUC({super.key, required this.email});
 
   final String email;
   @override
@@ -35,7 +34,7 @@ class _MainPageUCState extends State<MainPageUC> {
                     padding: const EdgeInsets.all(12),
                     child: Icon(
                       Icons.tag_faces_sharp,
-                      color: Theme.of(context).colorScheme.background,
+                      color: Theme.of(context).colorScheme.surface,
                       size: 80,
                     ),
                   ),
@@ -120,15 +119,15 @@ class _MainPageUCState extends State<MainPageUC> {
                     Get.toNamed('/');
                   },
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
+                    backgroundColor: WidgetStateProperty.all<Color>(
                         Colors.deepPurple), // Color morado
-                    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                    padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
                       const EdgeInsets.symmetric(
                           horizontal: 20,
                           vertical:
                               12), // Ajusta el padding según sea necesario
                     ),
-                    shape: MaterialStateProperty.all<OutlinedBorder>(
+                    shape: WidgetStateProperty.all<OutlinedBorder>(
                       RoundedRectangleBorder(
                         borderRadius:
                             BorderRadius.circular(8), // Borde suavizado
@@ -164,7 +163,7 @@ class _MainPageUCState extends State<MainPageUC> {
             color: Colors.grey.withOpacity(0.3),
             spreadRadius: 2,
             blurRadius: 5,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
           ),
         ],
       ),

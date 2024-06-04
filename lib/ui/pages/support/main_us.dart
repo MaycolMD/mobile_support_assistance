@@ -70,7 +70,7 @@ class _MainUSState extends State<MainUS> {
                           ),
                           Padding(
                             padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                                const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
                             child: Text(
                               'Welcome, ${widget.email}',
                               style: const TextStyle(
@@ -116,7 +116,7 @@ class _MainUSState extends State<MainUS> {
                               },
                               style: const ButtonStyle(
                                 backgroundColor:
-                                    MaterialStatePropertyAll(Colors.deepPurple),
+                                    WidgetStatePropertyAll(Colors.deepPurple),
                               ),
                               child: const Text(
                                 'Add Report',
@@ -125,7 +125,7 @@ class _MainUSState extends State<MainUS> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 50,
                           )
                         ],

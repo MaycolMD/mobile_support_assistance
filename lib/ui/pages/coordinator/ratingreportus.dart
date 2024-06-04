@@ -8,7 +8,7 @@ import 'package:project/ui/pages/coordinator/ratingreportspecific.dart';
 import './../../../widgets/reportcard.dart';
 
 class RatingReportUS extends StatefulWidget {
-  const RatingReportUS({Key? key, required this.email}) : super(key: key);
+  const RatingReportUS({super.key, required this.email});
   final String email;
 
   @override
@@ -40,7 +40,7 @@ class _RatingReportUSState extends State<RatingReportUS> {
                     padding: const EdgeInsets.all(12),
                     child: Icon(
                       Icons.tag_faces_sharp,
-                      color: Theme.of(context).colorScheme.background,
+                      color: Theme.of(context).colorScheme.surface,
                       size: 80,
                     ),
                   ),
@@ -78,7 +78,6 @@ class _RatingReportUSState extends State<RatingReportUS> {
                     return generateSpaceCardsFilter(
                         _clientController.selectedClientFilter.toString(),
                         _supportController.selectedSupport.toString());
-                    ;
                   }
                 }),
                 const SizedBox(height: 20),
@@ -89,7 +88,7 @@ class _RatingReportUSState extends State<RatingReportUS> {
                       onPressed: _clientController.selectClient,
                       style: ButtonStyle(
                         shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                            WidgetStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(18.0),
                             side: BorderSide(
@@ -104,7 +103,7 @@ class _RatingReportUSState extends State<RatingReportUS> {
                       onPressed: _supportController.selectSupport,
                       style: ButtonStyle(
                         shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                            WidgetStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(18.0),
                             side: BorderSide(
@@ -124,13 +123,13 @@ class _RatingReportUSState extends State<RatingReportUS> {
                     Get.to(() => MainPageUC(email: widget.email));
                   },
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
+                    backgroundColor: WidgetStateProperty.all<Color>(
                       Colors.deepPurple,
                     ),
-                    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                    padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                     ),
-                    shape: MaterialStateProperty.all<OutlinedBorder>(
+                    shape: WidgetStateProperty.all<OutlinedBorder>(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),

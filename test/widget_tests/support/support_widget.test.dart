@@ -20,7 +20,6 @@ import 'package:project/ui/controllers/connectivity_controller.dart';
 import 'package:project/ui/controllers/report/report_controller.dart';
 import 'package:project/ui/controllers/user_support/us_controller.dart';
 import 'package:project/ui/pages/support/create_report.dart';
-import 'package:project/ui/pages/support/main_us.dart';
 
 class FakeUSRepository extends Fake implements SupportRepository {}
 
@@ -139,7 +138,7 @@ void main() {
     controllerReport._syncReports();
     await controllerClient.getClientsName();
     completer.complete();
-    await tester.pumpAndSettle(Duration(seconds: 5));
+    await tester.pumpAndSettle(const Duration(seconds: 5));
 
     expect(find.text('Create a new report'), findsOneWidget);
     expect(find.byType(TextField), findsOneWidget);
