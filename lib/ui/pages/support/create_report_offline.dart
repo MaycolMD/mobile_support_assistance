@@ -295,7 +295,7 @@ class _CreateReportState extends State<CreateReportOffline> {
                                 null; // Reiniciar la hora de finalización seleccionada
                             Get.to(() => const MainReportsOffline());
                           },
-                          style: const ButtonStyle(
+                          style: ButtonStyle(
                             backgroundColor:
                                 WidgetStatePropertyAll(Colors.deepPurple),
                           ),

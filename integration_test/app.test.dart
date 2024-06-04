@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:project/data/core/network_info.dart';
@@ -26,6 +25,8 @@ import 'package:project/domain/use_case/us_usecase.dart';
 import 'package:project/main.dart';
 import 'package:project/ui/controllers/client/client_controller.dart';
 import 'package:project/ui/controllers/login_controller.dart';
+import 'package:project/ui/controllers/report/report_controller.dart';
+import 'package:project/ui/controllers/user_support/us_controller.dart';
 
 void main() {
   Get.put(NetworkInfo());
@@ -62,7 +63,7 @@ void main() {
     await Hive.close();
   });
 
-  /*testWidgets("login --> login éxitoso", (WidgetTester tester) async {
+  testWidgets("login --> login éxitoso", (WidgetTester tester) async {
     Get.put(LoginController());
     Widget widget = await createHomeScreen();
     await tester.pumpWidget(widget);
@@ -132,7 +133,7 @@ void main() {
 
     Get.replace(ClientController());
     expect(find.text('REMOVE A CLIENT USER'), findsNothing);
-  });*/
+  });
 
   testWidgets("login -> add report -> submit report -> check on main page",
       (WidgetTester tester) async {
@@ -147,6 +148,8 @@ void main() {
     await tester.tap(find.byKey(const Key('ButtonLogin')));
     await tester.pumpAndSettle(const Duration(seconds: 1));
 
+    Get.put(USController());
+
     expect(find.byKey(const Key('ButtonCreateReport')), findsOneWidget);
 
     await tester.tap(find.byKey(const Key('ButtonCreateReport')));
@@ -157,5 +160,36 @@ void main() {
 
     await tester.tap(find.byKey(const Key('clientSelector')));
     await tester.pumpAndSettle(const Duration(seconds: 2));
+
+    await tester.tap(find.text('Julio Y Salas'));
+    await tester.pumpAndSettle(const Duration(seconds: 1));
+
+    await tester.tap(find.byIcon(Icons.calendar_month));
+    await tester.pumpAndSettle(const Duration(seconds: 1));
+
+    await tester.tap(find.text('OK'));
+    await tester.pumpAndSettle(const Duration(seconds: 1));
+
+    await tester.enterText(
+        find.byKey(const Key('description')), "report bed on a test.");
+
+    await tester.tap(find.byIcon(Icons.access_time).at(0));
+    await tester.pumpAndSettle(const Duration(seconds: 1));
+
+    await tester.tap(find.text('OK'));
+    await tester.pumpAndSettle(const Duration(seconds: 1));
+
+    await tester.tap(find.byIcon(Icons.access_time).at(1));
+    await tester.pumpAndSettle(const Duration(seconds: 1));
+
+    await tester.tap(find.text('OK'));
+    await tester.pumpAndSettle(const Duration(seconds: 1));
+
+    await tester.tap(find.text('Submit'));
+    await tester.pumpAndSettle(const Duration(seconds: 5));
+
+    Get.replace(ReportController());
+
+    expect(find.byIcon(Icons.add), findsAny);
   });
 }

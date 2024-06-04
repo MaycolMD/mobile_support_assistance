@@ -24,7 +24,6 @@ import 'package:project/domain/use_case/client_usecase.dart';
 import 'package:project/domain/use_case/report_usecase.dart';
 import 'package:project/domain/use_case/us_usecase.dart';
 import 'package:project/ui/controllers/login_controller.dart';
-import 'package:project/ui/controllers/report/report_controller.dart';
 import 'package:project/ui/pages/coordinator/client_admin/deleteClient.dart';
 import 'package:project/ui/pages/coordinator/client_admin/updateClient.dart';
 import 'package:project/ui/pages/coordinator/list_supports.dart';
@@ -40,7 +39,6 @@ import 'ui/pages/coordinator/client_admin/createclient.dart';
 import 'ui/pages/coordinator/ratingreportus.dart';
 import 'ui/pages/coordinator/ratingreportspecific.dart';
 import 'package:project/ui/pages/coordinator/client_admin/client_admin_page.dart';
-
 import 'ui/pages/support/main_us_offline.dart';
 
 Future<void> _openBox() async {

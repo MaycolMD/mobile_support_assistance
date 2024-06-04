@@ -9,6 +9,7 @@ Widget customRowWidget({
   return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
       child: Container(
+        key: Key('container $id'),
         width: double.infinity,
         decoration: BoxDecoration(
             color: Colors.white,
