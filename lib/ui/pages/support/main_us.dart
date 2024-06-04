@@ -48,8 +48,8 @@ class _MainUSState extends State<MainUS> {
               ],
             ),
             FutureBuilder(
-              future: _controller.getAllReportsByEmail(
-                  widget.email), // Espera a que se completen las futuras operaciones
+              future: _controller.getAllReportsByEmail(widget
+                  .email), // Espera a que se completen las futuras operaciones
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const CircularProgressIndicator(); // Muestra un indicador de carga mientras se espera
@@ -109,7 +109,9 @@ class _MainUSState extends State<MainUS> {
                               key: const Key('ButtonCreateReport'),
                               onPressed: () async {
                                 if (await networkInfo.isConnected()) {
-                                  Get.to(() => CreateReport(email: widget.email,));
+                                  Get.to(() => CreateReport(
+                                        email: widget.email,
+                                      ));
                                 } else {
                                   Get.to(() => const CreateReportOffline());
                                 }

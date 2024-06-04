@@ -450,6 +450,7 @@ Widget dropBoxSelector({
         child: Padding(
           padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
           child: DropdownButton<String>(
+            key: const Key('clientSelector'),
             value: value,
             items: items.map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
