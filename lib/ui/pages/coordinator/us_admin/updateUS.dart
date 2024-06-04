@@ -262,6 +262,7 @@ class _UpdateUSState extends State<UpdateUS> {
                   nameController.text,
                   emailController.text,
                   passwordController.text);
+              Get.delete<USController>();
               Get.back();
             },
           ),
