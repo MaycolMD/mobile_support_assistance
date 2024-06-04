@@ -75,6 +75,7 @@ class ReportCard extends StatelessWidget {
           ),
           const SizedBox(height: 50),
           ElevatedButton(
+            key: Key('reviewButton$reportId'),
             onPressed: onPressed,
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all<Color>(

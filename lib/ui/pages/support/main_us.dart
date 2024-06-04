@@ -8,13 +8,19 @@ import 'package:project/widgets/custom_row.dart';
 
 import '../../../data/core/network_info.dart';
 
-class MainUS extends StatelessWidget {
+class MainUS extends StatefulWidget {
+  MainUS({super.key, required this.email});
+  late String email;
+
+  @override
+  _MainUSState createState() => _MainUSState();
+}
+
+class _MainUSState extends State<MainUS> {
   final USController _controller = Get.put(USController());
   final ConnectivityController connection = Get.put(ConnectivityController());
 
   final NetworkInfo networkInfo = Get.find();
-
-  String email = Get.arguments[0];
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +49,7 @@ class MainUS extends StatelessWidget {
             ),
             FutureBuilder(
               future: _controller.getAllReportsByEmail(
-                  email), // Espera a que se completen las futuras operaciones
+                  widget.email), // Espera a que se completen las futuras operaciones
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const CircularProgressIndicator(); // Muestra un indicador de carga mientras se espera
@@ -66,7 +72,7 @@ class MainUS extends StatelessWidget {
                             padding:
                                 EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
                             child: Text(
-                              'Welcome, $email',
+                              'Welcome, ${widget.email}',
                               style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 20.0,
@@ -103,11 +109,9 @@ class MainUS extends StatelessWidget {
                               key: const Key('ButtonCreateReport'),
                               onPressed: () async {
                                 if (await networkInfo.isConnected()) {
-                                  Get.to(() => const CreateReport(),
-                                      arguments: [email]);
+                                  Get.to(() => CreateReport(email: widget.email,));
                                 } else {
-                                  Get.to(() => const CreateReportOffline(),
-                                      arguments: [email]);
+                                  Get.to(() => const CreateReportOffline());
                                 }
                               },
                               style: const ButtonStyle(

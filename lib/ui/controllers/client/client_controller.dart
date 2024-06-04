@@ -18,7 +18,6 @@ class ClientController extends GetxController {
 
   @override
   void onInit() {
-    getClients();
     super.onInit();
   }
 

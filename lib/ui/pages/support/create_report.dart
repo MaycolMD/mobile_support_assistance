@@ -7,14 +7,14 @@ import 'package:project/ui/controllers/report/report_controller.dart';
 import 'package:project/ui/pages/support/main_us.dart';
 
 class CreateReport extends StatefulWidget {
-  const CreateReport({super.key});
+  CreateReport({super.key, required this.email});
+  late String email;
 
   @override
   _CreateReportState createState() => _CreateReportState();
 }
 
 class _CreateReportState extends State<CreateReport> {
-  String email = Get.arguments[0];
   final ClientController clientController = Get.put(ClientController());
   final ReportController controller = Get.put(ReportController());
   var descriptionController = TextEditingController();
@@ -298,7 +298,7 @@ class _CreateReportState extends State<CreateReport> {
                                             .format(context),
                                         controller.selectedClient.toString(),
                                         descriptionController.text.toString(),
-                                        email);
+                                        widget.email);
                                     descriptionController
                                         .clear(); // Borrar el contenido del campo de descripción
                                     controller.selectedClient =
@@ -311,7 +311,7 @@ class _CreateReportState extends State<CreateReport> {
                                         null; // Reiniciar la hora de finalización seleccionada
                                     Get.delete<ReportController>();
                                     Get.delete<ClientController>();
-                                    Get.to(() => MainUS(), arguments: [email]);
+                                    Get.to(() => MainUS(email: widget.email));
                                   },
                                   style: const ButtonStyle(
                                     backgroundColor: MaterialStatePropertyAll(

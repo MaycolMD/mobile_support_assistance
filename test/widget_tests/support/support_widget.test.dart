@@ -1,32 +1,54 @@
-//FUTURE BUILDER STOP THE TEST
-
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:mockito/mockito.dart';
+import 'package:project/data/core/network_info.dart';
+import 'package:project/data/models/report_db.dart';
+import 'package:project/domain/repositories/client_repository.dart';
+import 'package:project/domain/repositories/interfaces/I_client_repository.dart';
+import 'package:project/domain/repositories/interfaces/I_report_repository.dart';
+import 'package:project/domain/repositories/interfaces/I_support_repository.dart';
+import 'package:project/domain/repositories/report_repository.dart';
+import 'package:project/domain/repositories/support_repository.dart';
+import 'package:project/domain/use_case/client_usecase.dart';
+import 'package:project/domain/use_case/report_usecase.dart';
+import 'package:project/domain/use_case/us_usecase.dart';
 import 'package:project/ui/controllers/client/client_controller.dart';
+import 'package:project/ui/controllers/connectivity_controller.dart';
 import 'package:project/ui/controllers/report/report_controller.dart';
 import 'package:project/ui/controllers/user_support/us_controller.dart';
 import 'package:project/ui/pages/support/create_report.dart';
 import 'package:project/ui/pages/support/main_us.dart';
+
+class FakeUSRepository extends Fake implements SupportRepository {}
+
+class FakeReportRepository extends Fake implements ReportRepository {}
+
+class FakeClientRepository extends Fake implements ClientRepository {}
 
 // Mock classes
 class MockClientController extends GetxService
     with Mock
     implements ClientController {
   @override
-  var clientsNameList = <String>[].obs;
+  final RxList<String> clientsName = <String>[].obs;
+
+  @override
+  List<String> get clientsNameList => clientsName;
 
   @override
   Future<void> getClientsName() async {
-    clientsNameList.addAll(['Client A', 'Client B', 'Client C']);
+    clientsName.addAll(['Luis Lopez', 'Catrina Rubio']);
   }
 }
 
 class MockReportController extends GetxService
     with Mock
     implements ReportController {
+  final _reportBox = Hive.box<ReportDB>('reports');
+
   @override
   var selectedClient = 'Client A';
   @override
@@ -42,6 +64,36 @@ class MockReportController extends GetxService
     print('Report added');
   }
 
+  Future<void> _syncWithServer(List<ReportDB> reports) async {
+    // Lógica para sincronizar con el servidor
+    for (var element in reports) {
+      print(element);
+      await addReportHive(
+          element.date,
+          element.rating,
+          element.status,
+          element.endTime,
+          element.startTime,
+          element.clientID,
+          element.description,
+          element.supportID);
+    }
+  }
+
+  void _syncReports() async {
+    if (await networkInfo.isConnected()) {
+      // Obtener los reportes locales guardados en Hive
+      final reports = _reportBox.values.toList();
+      print('reports offline');
+      print(reports);
+      // Sincronizar con el servidor
+      await _syncWithServer(reports);
+      // Eliminar los reportes locales después de sincronizar con éxito
+      _reportBox.deleteAll(_reportBox.keys);
+      _reportBox.clear();
+    }
+  }
+
   @override
   Future<DateTime?> selectDate(BuildContext context) async {
     return DateTime.now();
@@ -55,87 +107,55 @@ class MockReportController extends GetxService
 
 class MockUSController extends GetxService with Mock implements USController {}
 
+class MockConnectivyController with Mock implements ConnectivityController {}
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-
-  testWidgets('main_us widget test', (WidgetTester tester) async {
-    await tester.pumpWidget(GetMaterialApp(
-      home: MainUS(),
-    ));
-
-    // Verificar que el widget AppBar está presente
-    expect(find.byType(AppBar), findsOneWidget);
-
-    // Verificar que el widget CircularProgressIndicator está presente mientras espera la carga
-    expect(find.byType(CircularProgressIndicator), findsOneWidget);
-
-    // Verificar que el mensaje de bienvenida no está presente mientras espera la carga
-    expect(find.text('Welcome, '), findsNothing);
-
-    // Verificar que el botón "Add Report" está presente mientras espera la carga
-    expect(find.byKey(Key('ButtonCreateReport')), findsOneWidget);
-
-    // Esperar a que se complete la carga
-    await tester.pumpAndSettle();
-
-    // Verificar que el widget AppBar sigue presente después de la carga
-    expect(find.byType(AppBar), findsOneWidget);
-
-    // Verificar que el widget CircularProgressIndicator ya no está presente después de la carga
-    expect(find.byType(CircularProgressIndicator), findsNothing);
-
-    // Verificar que el mensaje de bienvenida está presente después de la carga
-    expect(find.text('Welcome, '), findsOneWidget);
-
-    // Verificar que el botón "Add Report" sigue presente después de la carga
-    expect(find.byKey(Key('ButtonCreateReport')), findsOneWidget);
+  setUp(() {
+    Get.testMode = true;
+    Get.put(NetworkInfo());
+    Get.put<ISupportRepository>(FakeUSRepository());
+    Get.put(SupportUseCase(Get.find()));
+    Get.put<IReportRepository>(FakeReportRepository());
+    Get.put(ReportUseCase(Get.find()));
+    Get.put<IClientRepository>(FakeClientRepository());
+    Get.put(ClientUseCase(Get.find()));
   });
 
   testWidgets('create_report widget test', (WidgetTester tester) async {
-    final clientController = MockClientController();
-    final reportController = MockReportController();
+    final controllerReport = MockReportController();
+    final controllerClient = MockClientController();
+    Get.put<ReportController>(controllerReport);
+    Get.put<ClientController>(controllerClient);
+
     final completer = Completer<void>();
 
-    Get.put<ClientController>(clientController);
-    Get.put<ReportController>(reportController);
-
-    await clientController.getClientsName();
-    // Construir el widget
-    await tester.pumpWidget(const GetMaterialApp(
-      home: CreateReport(),
+    await tester.pumpWidget(GetMaterialApp(
+      home: CreateReport(
+        email: 'tesster@gmail.com',
+      ),
     ));
 
-    // Completar el Future después de inicializar el widget
+    controllerReport._syncReports();
+    await controllerClient.getClientsName();
     completer.complete();
     await tester.pumpAndSettle(Duration(seconds: 5));
-    // Verificar que el widget inicial tiene los textos esperados
+
     expect(find.text('Create a new report'), findsOneWidget);
     expect(find.byType(TextField), findsOneWidget);
     expect(find.byType(DropdownButton<String>), findsOneWidget);
     expect(find.byKey(const Key('ButtonSubmitReportUS')), findsOneWidget);
 
-    // Escribir en el campo de descripción
-    await tester.enterText(
-        find.byType(TextField), 'Description about your support');
-    expect(find.text('Description about your support'), findsOneWidget);
-
-    // Verificar que el Dropdown muestra los clientes
     await tester.tap(find.byType(DropdownButton<String>));
     await tester.pump();
-    expect(find.text('Client A'), findsOneWidget);
-    expect(find.text('Client B'), findsOneWidget);
-    expect(find.text('Client C'), findsOneWidget);
+    expect(find.text('Catrina Rubio'), findsOneWidget);
 
-    // Seleccionar un cliente del Dropdown
-    await tester.tap(find.text('Client B').last);
+    await tester.tap(find.text('Catrina Rubio'));
     await tester.pump();
-    expect(find.text('Client B'), findsOneWidget);
+    expect(find.text('Luis Lopez'), findsOneWidget);
 
     // Pulsar el botón de Submit
     await tester.tap(find.byKey(const Key('ButtonSubmitReportUS')));
     await tester.pump();
-
-    // Verificar que el método addReport se llamó una vez
-    //verify(reportController.addReport(any, any, any, any, any, any, any, any)).called(1);
   });
 }

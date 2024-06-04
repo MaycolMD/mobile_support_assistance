@@ -239,6 +239,7 @@ class _RatingReportUSState extends State<RatingReportUS> {
                   child: SizedBox(
                     width: 400,
                     child: ReportCard(
+                      key: Key('card${report.id}'),
                       reportId: report.id.toString(),
                       username: report.supportID.toString(),
                       date: report.date,

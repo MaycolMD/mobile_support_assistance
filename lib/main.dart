@@ -87,8 +87,6 @@ void main() async {
 
   Get.put(LoginController());
 
-  WidgetsFlutterBinding.ensureInitialized();
-
   // Initialize Hive
   await Hive.initFlutter();
 
@@ -139,10 +137,14 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: '/SpecificReport',
             page: () => RatingReport(email: '', id: 0)),
-        GetPage(name: '/MainUS', page: () => MainUS()),
+        GetPage(name: '/MainUS', page: () => MainUS(email: '')),
         GetPage(name: '/MainUSOffline', page: () => MainReportsOffline()),
         GetPage(name: '/Login', page: () => const Login()),
-        GetPage(name: '/CreateReport', page: () => const CreateReport()),
+        GetPage(
+            name: '/CreateReport',
+            page: () => CreateReport(
+                  email: '',
+                )),
         GetPage(
             name: '/CreateReportOffline',
             page: () => const CreateReportOffline()),

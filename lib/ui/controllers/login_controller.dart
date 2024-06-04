@@ -10,7 +10,7 @@ class LoginController extends GetxController {
   final SupportUseCase _supportcase = Get.find();
 
   Future<void> validateLogin() async {
-    if ((!validateEmail() || !validatePassword()) && false) {
+    if ((!validateEmail() || !validatePassword())) {
       return;
     }
 
@@ -23,7 +23,7 @@ class LoginController extends GetxController {
         //Get.offNamed('/MainPageUC');
       } else if (await _supportcase.isGetSupport(email, password)) {
         clearControllers();
-        Get.to(() => MainUS(), arguments: [email]);
+        Get.to(() => MainUS(email: email));
       } else {
         Get.snackbar('Incorrect credentials', 'Check it please!!');
       }
