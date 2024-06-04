@@ -62,6 +62,7 @@ class _RecapReportState extends State<RecapReport> {
             Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
               child: AppBar(
+                backgroundColor: Colors.white,
                 toolbarHeight: 30,
                 actions: [
                   Row(

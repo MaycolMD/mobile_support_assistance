@@ -4,8 +4,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
 import 'package:project/data/core/network_info.dart';
+import 'package:project/data/core/sync_service.dart';
 import 'package:project/data/models/report_db.dart';
 import 'package:project/domain/repositories/client_repository.dart';
 import 'package:project/domain/repositories/interfaces/I_client_repository.dart';
@@ -111,8 +113,14 @@ class MockConnectivyController with Mock implements ConnectivityController {}
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+
+  late http.Client httpClient; // Declared as late, initialized in setUp
+
   setUp(() async {
     Get.testMode = true;
+
+    httpClient = http.Client();
+
     Get.put(NetworkInfo());
     Get.put<ISupportRepository>(FakeUSRepository());
     Get.put(SupportUseCase(Get.find()));
@@ -121,8 +129,16 @@ void main() {
     Get.put<IClientRepository>(FakeClientRepository());
     Get.put(ClientUseCase(Get.find()));
 
-    await Hive.initFlutter();
+    Hive.registerAdapter(ReportDBAdapter());
+
+    // Open the Hive box
     await Hive.openBox<ReportDB>('reports');
+
+    // Initialize NetworkInfo
+    Get.put(NetworkInfo());
+
+    // Initialize SyncService
+    Get.put(SyncService());
   });
 
   tearDownAll(() async {
@@ -154,16 +170,16 @@ void main() {
     expect(find.byKey(const Key('ButtonSubmitReportUS')), findsOneWidget);
 
     await tester.tap(find.byType(DropdownButton<String>));
-    await tester.pump();
+    await tester.pumpAndSettle(const Duration(seconds: 2));
     expect(find.text('Catrina Rubio'), findsOneWidget);
 
     await tester.tap(find.text('Catrina Rubio'));
-    await tester.pump();
+    await tester.pumpAndSettle(const Duration(seconds: 2));
     expect(find.text('Luis Lopez'), findsOneWidget);
 
     // Pulsar el botón de Submit
     await tester.tap(find.byKey(const Key('ButtonSubmitReportUS')));
-    await tester.pump();
+    await tester.pumpAndSettle(const Duration(seconds: 2));
   });
 }
 */

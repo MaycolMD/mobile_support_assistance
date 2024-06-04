@@ -40,6 +40,7 @@ class _CreateReportState extends State<CreateReportOffline> {
             Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
               child: AppBar(
+                backgroundColor: Colors.white,
                 toolbarHeight: 30,
                 actions: const [
                   Row(

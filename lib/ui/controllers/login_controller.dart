@@ -17,7 +17,7 @@ class LoginController extends GetxController {
     try {
       String email = emailController.text;
       String password = passwordController.text;
-      if ((email == "a@a.com" || email == "b@b.com") && password == "123456") {
+      if ((email == "a@a.com" || email == "b@a.com") && password == "123456") {
         clearControllers();
         Get.to(() => MainPageUC(email: email));
         //Get.offNamed('/MainPageUC');
