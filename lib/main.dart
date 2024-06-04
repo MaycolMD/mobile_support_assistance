@@ -100,9 +100,6 @@ void main() async {
   // Initialize SyncService
   Get.put(SyncService());
 
-  // Initialize ReportController
-  Get.put(ReportController());
-
   runApp(const MyApp());
 }
 

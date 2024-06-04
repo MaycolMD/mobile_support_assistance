@@ -104,54 +104,60 @@ class _RatingReportState extends State<RatingReport> {
                   ),
                   const SizedBox(height: 30),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(50.0, 0, 0, 0),
-                    child: buildIconTextField(
-                      Icons.person,
-                      'Client ID',
-                      userIdController,
-                      report.clientID.toString(),
-                      isEditable: false,
-                    ),
-                  ),
+                      padding: const EdgeInsets.fromLTRB(50.0, 0, 0, 0),
+                      child: Expanded(
+                          child: buildIconTextField(
+                        Icons.person,
+                        'Client ID',
+                        userIdController,
+                        report.clientID.toString(),
+                        isEditable: false,
+                      ))),
                   const SizedBox(height: 40),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(50.0, 0, 0, 0),
-                    child: buildIconTextField(
-                      Icons.calendar_today,
-                      'Date',
-                      userDateController,
-                      report.date,
-                      isEditable: false,
+                    child: Expanded(
+                      child: buildIconTextField(
+                        Icons.calendar_today,
+                        'Date',
+                        userDateController,
+                        report.date,
+                        isEditable: false,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 40),
                   SizedBox(
-                    width: 800,
-                    child: buildReadOnlyTextField(
-                      'Description',
-                      report.description,
-                    ),
-                  ),
+                      width: 800,
+                      child: Expanded(
+                        child: buildReadOnlyTextField(
+                          'Description',
+                          report.description,
+                        ),
+                      )),
                   const SizedBox(height: 40),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(50.0, 0, 0, 0),
-                    child: buildIconTextField(
+                    child: Expanded(
+                        child: buildIconTextField(
                       Icons.access_time,
                       'Start time',
                       userStartTimeController,
                       report.startTime,
                       isEditable: false,
-                    ),
+                    )),
                   ),
                   const SizedBox(height: 40),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(50.0, 0, 0, 0),
-                    child: buildIconTextField(
-                      Icons.access_time,
-                      'End time',
-                      userEndTimeController,
-                      report.endTime,
-                      isEditable: false,
+                    child: Expanded(
+                      child: buildIconTextField(
+                        Icons.access_time,
+                        'End time',
+                        userEndTimeController,
+                        report.endTime,
+                        isEditable: false,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 50),
