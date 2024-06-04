@@ -171,7 +171,7 @@ void main() {
     await tester.pumpAndSettle(const Duration(seconds: 1));
 
     await tester.enterText(
-        find.byKey(const Key('description')), "report bed on a test.");
+        find.byKey(const Key('description')), "report based on a test.");
 
     await tester.tap(find.byIcon(Icons.access_time).at(0));
     await tester.pumpAndSettle(const Duration(seconds: 1));

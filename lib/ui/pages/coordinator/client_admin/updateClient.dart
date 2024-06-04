@@ -252,6 +252,7 @@ class _UpdateClientState extends State<UpdateClient> {
 
               controller.updateClient(
                   int.parse(userIdController.text), nameController.text);
+              Get.delete<ClientController>();
               Get.back();
             },
           ),

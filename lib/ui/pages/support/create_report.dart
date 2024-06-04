@@ -173,6 +173,7 @@ class _CreateReportState extends State<CreateReport> {
                                 SizedBox(
                                     width: 350,
                                     child: TextField(
+                                      key: const Key('description'),
                                       controller: descriptionController,
                                       textCapitalization:
                                           TextCapitalization.words,

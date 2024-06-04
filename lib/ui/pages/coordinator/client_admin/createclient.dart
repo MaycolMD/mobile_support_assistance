@@ -79,6 +79,7 @@ class _CreateClientState extends State<CreateClient> {
                   buildSubmitButton(onPressed: () async {
                     await _controller.addClient(
                         int.parse(userIdController.text), nameController.text);
+                    Get.delete<ClientController>();
                     Get.back();
                   }),
                   const SizedBox(
