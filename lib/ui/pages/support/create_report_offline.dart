@@ -297,7 +297,7 @@ class _CreateReportState extends State<CreateReportOffline> {
                           },
                           style: ButtonStyle(
                             backgroundColor:
-                                 MaterialStateProperty.all<Color>(Colors.deepPurple),
+                                WidgetStatePropertyAll(Colors.deepPurple),
                           ),
                           child: const Text('Submit',
                               style: TextStyle(

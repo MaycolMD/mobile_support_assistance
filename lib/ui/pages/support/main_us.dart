@@ -118,7 +118,7 @@ class _MainUSState extends State<MainUS> {
                               },
                               style: const ButtonStyle(
                                 backgroundColor:
-                                    MaterialStatePropertyAll(Colors.deepPurple),
+                                    WidgetStatePropertyAll(Colors.deepPurple),
                               ),
                               child: const Text(
                                 'Add Report',

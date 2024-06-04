@@ -39,7 +39,6 @@ import 'ui/pages/coordinator/client_admin/createclient.dart';
 import 'ui/pages/coordinator/ratingreportus.dart';
 import 'ui/pages/coordinator/ratingreportspecific.dart';
 import 'package:project/ui/pages/coordinator/client_admin/client_admin_page.dart';
-
 import 'ui/pages/support/main_us_offline.dart';
 
 Future<void> _openBox() async {
@@ -110,7 +109,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Your Support Assistance',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
+      theme: new ThemeData(
         scaffoldBackgroundColor: const Color.fromARGB(255, 255, 255, 255),
         primarySwatch: Colors.blue,
         brightness: Brightness.light,

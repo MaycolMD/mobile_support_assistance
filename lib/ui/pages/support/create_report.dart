@@ -334,8 +334,8 @@ class _CreateReportState extends State<CreateReport> {
                                         Get.to(
                                             () => MainUS(email: widget.email));
                                       },
-                                      style: ButtonStyle(
-                                        backgroundColor: MaterialStateProperty.all<Color>(
+                                      style: const ButtonStyle(
+                                        backgroundColor: WidgetStatePropertyAll(
                                             Colors.deepPurple),
                                       ),
                                       child: const Text('Submit',

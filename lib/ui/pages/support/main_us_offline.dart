@@ -47,7 +47,7 @@ class MainReportsOffline extends StatelessWidget {
                     arguments: ['Usuario']);
               },
               style: const ButtonStyle(
-                backgroundColor:  MaterialStatePropertyAll(Colors.deepPurple),
+                backgroundColor: WidgetStatePropertyAll(Colors.deepPurple),
               ),
               child: const Text(
                 'Add Report',
@@ -60,7 +60,7 @@ class MainReportsOffline extends StatelessWidget {
                 Get.offNamed('/Login');
               },
               style: const ButtonStyle(
-                backgroundColor: MaterialStatePropertyAll(Colors.deepPurple),
+                backgroundColor: WidgetStatePropertyAll(Colors.deepPurple),
               ),
               child: const Text(
                 'Ya tengo internet',
