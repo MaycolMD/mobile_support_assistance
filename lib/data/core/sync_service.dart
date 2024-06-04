@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:project/data/core/network_info.dart';
-import 'package:project/domain/entities/report.dart';
 import 'package:project/domain/use_case/report_usecase.dart';
 import 'package:project/data/models/report_db.dart';
 

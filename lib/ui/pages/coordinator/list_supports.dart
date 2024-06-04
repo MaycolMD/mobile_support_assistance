@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:project/domain/entities/user_support.dart';
 import 'package:project/ui/controllers/report/report_controller.dart';
 import 'package:project/ui/controllers/user_support/us_controller.dart';
 import 'package:project/ui/pages/coordinator/main_uc.dart';
-import 'package:project/ui/pages/coordinator/ratingreportspecific.dart';
 import 'package:project/widgets/reportcardsupport.dart';
 
-import '../../../widgets/reportcard.dart';
 
 class ListSupporters extends StatefulWidget {
   ListSupporters({super.key, required this.email});
@@ -46,7 +43,7 @@ class _ListSupportersState extends State<ListSupporters> {
                     padding: const EdgeInsets.all(12),
                     child: Icon(
                       Icons.tag_faces_sharp,
-                      color: Theme.of(context).colorScheme.background,
+                      color: Theme.of(context).colorScheme.surface,
                       size: 80,
                     ),
                   ),
@@ -106,13 +103,13 @@ class _ListSupportersState extends State<ListSupporters> {
                     Get.to(() => MainPageUC(email: widget.email));
                   },
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
+                    backgroundColor: WidgetStateProperty.all<Color>(
                       Colors.deepPurple,
                     ),
-                    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                    padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                     ),
-                    shape: MaterialStateProperty.all<OutlinedBorder>(
+                    shape: WidgetStateProperty.all<OutlinedBorder>(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),

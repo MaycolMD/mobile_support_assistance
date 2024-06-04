@@ -30,7 +30,7 @@ void main() {
   test('Create, Get all reports, Update, and Delete an entry', () async {
     // Step 1: Create an entry
     bool createResult = await datasource.addReport(newReport);
-    print('createResult value is: ${createResult}');
+    print('createResult value is: $createResult');
     expect(createResult, isTrue);
 
     // Step 2: Retrieve the user to get the ID

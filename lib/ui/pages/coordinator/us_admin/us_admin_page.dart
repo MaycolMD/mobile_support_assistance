@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:project/domain/entities/user_support.dart';
-import 'package:project/ui/controllers/user_support/us_controller.dart';
 import 'package:project/ui/pages/coordinator/main_uc.dart';
 import 'package:project/ui/pages/coordinator/us_admin/createUS.dart';
 import 'package:project/ui/pages/coordinator/us_admin/deleteUS.dart';
@@ -36,7 +34,7 @@ class _AdminPageUSState extends State<AdminPageUS> {
                     padding: const EdgeInsets.all(12),
                     child: Icon(
                       Icons.tag_faces_sharp,
-                      color: Theme.of(context).colorScheme.background,
+                      color: Theme.of(context).colorScheme.surface,
                       size: 80,
                     ),
                   ),
@@ -98,18 +96,18 @@ class _AdminPageUSState extends State<AdminPageUS> {
                 ElevatedButton(
                   key: const Key('ButtonGoBack'),
                   onPressed: () {
-                    Get.to(() => MainPageUC(email: widget.email!));
+                    Get.to(() => MainPageUC(email: widget.email));
                   },
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
+                    backgroundColor: WidgetStateProperty.all<Color>(
                         Colors.deepPurple), // Color morado
-                    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                    padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
                       const EdgeInsets.symmetric(
                           horizontal: 20,
                           vertical:
                               12), // Ajusta el padding según sea necesario
                     ),
-                    shape: MaterialStateProperty.all<OutlinedBorder>(
+                    shape: WidgetStateProperty.all<OutlinedBorder>(
                       RoundedRectangleBorder(
                         borderRadius:
                             BorderRadius.circular(8), // Borde suavizado
@@ -144,7 +142,7 @@ class _AdminPageUSState extends State<AdminPageUS> {
             color: Colors.grey.withOpacity(0.3),
             spreadRadius: 2,
             blurRadius: 5,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
           ),
         ],
       ),

@@ -8,13 +8,13 @@ class ReportCard extends StatelessWidget {
   final VoidCallback onPressed;
 
   const ReportCard({
-    Key? key,
+    super.key,
     required this.reportId,
     required this.username,
     required this.date,
     required this.status,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -78,20 +78,20 @@ class ReportCard extends StatelessWidget {
             key: Key('reviewButton$reportId'),
             onPressed: onPressed,
             style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(
+              backgroundColor: WidgetStateProperty.all<Color>(
                 Theme.of(context).primaryColor,
               ),
-              padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+              padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
                 const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
               ),
-              shape: MaterialStateProperty.all<OutlinedBorder>(
+              shape: WidgetStateProperty.all<OutlinedBorder>(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
               ),
-              overlayColor: MaterialStateProperty.resolveWith<Color?>(
-                (Set<MaterialState> states) {
-                  if (states.contains(MaterialState.hovered)) {
+              overlayColor: WidgetStateProperty.resolveWith<Color?>(
+                (Set<WidgetState> states) {
+                  if (states.contains(WidgetState.hovered)) {
                     return Colors.grey.withOpacity(0.5);
                   }
                   return null;

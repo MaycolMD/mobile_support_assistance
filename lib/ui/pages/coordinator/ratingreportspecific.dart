@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
-import 'package:loggy/loggy.dart';
 import 'package:project/domain/entities/report.dart';
 import 'package:project/domain/entities/user_support.dart';
 import 'package:project/ui/controllers/client/client_controller.dart';
@@ -12,8 +11,7 @@ import './../../../widgets/back_button.dart';
 import './../../../widgets/submit_button.dart';
 
 class RatingReport extends StatefulWidget {
-  const RatingReport({Key? key, required this.email, required this.id})
-      : super(key: key);
+  const RatingReport({super.key, required this.email, required this.id});
   final String email;
   final int? id;
   @override
@@ -35,19 +33,21 @@ class _RatingReportState extends State<RatingReport> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: _controller.getReportById(widget.id!),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          Report report = _controller.report;
-          return build2(context, report);
-        } else {
-          return const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
-          );
-        }
-      },
-    );
+    return Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: FutureBuilder(
+          future: _controller.getReportById(widget.id!),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              Report report = _controller.report;
+              return build2(context, report);
+            } else {
+              return const Scaffold(
+                body: Center(child: CircularProgressIndicator()),
+              );
+            }
+          },
+        ));
   }
 
   Widget build2(BuildContext context, Report report) {
@@ -85,14 +85,14 @@ class _RatingReportState extends State<RatingReport> {
                     padding: const EdgeInsets.all(20),
                     child: Icon(
                       Icons.tag_faces_sharp,
-                      color: Theme.of(context).colorScheme.background,
+                      color: Theme.of(context).colorScheme.surface,
                       size: 80,
                     ),
                   ),
                   const SizedBox(height: 20),
                   Text(
-                    'REPORT #${widget.id.toString()} FROM ${usName}',
-                    style: TextStyle(fontSize: 40),
+                    'REPORT #${widget.id.toString()} FROM $usName',
+                    style: const TextStyle(fontSize: 40),
                   ),
                   const SizedBox(height: 20),
                   Divider(

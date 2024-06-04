@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:loggy/loggy.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
@@ -24,9 +23,7 @@ import 'package:project/domain/repositories/support_repository.dart';
 import 'package:project/domain/use_case/client_usecase.dart';
 import 'package:project/domain/use_case/report_usecase.dart';
 import 'package:project/domain/use_case/us_usecase.dart';
-import 'package:project/ui/controllers/client/client_controller.dart';
 import 'package:project/ui/controllers/login_controller.dart';
-import 'package:project/ui/controllers/report/report_controller.dart';
 import 'package:project/ui/pages/coordinator/client_admin/deleteClient.dart';
 import 'package:project/ui/pages/coordinator/client_admin/updateClient.dart';
 import 'package:project/ui/pages/coordinator/list_supports.dart';
@@ -91,7 +88,7 @@ void main() async {
   await Hive.initFlutter();
 
   // Register the ReportDB adapter
-  Hive.registerAdapter(ReportDBAdapter());
+  //Hive.registerAdapter(ReportDBAdapter());
 
   // Open the Hive box
   await Hive.openBox<ReportDB>('reports');
@@ -114,28 +111,32 @@ class MyApp extends StatelessWidget {
       title: 'Your Support Assistance',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        scaffoldBackgroundColor: const Color.fromARGB(255, 255, 255, 255),
         primarySwatch: Colors.blue,
+        brightness: Brightness.light,
       ),
+      themeMode: ThemeMode.light,
       initialRoute: '/',
       getPages: [
         GetPage(name: '/', page: () => const Login()),
         GetPage(
             name: '/CreateUS',
-            page: () => CreateUser(
+            page: () => const CreateUser(
                   email: '',
                 )),
         GetPage(
             name: '/MainPageUC',
-            page: () => MainPageUC(
+            page: () => const MainPageUC(
                   email: '',
                 )),
-        GetPage(name: '/CreateClient', page: () => CreateClient(email: '')),
-        GetPage(name: '/Reports', page: () => RatingReportUS(email: '')),
+        GetPage(
+            name: '/CreateClient', page: () => const CreateClient(email: '')),
+        GetPage(name: '/Reports', page: () => const RatingReportUS(email: '')),
         GetPage(
             name: '/SpecificReport',
-            page: () => RatingReport(email: '', id: 0)),
+            page: () => const RatingReport(email: '', id: 0)),
         GetPage(name: '/MainUS', page: () => MainUS(email: '')),
-        GetPage(name: '/MainUSOffline', page: () => MainReportsOffline()),
+        GetPage(name: '/MainUSOffline', page: () => const MainReportsOffline()),
         GetPage(name: '/Login', page: () => const Login()),
         GetPage(
             name: '/CreateReport',
@@ -147,11 +148,14 @@ class MyApp extends StatelessWidget {
             page: () => const CreateReportOffline()),
         GetPage(name: '/RecapReport', page: () => const RecapReport()),
         GetPage(name: '/ListSupporters', page: () => ListSupporters(email: '')),
-        GetPage(name: '/AdminPageUS', page: () => AdminPageUS(email: '')),
+        GetPage(name: '/AdminPageUS', page: () => const AdminPageUS(email: '')),
         GetPage(
-            name: '/AdminPageClient', page: () => AdminPageClient(email: '')),
-        GetPage(name: '/deleteClient', page: () => DeleteClient(email: '')),
-        GetPage(name: '/updateClient', page: () => UpdateClient(email: '')),
+            name: '/AdminPageClient',
+            page: () => const AdminPageClient(email: '')),
+        GetPage(
+            name: '/deleteClient', page: () => const DeleteClient(email: '')),
+        GetPage(
+            name: '/updateClient', page: () => const UpdateClient(email: '')),
       ],
       home: const Login(key: Key('MainPage')),
     );

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:loggy/loggy.dart';
 import 'package:project/data/models/report_db.dart';
 import 'package:project/domain/entities/report.dart';
 import 'package:project/domain/entities/user_support.dart';
 import 'package:project/domain/use_case/report_usecase.dart';
 import 'package:project/domain/use_case/us_usecase.dart';
-import 'package:project/ui/controllers/connectivity_controller.dart';
 
 class USController extends GetxController {
   final RxList<Report> _reports = <Report>[].obs;
@@ -68,11 +66,11 @@ class USController extends GetxController {
   }
 
   Future<void> getAllReportsByEmail(String email) async {
-    final RxList<UserSupport> _supports = <UserSupport>[].obs;
-    _supports.value = await _supportUseCase.getSupports();
+    final RxList<UserSupport> supports = <UserSupport>[].obs;
+    supports.value = await _supportUseCase.getSupports();
 
     String supportID = '';
-    for (var s in _supports) {
+    for (var s in supports) {
       if (s.email == email) {
         supportID = s.id.toString();
       }
@@ -198,8 +196,8 @@ class USController extends GetxController {
   }
 
   Future<void> getSupportsName() async {
-    final RxList<UserSupport> _supportsTemp = <UserSupport>[].obs;
-    _supportsTemp.value = await _supportUseCase.getSupports();
+    final RxList<UserSupport> supportsTemp = <UserSupport>[].obs;
+    supportsTemp.value = await _supportUseCase.getSupports();
 
     for (var support in _supports) {
       supportsNameList.add(support.name);

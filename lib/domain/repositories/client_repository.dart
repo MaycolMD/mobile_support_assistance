@@ -1,5 +1,4 @@
 import 'package:project/data/datasources/remote/interfaces/I_client_datasource.dart';
-import 'package:project/data/datasources/remote/client_datasource.dart';
 import 'package:project/domain/entities/user_client.dart';
 import 'package:project/domain/repositories/interfaces/I_client_repository.dart';
 

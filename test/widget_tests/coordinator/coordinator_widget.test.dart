@@ -4,7 +4,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/list_notifier.dart';
 import 'package:mockito/mockito.dart';
-import 'package:project/data/core/network_info.dart';
 import 'package:project/domain/entities/report.dart';
 import 'package:project/domain/entities/user_client.dart';
 import 'package:project/domain/entities/user_support.dart';
@@ -23,15 +22,11 @@ import 'package:project/ui/controllers/user_support/us_controller.dart';
 import 'package:project/ui/pages/coordinator/client_admin/client_admin_page.dart';
 import 'package:project/ui/pages/coordinator/client_admin/createclient.dart';
 import 'package:project/ui/pages/coordinator/client_admin/deleteClient.dart';
-import 'package:project/ui/pages/coordinator/list_supports.dart';
 import 'package:project/ui/pages/coordinator/main_uc.dart';
-import 'package:project/ui/pages/coordinator/ratingreportspecific.dart';
-import 'package:project/ui/pages/coordinator/ratingreportus.dart';
 import 'package:project/ui/pages/coordinator/us_admin/createUS.dart';
 import 'package:project/ui/pages/coordinator/us_admin/updateUS.dart';
 import 'package:project/ui/pages/coordinator/us_admin/us_admin_page.dart';
 
-import '../support/support_widget.test.dart';
 
 class FakeUSRepository extends Fake implements SupportRepository {}
 
@@ -332,7 +327,7 @@ void main() {
     expect(find.text('Reports'), findsOneWidget);
     expect(find.text('Supports'), findsOneWidget);
 
-    expect(find.byKey(Key('ButtonGoBack')), findsOneWidget);
+    expect(find.byKey(const Key('ButtonGoBack')), findsOneWidget);
   });
 
   testWidgets('us_admin_page widget test', (WidgetTester tester) async {
@@ -349,7 +344,7 @@ void main() {
     expect(find.text('Update an US'), findsOneWidget);
     expect(find.text('Remove an US'), findsOneWidget);
 
-    expect(find.byKey(Key('ButtonGoBack')), findsOneWidget);
+    expect(find.byKey(const Key('ButtonGoBack')), findsOneWidget);
   });
 
   group('crud for us_admin widgets', () {
@@ -394,7 +389,7 @@ void main() {
 
       await controller.getSupportsName();
       completer.complete();
-      await tester.pumpAndSettle(Duration(seconds: 5));
+      await tester.pumpAndSettle(const Duration(seconds: 5));
 
       expect(find.text('UPDATE A SUPPORT USER'), findsOneWidget);
       expect(find.byType(DropdownButton<String>), findsOneWidget);
@@ -412,7 +407,7 @@ void main() {
       await tester.pumpAndSettle();
 
       await controller.getSupportByName('Luis Lopez');
-      await tester.pumpAndSettle(Duration(seconds: 5));
+      await tester.pumpAndSettle(const Duration(seconds: 5));
 
       expect(find.byType(TextField), findsNWidgets(4));
 
@@ -458,7 +453,7 @@ void main() {
     expect(find.text('Update a Client'), findsOneWidget);
     expect(find.text('Remove a Client'), findsOneWidget);
 
-    expect(find.byKey(Key('ButtonGoBack')), findsOneWidget);
+    expect(find.byKey(const Key('ButtonGoBack')), findsOneWidget);
   });
 
   group('crud for client_admin widgets', () {
@@ -501,7 +496,7 @@ void main() {
 
       await controller.getClientsName();
       completer.complete();
-      await tester.pumpAndSettle(Duration(seconds: 5));
+      await tester.pumpAndSettle(const Duration(seconds: 5));
 
       expect(find.text('REMOVE A CLIENT USER'), findsOneWidget);
       expect(find.byType(DropdownButton<String>), findsOneWidget);
@@ -519,7 +514,7 @@ void main() {
       await tester.pumpAndSettle();
 
       await controller.getClientByName('Catrina Rubio');
-      await tester.pumpAndSettle(Duration(seconds: 5));
+      await tester.pumpAndSettle(const Duration(seconds: 5));
 
       expect(find.text('Catrina Rubio'), findsNWidgets(2));
 

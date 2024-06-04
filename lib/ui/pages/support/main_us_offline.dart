@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:project/ui/controllers/connectivity_controller.dart';
-import 'package:project/ui/controllers/user_support/us_controller.dart';
-import 'package:project/ui/pages/support/create_report.dart';
 import 'package:project/ui/pages/support/create_report_offline.dart';
-import 'package:project/widgets/custom_row.dart';
 
-import '../../../data/core/network_info.dart';
-import '../login/login.dart';
 
 class MainReportsOffline extends StatelessWidget {
+  const MainReportsOffline({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,11 +22,11 @@ class MainReportsOffline extends StatelessWidget {
                 color: Colors.white,
               ),
             ),
-            Padding(
+            const Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
               child: Text(
                 'Welcome, Soporte de Usuario',
-                style: const TextStyle(
+                style: TextStyle(
                   color: Colors.black,
                   fontSize: 20.0,
                   fontFamily: 'Roboto',
@@ -51,7 +47,7 @@ class MainReportsOffline extends StatelessWidget {
                     arguments: ['Usuario']);
               },
               style: const ButtonStyle(
-                backgroundColor: MaterialStatePropertyAll(Colors.deepPurple),
+                backgroundColor:  MaterialStatePropertyAll(Colors.deepPurple),
               ),
               child: const Text(
                 'Add Report',

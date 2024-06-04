@@ -1,15 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
-import 'package:loggy/loggy.dart';
-import 'package:project/data/core/network_info.dart';
 import 'package:project/data/models/report_db.dart';
-import 'package:project/domain/entities/report.dart';
-import 'package:project/domain/entities/user_client.dart';
-import 'package:project/domain/entities/user_support.dart';
-import 'package:project/domain/use_case/client_usecase.dart';
-import 'package:project/domain/use_case/report_usecase.dart';
-import 'package:project/domain/use_case/us_usecase.dart';
 
 class ReportControllerOffline extends GetxController {
   // Otros campos de estado
@@ -22,10 +14,6 @@ class ReportControllerOffline extends GetxController {
 
   final _reportBox = Hive.box<ReportDB>('reports');
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
 
   Future<DateTime?> selectDate(BuildContext context) async {
     final pickedDate = await showDatePicker(

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:integration_test/integration_test.dart';
-import 'package:loggy/loggy.dart';
 import 'package:project/data/core/network_info.dart';
 import 'package:project/data/datasources/local/interfaces/I_report_local_datasource.dart';
 import 'package:project/data/datasources/local/report_local_datasource.dart';

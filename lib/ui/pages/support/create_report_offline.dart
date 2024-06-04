@@ -2,11 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:project/data/core/network_info.dart';
-import 'package:project/domain/entities/report.dart';
-import 'package:project/ui/controllers/client/client_controller.dart';
 import 'package:project/ui/controllers/report/offline_report_controller.dart';
-import 'package:project/ui/controllers/report/report_controller.dart';
-import 'package:project/ui/pages/support/main_us.dart';
 import 'package:project/ui/pages/support/main_us_offline.dart';
 import 'package:project/widgets/text_field.dart';
 
@@ -297,11 +293,11 @@ class _CreateReportState extends State<CreateReportOffline> {
                                 null; // Reiniciar la hora de inicio seleccionada
                             controller.selectedTimeEnd =
                                 null; // Reiniciar la hora de finalización seleccionada
-                            Get.to(() => MainReportsOffline());
+                            Get.to(() => const MainReportsOffline());
                           },
-                          style: const ButtonStyle(
+                          style: ButtonStyle(
                             backgroundColor:
-                                MaterialStatePropertyAll(Colors.deepPurple),
+                                 MaterialStateProperty.all<Color>(Colors.deepPurple),
                           ),
                           child: const Text('Submit',
                               style: TextStyle(

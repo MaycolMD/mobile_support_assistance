@@ -73,7 +73,7 @@ class _deleteUSState extends State<deleteUS> {
                             padding: const EdgeInsets.all(12),
                             child: Icon(
                               Icons.tag_faces_sharp,
-                              color: Theme.of(context).colorScheme.background,
+                              color: Theme.of(context).colorScheme.surface,
                               size: 80,
                             ),
                           ),
@@ -208,18 +208,18 @@ class _deleteUSState extends State<deleteUS> {
         );
       },
       style: ButtonStyle(
-        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+        padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
           const EdgeInsets.symmetric(
             horizontal: 20,
             vertical: 12,
           ),
         ),
-        shape: MaterialStateProperty.all<OutlinedBorder>(
+        shape: WidgetStateProperty.all<OutlinedBorder>(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),
         ),
-        side: MaterialStateProperty.all<BorderSide>(
+        side: WidgetStateProperty.all<BorderSide>(
           const BorderSide(
             color: Colors.deepPurple, // Borde morado
             width: 2, // Ancho del borde
