@@ -7,14 +7,13 @@ import 'package:project/ui/pages/support/main_us_offline.dart';
 import 'package:project/widgets/text_field.dart';
 
 class CreateReportOffline extends StatefulWidget {
-  const CreateReportOffline({super.key});
+  CreateReportOffline({super.key});
 
   @override
   _CreateReportState createState() => _CreateReportState();
 }
 
 class _CreateReportState extends State<CreateReportOffline> {
-  String email = Get.arguments[0];
   final ReportControllerOffline controller = Get.put(ReportControllerOffline());
 
   var clientName = TextEditingController();
@@ -27,6 +26,7 @@ class _CreateReportState extends State<CreateReportOffline> {
 
   @override
   void initState() {
+    print('llega aca');
     super.initState();
   }
 
@@ -268,6 +268,7 @@ class _CreateReportState extends State<CreateReportOffline> {
                       child: ElevatedButton(
                           key: const Key('ButtonSubmitReportUS'),
                           onPressed: () async {
+                            print('llega parte 1');
                             DateTime dateFormatted = DateTime(
                                 controller.selectedDate!.year,
                                 controller.selectedDate!.month,
@@ -280,7 +281,7 @@ class _CreateReportState extends State<CreateReportOffline> {
                                 controller.selectedTimeStart!.format(context),
                                 controller.selectedClient.toString(),
                                 descriptionController.text.toString(),
-                                email,
+                                '',
                                 int.parse(clientID.text),
                                 int.parse(supportID.text));
                             descriptionController

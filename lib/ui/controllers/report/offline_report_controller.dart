@@ -14,7 +14,6 @@ class ReportControllerOffline extends GetxController {
 
   final _reportBox = Hive.box<ReportDB>('reports');
 
-
   Future<DateTime?> selectDate(BuildContext context) async {
     final pickedDate = await showDatePicker(
       context: context,
@@ -72,6 +71,10 @@ class ReportControllerOffline extends GetxController {
       supportID: supportID,
     );
 
+    print('llega parte 2');
+
     await _reportBox.add(report);
+
+    print('llega parte 3');
   }
 }

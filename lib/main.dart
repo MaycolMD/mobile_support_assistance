@@ -87,7 +87,7 @@ void main() async {
   await Hive.initFlutter();
 
   // Register the ReportDB adapter
-  //Hive.registerAdapter(ReportDBAdapter());
+  Hive.registerAdapter(ReportDBAdapter());
 
   // Open the Hive box
   await Hive.openBox<ReportDB>('reports');
@@ -143,8 +143,7 @@ class MyApp extends StatelessWidget {
                   email: '',
                 )),
         GetPage(
-            name: '/CreateReportOffline',
-            page: () => const CreateReportOffline()),
+            name: '/CreateReportOffline', page: () => CreateReportOffline()),
         GetPage(name: '/RecapReport', page: () => const RecapReport()),
         GetPage(name: '/ListSupporters', page: () => ListSupporters(email: '')),
         GetPage(name: '/AdminPageUS', page: () => const AdminPageUS(email: '')),

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project/ui/pages/support/create_report_offline.dart';
 
-
 class MainReportsOffline extends StatelessWidget {
   const MainReportsOffline({super.key});
 
@@ -43,8 +42,7 @@ class MainReportsOffline extends StatelessWidget {
             const SizedBox(height: 30),
             ElevatedButton(
               onPressed: () async {
-                Get.to(() => const CreateReportOffline(),
-                    arguments: ['Usuario']);
+                Get.to(() => CreateReportOffline(), arguments: ['Usuario']);
               },
               style: const ButtonStyle(
                 backgroundColor: WidgetStatePropertyAll(Colors.deepPurple),

@@ -69,8 +69,8 @@ class _MainUSState extends State<MainUS> {
                             ),
                           ),
                           Padding(
-                            padding:
-                                const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 12, 0, 0),
                             child: Text(
                               'Welcome, ${widget.email}',
                               style: const TextStyle(
@@ -113,7 +113,8 @@ class _MainUSState extends State<MainUS> {
                                         email: widget.email,
                                       ));
                                 } else {
-                                  Get.to(() => const CreateReportOffline());
+                                  print(await networkInfo.isConnected());
+                                  Get.to(() => CreateReportOffline());
                                 }
                               },
                               style: const ButtonStyle(
